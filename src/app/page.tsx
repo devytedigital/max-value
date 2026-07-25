@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import ServicesSection from "@/components/ServicesSection";
 import AboutStatsSection from "@/components/AboutStatsSection";
 import AdvantagesSection from "@/components/AdvantagesSection";
+import EventsSection from "@/components/EventsSection";
 
 // Dynamically import client-only SplashModal with SSR disabled to prevent hydration mismatches
 const SplashModal = dynamic(() => import("@/components/SplashModal"), { ssr: false });
@@ -69,6 +70,9 @@ export default function Home() {
 
       {/* Advantages Section */}
       <AdvantagesSection />
+
+      {/* Events Section */}
+      <EventsSection />
 
       {/* Corporate Footer */}
       <Footer />

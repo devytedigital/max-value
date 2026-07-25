@@ -9,7 +9,8 @@ import {
   ChevronUp,
   PhoneCall,
   Calendar,
-  Layers
+  Layers,
+  Clock
 } from "lucide-react";
 
 // Social SVG Icons
@@ -99,17 +100,42 @@ export default function Footer() {
                 Thrissur, Kerala - 680007
               </span>
             </li>
-            <li className="flex gap-2.5 items-center">
-              <Phone className="h-4.5 w-4.5 text-[#147FC3] shrink-0" />
-              <a href="tel:04876690274" className="hover:text-[#147FC3] transition-colors">
-                0487 669 0274 | 2422799
-              </a>
+            <li className="flex gap-2.5 items-start">
+              <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Customer Care
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  <a href="tel:04872422799" className="hover:text-[#147FC3] transition-colors">
+                    0487 2422799
+                  </a>
+                  <span className="text-zinc-350">/</span>
+                  <a href="tel:04876690274" className="hover:text-[#147FC3] transition-colors">
+                    0487 6690274
+                  </a>
+                </div>
+              </div>
             </li>
-            <li className="flex gap-2.5 items-center">
-              <Mail className="h-4.5 w-4.5 text-[#147FC3] shrink-0" />
-              <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
-                info@maxvaluecredits.com
-              </a>
+            <li className="flex gap-2.5 items-start">
+              <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Working Hours
+                </span>
+                <span>Mon - Sat: 9.30 am - 5.30 pm</span>
+              </div>
+            </li>
+            <li className="flex gap-2.5 items-start">
+              <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Email
+                </span>
+                <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
+                  info@maxvaluecredits.com
+                </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -128,17 +154,36 @@ export default function Footer() {
                 Karnataka - 560011
               </span>
             </li>
-            <li className="flex gap-2.5 items-center">
-              <Phone className="h-4.5 w-4.5 text-[#147FC3] shrink-0" />
-              <a href="tel:08029650516" className="hover:text-[#147FC3] transition-colors">
-                08029650516
-              </a>
+            <li className="flex gap-2.5 items-start">
+              <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Phone
+                </span>
+                <a href="tel:08029650516" className="hover:text-[#147FC3] transition-colors">
+                  08029650516
+                </a>
+              </div>
             </li>
-            <li className="flex gap-2.5 items-center">
-              <Mail className="h-4.5 w-4.5 text-[#147FC3] shrink-0" />
-              <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
-                info@maxvaluecredits.com
-              </a>
+            <li className="flex gap-2.5 items-start">
+              <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Working Hours
+                </span>
+                <span>Mon - Sat: 9.30 am - 5.30 pm</span>
+              </div>
+            </li>
+            <li className="flex gap-2.5 items-start">
+              <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                  Email
+                </span>
+                <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
+                  info@maxvaluecredits.com
+                </a>
+              </div>
             </li>
           </ul>
         </div>

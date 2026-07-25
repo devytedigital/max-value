@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { 
   Clock, 
   Phone, 
@@ -63,10 +64,32 @@ const MaxValueLogo = () => (
 );
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("HOME");
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    if (!pathname) return;
+    if (pathname === "/" || pathname === "") {
+      setActiveMenu("HOME");
+    } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname.startsWith("/corporate")) {
+      setActiveMenu("CORPORATE");
+    } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/microfinance" || pathname === "/money-transfer") {
+      setActiveMenu("OUR SERVICES");
+    } else if (pathname === "/media") {
+      setActiveMenu("MEDIA");
+    } else if (pathname === "/career") {
+      setActiveMenu("CAREER");
+    } else if (pathname === "/news") {
+      setActiveMenu("NEWS");
+    } else if (pathname === "/branch-network") {
+      setActiveMenu("BRANCH NETWORK");
+    } else if (pathname === "/contact-us" || pathname === "/grievance") {
+      setActiveMenu("CONTACT US");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -189,7 +212,7 @@ export default function Navbar() {
           <div className="lg:hidden flex items-center">
             <button 
               onClick={() => setMobileMenuOpen(true)}
-              className="p-2 rounded-lg text-zinc-700 hover:bg-zinc-100 transition-colors"
+              className="p-2 rounded-lg text-zinc-700 hover:bg-zinc-100 transition-colors cursor-pointer"
             >
               <Menu className="h-6 w-6" />
             </button>
@@ -203,22 +226,91 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-center relative">
             <div className="flex items-center flex-wrap">
-              {menuItems.map((item) => (
-                <button
-                  key={item}
-                  onClick={() => setActiveMenu(item)}
-                  className={`px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative ${
-                    activeMenu === item
-                      ? "text-[#FCA038]"
-                      : "text-white hover:text-[#FCA038]"
-                  }`}
-                >
-                  {item}
-                  {activeMenu === item && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
-                  )}
-                </button>
-              ))}
+              {menuItems.map((item) => {
+                const isCorporate = item === "CORPORATE";
+                const isServices = item === "OUR SERVICES";
+                const isContactUs = item === "CONTACT US";
+                return (
+                  <div key={item} className="relative group">
+                    <button
+                      onClick={() => setActiveMenu(item)}
+                      className={`px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative cursor-pointer ${
+                        activeMenu === item
+                          ? "text-[#FCA038]"
+                          : "text-white hover:text-[#FCA038]"
+                      }`}
+                    >
+                      {item}
+                      {activeMenu === item && (
+                        <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
+                      )}
+                    </button>
+
+                    {isCorporate && (
+                      <div className="absolute top-full left-0 bg-white shadow-xl py-5 px-6 min-w-[220px] flex flex-col gap-4 border-b-4 border-[#FCA038] hidden group-hover:flex z-50">
+                        <Link 
+                          href="/about-us"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          ABOUT US
+                        </Link>
+                        <Link 
+                          href="/board-of-directors"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          BOARD OF DIRECTORS
+                        </Link>
+                      </div>
+                    )}
+
+                    {isServices && (
+                      <div className="absolute top-full left-0 bg-white shadow-xl py-5 px-6 min-w-[220px] flex flex-col gap-4 border-b-4 border-[#FCA038] hidden group-hover:flex z-50">
+                        <Link 
+                          href="/gold-loan"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          GOLD LOAN
+                        </Link>
+                        <Link 
+                          href="/vehicle-loan"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          VEHICLE LOAN
+                        </Link>
+                        <Link 
+                          href="/business-loan"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          BUSINESS LOAN
+                        </Link>
+                        <Link 
+                          href="/microfinance"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          MICROFINANCE
+                        </Link>
+                        <Link 
+                          href="/money-transfer"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          MONEY TRANSFER
+                        </Link>
+                      </div>
+                    )}
+
+                    {isContactUs && (
+                      <div className="absolute top-full left-0 bg-white shadow-xl py-5 px-6 min-w-[220px] flex flex-col gap-4 border-b-4 border-[#FCA038] hidden group-hover:flex z-50">
+                        <Link 
+                          href="/grievance"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          GRIEVANCE
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -242,7 +334,7 @@ export default function Navbar() {
                 <span className="font-black text-sm text-[#147FC3] tracking-wider">NAVIGATE</span>
                 <button 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1 rounded-full text-zinc-500 hover:bg-zinc-100"
+                  className="p-1 rounded-full text-zinc-500 hover:bg-zinc-100 cursor-pointer"
                 >
                   <CloseIcon className="h-5 w-5" />
                 </button>
@@ -257,7 +349,7 @@ export default function Navbar() {
                       setActiveMenu(item);
                       setMobileMenuOpen(false);
                     }}
-                    className={`py-3.5 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${
+                    className={`py-3.5 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
                       activeMenu === item ? "text-[#147FC3]" : "text-zinc-700 hover:text-[#147FC3]"
                     }`}
                   >
