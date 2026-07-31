@@ -232,19 +232,51 @@ export default function Navbar() {
                 const isContactUs = item === "CONTACT US";
                 return (
                   <div key={item} className="relative group">
-                    <button
-                      onClick={() => setActiveMenu(item)}
-                      className={`px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative cursor-pointer ${
-                        activeMenu === item
-                          ? "text-[#FCA038]"
-                          : "text-white hover:text-[#FCA038]"
-                      }`}
-                    >
-                      {item}
-                      {activeMenu === item && (
-                        <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
-                      )}
-                    </button>
+                    {isContactUs ? (
+                      <Link
+                        href="/contact-us"
+                        onClick={() => setActiveMenu(item)}
+                        className={`block px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative cursor-pointer ${
+                          activeMenu === item
+                            ? "text-[#FCA038]"
+                            : "text-white hover:text-[#FCA038]"
+                        }`}
+                      >
+                        {item}
+                        {activeMenu === item && (
+                          <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
+                        )}
+                      </Link>
+                    ) : item === "HOME" ? (
+                      <Link
+                        href="/"
+                        onClick={() => setActiveMenu(item)}
+                        className={`block px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative cursor-pointer ${
+                          activeMenu === item
+                            ? "text-[#FCA038]"
+                            : "text-white hover:text-[#FCA038]"
+                        }`}
+                      >
+                        {item}
+                        {activeMenu === item && (
+                          <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
+                        )}
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => setActiveMenu(item)}
+                        className={`px-3 xl:px-5 py-4 text-xs font-bold tracking-wider transition-colors relative cursor-pointer ${
+                          activeMenu === item
+                            ? "text-[#FCA038]"
+                            : "text-white hover:text-[#FCA038]"
+                        }`}
+                      >
+                        {item}
+                        {activeMenu === item && (
+                          <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#FCA038]" />
+                        )}
+                      </button>
+                    )}
 
                     {isCorporate && (
                       <div className="absolute top-full left-0 bg-white shadow-xl py-5 px-6 min-w-[220px] flex flex-col gap-4 border-b-4 border-[#FCA038] hidden group-hover:flex z-50">
@@ -301,6 +333,12 @@ export default function Navbar() {
                     {isContactUs && (
                       <div className="absolute top-full left-0 bg-white shadow-xl py-5 px-6 min-w-[220px] flex flex-col gap-4 border-b-4 border-[#FCA038] hidden group-hover:flex z-50">
                         <Link 
+                          href="/contact-us"
+                          className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
+                        >
+                          CONTACT US
+                        </Link>
+                        <Link 
                           href="/grievance"
                           className="text-xs font-extrabold tracking-wider text-[#147FC3] hover:text-[#FCA038] cursor-pointer transition-colors text-left"
                         >
@@ -326,7 +364,7 @@ export default function Navbar() {
           />
 
           {/* Slide out menu */}
-          <div className="relative w-4/5 max-w-xs h-full bg-white shadow-2xl flex flex-col justify-between py-6 px-5 z-10 transition-transform">
+          <div className="relative w-4/5 max-w-xs h-full bg-white shadow-2xl flex flex-col justify-between py-6 px-5 z-10 transition-transform overflow-y-auto">
             
             {/* Top row */}
             <div className="flex flex-col gap-6">
@@ -342,21 +380,46 @@ export default function Navbar() {
 
               {/* Menu lists */}
               <div className="flex flex-col divide-y divide-zinc-100">
-                {menuItems.map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => {
-                      setActiveMenu(item);
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`py-3.5 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
-                      activeMenu === item ? "text-[#147FC3]" : "text-zinc-700 hover:text-[#147FC3]"
-                    }`}
+                <Link
+                  href="/"
+                  onClick={() => { setActiveMenu("HOME"); setMobileMenuOpen(false); }}
+                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "HOME" ? "text-[#147FC3]" : "text-zinc-700 hover:text-[#147FC3]"}`}
+                >
+                  HOME <ChevronRight className="h-4 w-4 opacity-50" />
+                </Link>
+                
+                <div className="py-2 flex flex-col gap-1.5">
+                  <Link
+                    href="/about-us"
+                    onClick={() => { setActiveMenu("CORPORATE"); setMobileMenuOpen(false); }}
+                    className="py-1 text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#147FC3] flex items-center justify-between"
                   >
-                    {item}
-                    <ChevronRight className="h-4 w-4 opacity-50" />
-                  </button>
-                ))}
+                    ABOUT US <ChevronRight className="h-4 w-4 opacity-50" />
+                  </Link>
+                  <Link
+                    href="/board-of-directors"
+                    onClick={() => { setActiveMenu("CORPORATE"); setMobileMenuOpen(false); }}
+                    className="py-1 text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#147FC3] flex items-center justify-between"
+                  >
+                    BOARD OF DIRECTORS <ChevronRight className="h-4 w-4 opacity-50" />
+                  </Link>
+                </div>
+
+                <Link
+                  href="/contact-us"
+                  onClick={() => { setActiveMenu("CONTACT US"); setMobileMenuOpen(false); }}
+                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "CONTACT US" ? "text-[#147FC3]" : "text-zinc-700 hover:text-[#147FC3]"}`}
+                >
+                  CONTACT US <ChevronRight className="h-4 w-4 opacity-50" />
+                </Link>
+
+                <Link
+                  href="/grievance"
+                  onClick={() => { setActiveMenu("CONTACT US"); setMobileMenuOpen(false); }}
+                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${pathname === "/grievance" ? "text-[#147FC3]" : "text-zinc-700 hover:text-[#147FC3]"}`}
+                >
+                  GRIEVANCE REDRESSAL <ChevronRight className="h-4 w-4 opacity-50" />
+                </Link>
               </div>
             </div>
 
