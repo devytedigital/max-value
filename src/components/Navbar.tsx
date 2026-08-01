@@ -104,7 +104,7 @@ export default function Navbar() {
       isVisible ? "translate-y-0" : "-translate-y-full"
     } ${
       isScrolled 
-        ? "bg-[#0c141c]/20 backdrop-blur-xl border-b border-white/10 shadow-lg" 
+        ? "bg-[#0c141c]/80 backdrop-blur-xl border-b border-white/10 shadow-lg" 
         : "bg-transparent border-b border-transparent"
     }`}>
       {/* Subtle background grid lines pattern */}
@@ -166,7 +166,7 @@ export default function Navbar() {
 
                       {/* Submenu Dropdowns */}
                       {isCorporate && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/95 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
                           <Link 
                             href="/about-us"
                             className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
@@ -183,7 +183,7 @@ export default function Navbar() {
                       )}
 
                       {isServices && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/95 border border-white/10 shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
                           <Link 
                             href="/gold-loan"
                             className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
@@ -218,7 +218,7 @@ export default function Navbar() {
                       )}
 
                       {isContactUs && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/95 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
                           <Link 
                             href="/contact-us"
                             className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
