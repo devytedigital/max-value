@@ -144,10 +144,9 @@ Sent via MaxValue Credits Website`;
       
       {/* 3-Tier Navbar */}
       <Navbar />
-      <div className="h-[76px] lg:h-[128px] w-full" />
 
       {/* SECTION 1: GRIEVANCE BANNER */}
-      <section className="relative w-full py-20 md:py-28 bg-[#0c141c] text-white overflow-hidden">
+      <section className="relative w-full pt-32 pb-20 md:pt-40 md:pb-28 lg:pt-44 lg:pb-32 bg-[#0c141c] text-white overflow-hidden">
         {/* Background Image with Dark Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -171,11 +170,7 @@ Sent via MaxValue Credits Website`;
             transition={{ duration: 0.6 }}
             className="flex flex-col items-center md:items-start"
           >
-            {/* Tag Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FCA038]/20 border border-[#FCA038]/40 text-[#FCA038] text-xs font-bold uppercase tracking-wider mb-4">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Customer Redressal Cell</span>
-            </div>
+
 
             <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white uppercase leading-tight mb-4">
               Grievance <span className="text-[#FCA038]">Redressal</span>
@@ -227,9 +222,7 @@ Sent via MaxValue Credits Website`;
               className="lg:col-span-5 flex flex-col gap-8 text-left"
             >
               <div>
-                <div className="inline-block text-xs font-black tracking-widest text-[#FCA038] uppercase mb-2">
-                  REDRESSAL CELL
-                </div>
+
                 <h2 className="text-2xl md:text-3xl font-black text-[#147FC3] tracking-tight uppercase">
                   Get In Touch
                 </h2>
@@ -326,10 +319,7 @@ Sent via MaxValue Credits Website`;
                 <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FCA038] via-[#147FC3] to-[#FCA038]" />
 
                 <div className="mb-8 text-left">
-                  <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#147FC3] uppercase mb-1">
-                    <FileText className="w-4 h-4 text-[#FCA038]" />
-                    REGISTRATION FORM
-                  </div>
+
                   <h3 className="text-2xl font-black text-zinc-900 tracking-tight">
                     Submit Your Grievance
                   </h3>

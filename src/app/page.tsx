@@ -41,13 +41,11 @@ export default function Home() {
         <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#147FC3]/5 blur-[150px]" />
       </div>
 
-      {/* Custom Three-Tier Corporate Navbar */}
       <Navbar />
-      <div className="h-[76px] lg:h-[128px] w-full" />
 
       {/* Hero Section */}
       {/* Auto-Playing Hero Image Banner Slider */}
-      <div className="relative w-full overflow-hidden h-[calc(100vh-76px)] lg:h-[calc(100vh-128px)] bg-white z-20 group">
+      <div className="relative w-full overflow-hidden h-screen bg-white z-20 group">
         <AnimatePresence mode="wait">
           <motion.img
             key={activeSlide}
