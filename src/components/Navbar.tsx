@@ -76,11 +76,14 @@ export default function Navbar() {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -292,7 +295,7 @@ export default function Navbar() {
             className="fixed inset-0 bg-white/60 backdrop-blur-sm"
           />
 
-          <div className="relative w-4/5 max-w-xs h-full bg-white text-zinc-900 shadow-2xl flex flex-col justify-between z-10 transition-transform overflow-hidden animate-none">
+          <div data-lenis-prevent className="relative w-4/5 max-w-xs h-full bg-white text-zinc-900 shadow-2xl flex flex-col justify-between z-10 transition-transform overflow-hidden animate-none">
             
             {/* Header (Sticky at top) */}
             <div className="flex justify-between items-center py-5 px-5 border-b border-zinc-100 bg-white">
@@ -306,7 +309,7 @@ export default function Navbar() {
             </div>
 
             {/* Middle List (Scrollable body) */}
-            <div className="flex-1 min-h-0 overflow-y-auto py-4 px-5 text-left">
+            <div className="flex-1 min-h-0 overflow-y-auto py-4 px-5 text-left overscroll-contain">
               <div className="flex flex-col divide-y divide-zinc-100">
                 {/* HOME */}
                 <Link
