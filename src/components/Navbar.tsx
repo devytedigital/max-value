@@ -87,6 +87,16 @@ export default function Navbar() {
     };
   }, [mobileMenuOpen]);
 
+  const getHref = (item: string) => {
+    if (item === "HOME") return "/";
+    if (item === "MEDIA") return "/media";
+    if (item === "CAREER") return "/career";
+    if (item === "NEWS") return "/news";
+    if (item === "BRANCH NETWORK") return "/branch-network";
+    if (item === "CONTACT US") return "/contact-us";
+    return "";
+  };
+
   const menuItems = [
     "HOME",
     "CORPORATE",
@@ -138,6 +148,8 @@ export default function Navbar() {
                   const isServices = item === "OUR SERVICES";
                   const isContactUs = item === "CONTACT US";
                   const isActive = activeMenu === item;
+                  const href = getHref(item);
+                  const hasDropdown = isCorporate || isServices || isContactUs;
 
                   const linkClass = `px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300 flex items-center gap-0.5 cursor-pointer select-none ${
                     isActive 
@@ -147,18 +159,17 @@ export default function Navbar() {
 
                   return (
                     <div key={item} className="relative group py-0.5">
-                      {isContactUs ? (
-                        <Link href="/contact-us" className={linkClass} onClick={() => setActiveMenu(item)}>
-                          {item}
-                        </Link>
-                      ) : item === "HOME" ? (
-                        <Link href="/" className={linkClass} onClick={() => setActiveMenu(item)}>
-                          {item}
+                      {href ? (
+                        <Link href={href} className={linkClass} onClick={() => setActiveMenu(item)}>
+                          <span>{item}</span>
+                          {hasDropdown && (
+                            <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
+                          )}
                         </Link>
                       ) : (
                         <button className={linkClass}>
                           <span>{item}</span>
-                          {(isCorporate || isServices || isContactUs) && (
+                          {hasDropdown && (
                             <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
                           )}
                         </button>
