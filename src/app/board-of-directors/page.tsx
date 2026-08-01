@@ -97,13 +97,29 @@ export default function BoardOfDirectorsPage() {
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
+
+                {/* Default Dark Gradient (Ensures white text readability before hover) */}
+                <div className="absolute bottom-0 left-0 right-0 h-[45%] bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500 z-10" />
+
+                {/* Hover Colored Gradient Overlay (Alternating Yellow and Blue Fog) */}
+                <div 
+                  className={`absolute bottom-0 left-0 right-0 h-[45%] bg-gradient-to-t to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 ${
+                    index % 2 === 0 
+                      ? "from-[#FCA038]/95 via-[#FCA038]/40" 
+                      : "from-[#147FC3]/95 via-[#147FC3]/40"
+                  }`}
+                />
                 
-                {/* Floating details badge card */}
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 md:bottom-3 md:left-3 md:right-3 bg-white/95 backdrop-blur-xs border border-zinc-100 shadow-md rounded-xl md:rounded-2xl py-2 px-2.5 md:py-3 md:px-4 text-center z-10">
-                  <h4 className="text-[11px] md:text-[14px] font-bold text-zinc-900 tracking-tight leading-tight">
+                {/* Name and Title Text (Directly on card bottom, left-aligned) */}
+                <div className="absolute bottom-5 left-5 right-5 z-20 text-left">
+                  <h4 className="text-sm md:text-base font-extrabold text-white tracking-wide leading-tight">
                     {director.name}
                   </h4>
-                  <span className="text-[9px] md:text-[11px] font-medium text-zinc-500 mt-1 md:mt-1.5 block leading-tight">
+                  <span className={`text-[10px] md:text-[12px] font-semibold mt-1 block leading-tight transition-colors duration-500 ${
+                    index % 2 === 0 
+                      ? "text-[#faf9f6]/90 group-hover:text-amber-100" 
+                      : "text-[#faf9f6]/90 group-hover:text-sky-100"
+                  }`}>
                     {director.role}
                   </span>
                 </div>
