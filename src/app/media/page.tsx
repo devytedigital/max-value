@@ -1,57 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { galleryItems } from "@/data/galleryData";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, FileText, Image as ImageIcon, PlayCircle, X } from "lucide-react";
+import { Download, FileText, Image as ImageIcon, PlayCircle, X, ArrowRight } from "lucide-react";
 
 export default function MediaPage() {
   const [activeTab, setActiveTab] = useState<"image" | "video" | "download">("image");
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
-
-  const images = [
-    {
-      category: "Workshop",
-      title: "Specialized Workshop Conducted For Top Performers",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "Branch Launch",
-      title: "Triprayar Branch Inauguration",
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "Annual Event",
-      title: "TARANG 2025",
-      image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "CSR Initiative",
-      title: "Community Empowerment Campaign",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "Branch Launch",
-      title: "Kochi Infopark Branch Opening",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "Award Ceremony",
-      title: "Best Financial Partner Award 2025",
-      image: "https://images.unsplash.com/photo-1531058020387-3be344559be6?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "Annual Event",
-      title: "MaxValue Sports Meet 2025",
-      image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      category: "CSR Initiative",
-      title: "Free Health Camp & Medicine Distribution",
-      image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
-    },
-  ];
 
   const videos = [
     {
@@ -178,31 +137,38 @@ export default function MediaPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
               >
-                {images.map((item) => (
-                  <div 
-                    key={item.title}
-                    className="flex flex-col bg-transparent group"
+                {galleryItems.map((item) => (
+                  <Link 
+                    key={item.id}
+                    href={`/media/gallery/${item.id}`}
+                    className="flex flex-col bg-transparent group cursor-pointer text-left"
                   >
-                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-shadow duration-300">
+                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-xl transition-all duration-300 rounded-xl">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
+                      {/* Hover Overlay Badge */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span className="text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                          View Gallery ({item.images.length} Photos) <ArrowRight className="w-3.5 h-3.5 text-[#FCA038]" />
+                        </span>
+                      </div>
                     </div>
-                    {/* Left-aligned description details directly below card photo container */}
+                    {/* Details */}
                     <div className="pt-4 text-left">
                       <span className="text-[11px] font-semibold text-zinc-500 tracking-wider uppercase">
                         {item.category}
                       </span>
-                      <h3 className="text-[13px] md:text-[14px] font-extrabold text-zinc-900 mt-1.5 tracking-wider uppercase leading-snug">
+                      <h3 className="text-[13px] md:text-[14px] font-extrabold text-zinc-900 mt-1.5 tracking-wider uppercase leading-snug group-hover:text-[#147FC3] transition-colors">
                         {item.title}
                       </h3>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </motion.div>
             )}
@@ -215,15 +181,15 @@ export default function MediaPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
               >
                 {videos.map((item) => (
                   <div
                     key={item.title}
                     onClick={() => setActiveVideoUrl(item.videoUrl)}
-                    className="flex flex-col bg-transparent cursor-pointer group"
+                    className="flex flex-col bg-transparent cursor-pointer group text-left"
                   >
-                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-shadow duration-300">
+                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-shadow duration-300 rounded-xl">
                       <img
                         src={item.thumbnail}
                         alt={item.title}

@@ -33,7 +33,7 @@ export default function Navbar() {
       setActiveMenu("HOME");
     } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname.startsWith("/corporate")) {
       setActiveMenu("CORPORATE");
-    } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/microfinance" || pathname === "/money-transfer") {
+    } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/traders-loan" || pathname === "/microfinance" || pathname === "/money-transfer") {
       setActiveMenu("OUR SERVICES");
     } else if (pathname === "/media") {
       setActiveMenu("MEDIA");
