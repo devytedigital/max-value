@@ -3,13 +3,13 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDa3b6jLh2UUtIRq8zq_i_isBG5DloqzKM",
-  authDomain: "maxvalue-5818d.firebaseapp.com",
-  projectId: "maxvalue-5818d",
-  storageBucket: "maxvalue-5818d.firebasestorage.app",
-  messagingSenderId: "20408939483",
-  appId: "1:20408939483:web:7e96eecbd3c1d95f4b2dfe",
-  measurementId: "G-EPN4VS3SR6"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase (safely checks if the app is already initialized, standard for Next.js hot-reloads)
