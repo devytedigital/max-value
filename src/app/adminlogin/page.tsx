@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
 
@@ -35,16 +34,6 @@ export default function AdminLoginPage() {
       
       {/* Left side: Login Form */}
       <div className="w-full lg:w-[50%] flex flex-col justify-center px-8 sm:px-16 md:px-24 lg:px-20 xl:px-28 py-12 relative z-10">
-        
-        {/* Subtle top banner return option */}
-        <div className="absolute top-6 left-8 z-20">
-          <Link 
-            href="/" 
-            className="text-xs font-bold text-zinc-550 hover:text-zinc-950 transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            ← Return to Website
-          </Link>
-        </div>
 
         <div className="max-w-md w-full mx-auto">
           {/* Header Branding */}
