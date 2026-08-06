@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -15,6 +15,7 @@ import {
   ShieldAlert,
   Sparkles,
   ExternalLink,
+  Coins,
 } from "lucide-react";
 
 export type AdminTab =
@@ -44,6 +45,12 @@ export default function AdminSidebar({
   const [mediaOpen, setMediaOpen] = useState(
     activeTab.startsWith("media-")
   );
+
+  useEffect(() => {
+    if (activeTab.startsWith("media-")) {
+      setMediaOpen(true);
+    }
+  }, [activeTab]);
 
   const handleSelect = (tab: AdminTab) => {
     setActiveTab(tab);
@@ -125,7 +132,7 @@ export default function AdminSidebar({
                 : "hover:bg-slate-800 hover:text-white text-slate-400"
             }`}
           >
-            <Briefcase className="w-4 h-4" />
+            <Coins className="w-4 h-4" />
             <span>Our Services</span>
           </button>
 
