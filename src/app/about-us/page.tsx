@@ -40,7 +40,7 @@ export default function AboutUsPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-      
+
       {/* 3-Tier Navbar */}
       <Navbar />
 
@@ -53,9 +53,9 @@ export default function AboutUsPage() {
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
+
             {/* Left Content */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -73,13 +73,13 @@ export default function AboutUsPage() {
               <div className="mt-8 flex flex-col sm:flex-row items-center gap-8 w-full">
                 {/* 30th Logo with mix-blend-multiply for transparent blending */}
                 <div className="relative w-48 shrink-0 select-none mix-blend-multiply">
-                  <img 
-                    src="https://maxvaluecredits.com/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-13-at-4.44.21-PM.jpeg" 
-                    alt="30 Years of Excellence" 
+                  <img
+                    src="https://maxvaluecredits.com/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-13-at-4.44.21-PM.jpeg"
+                    alt="30 Years of Excellence"
                     className="w-full h-auto object-contain"
                   />
                 </div>
-                
+
                 {/* Highlights List */}
                 <div className="flex flex-col gap-4 text-left border-l border-zinc-200 pl-6 sm:pl-8">
                   <div className="flex items-start gap-3">
@@ -101,7 +101,7 @@ export default function AboutUsPage() {
             </motion.div>
 
             {/* Right Map Image */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -115,9 +115,9 @@ export default function AboutUsPage() {
                 </span>
               </h2>
               <div className="w-full max-w-[360px] lg:max-w-none flex justify-center mix-blend-multiply">
-                <img 
-                  src="https://maxvaluecredits.com/wp-content/uploads/elementor/thumbs/29-qrticpkdr5p7oihepj5aw0judd2h94vy9c4emef6ao.jpeg" 
-                  alt="MaxValue Branch Map" 
+                <img
+                  src="https://maxvaluecredits.com/wp-content/uploads/elementor/thumbs/29-qrticpkdr5p7oihepj5aw0judd2h94vy9c4emef6ao.jpeg"
+                  alt="MaxValue Branch Map"
                   className="w-full h-auto object-contain"
                 />
               </div>
@@ -129,24 +129,24 @@ export default function AboutUsPage() {
 
       {/* SECTION 2: MISSION & VISION */}
       <section className="w-full grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[500px] bg-[#0c141c]">
-        
+
         {/* Left Image Panel */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="lg:col-span-5 relative min-h-[350px] lg:min-h-0 overflow-hidden"
         >
-          <img 
-            src="https://maxvaluecredits.com/wp-content/themes/annvision-temp/images/ab-img1.jpg" 
-            alt="MaxValue Logo background" 
+          <img
+            src="https://maxvaluecredits.com/wp-content/themes/annvision-temp/images/ab-img1.jpg"
+            alt="MaxValue Logo background"
             className="absolute inset-0 w-full h-full object-cover select-none"
           />
         </motion.div>
 
         {/* Right Content Panel */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -179,17 +179,17 @@ export default function AboutUsPage() {
       {/* SECTION 3: OUR VALUES */}
       <section className="relative w-full py-20 md:py-24 overflow-hidden">
         {/* Teamwork background image */}
-        <img 
-          src="/values-bg.png" 
-          alt="Our Values" 
+        <img
+          src="/values-bg.png"
+          alt="Our Values"
           className="absolute inset-0 w-full h-full object-cover select-none"
         />
         {/* Dark warm overlay */}
         <div className="absolute inset-0 bg-[#3c1d0c]/85 md:bg-black/80 z-0" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-          
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -202,7 +202,7 @@ export default function AboutUsPage() {
           {/* Responsive grid of values */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
             {values.map((item, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -214,7 +214,7 @@ export default function AboutUsPage() {
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#147FC3] shrink-0 shadow-md">
                   <ArrowRight className="w-5 h-5" />
                 </div>
-                
+
                 <div>
                   <h3 className="text-white font-black text-sm md:text-base tracking-wide uppercase mb-2">
                     {item.title}
@@ -239,9 +239,9 @@ export default function AboutUsPage() {
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16">
-            
+
             {documents.map((doc, idx) => (
-              <motion.a 
+              <motion.a
                 key={idx}
                 href={doc.href}
                 initial={{ opacity: 0, scale: 0.9 }}

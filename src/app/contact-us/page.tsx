@@ -4,13 +4,13 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Send, 
-  CheckCircle2, 
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Send,
+  CheckCircle2,
   AlertCircle,
   MessageSquare,
   Headphones,
@@ -81,8 +81,8 @@ export default function ContactUsPage() {
 
     setIsSubmitting(true);
 
-    const messageText = 
-`*NEW ENQUIRY - MAXVALUE CREDITS*
+    const messageText =
+      `*NEW ENQUIRY - MAXVALUE CREDITS*
 ----------------------------------------
 👤 *Name:* ${formData.name.trim()}
 📧 *Email:* ${formData.email.trim()}
@@ -109,7 +109,7 @@ Sent via MaxValue Credits Website`;
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-      
+
       {/* 3-Tier Navbar */}
       <Navbar />
 
@@ -117,9 +117,9 @@ Sent via MaxValue Credits Website`;
       <section className="relative w-full pt-32 pb-20 md:pt-40 md:pb-28 lg:pt-44 lg:pb-32 bg-[#0c141c] text-white overflow-hidden">
         {/* Background Image with Dark Gradient Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://maxvaluecredits.com/wp-content/uploads/2025/07/Landing-Page-1.jpg" 
-            alt="MaxValue Contact Banner" 
+          <img
+            src="https://maxvaluecredits.com/wp-content/uploads/2025/07/Landing-Page-1.jpg"
+            alt="MaxValue Contact Banner"
             className="w-full h-full object-cover opacity-25"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0c141c] via-[#0c141c]/90 to-[#147FC3]/40" />
@@ -132,7 +132,7 @@ Sent via MaxValue Credits Website`;
         </div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10 text-center md:text-left">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -161,11 +161,11 @@ Sent via MaxValue Credits Website`;
         </div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-            
+
             {/* COLUMN 1: CONTACT INFORMATION */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -184,7 +184,7 @@ Sent via MaxValue Credits Website`;
 
               {/* Contact Information Cards */}
               <div className="flex flex-col gap-5">
-                
+
                 {/* Phone Card */}
                 <div className="bg-white p-6 rounded-xl border border-zinc-200/80 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-[#147FC3]/10 text-[#147FC3] flex items-center justify-center shrink-0">
@@ -194,8 +194,8 @@ Sent via MaxValue Credits Website`;
                     <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">
                       Phone Number
                     </h3>
-                    <a 
-                      href="tel:04872422799" 
+                    <a
+                      href="tel:04872422799"
                       className="text-lg font-extrabold text-zinc-900 hover:text-[#147FC3] transition-colors block"
                     >
                       0487 2422799
@@ -216,8 +216,8 @@ Sent via MaxValue Credits Website`;
                     <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">
                       Email Address
                     </h3>
-                    <a 
-                      href="mailto:info@maxvaluecredits.com" 
+                    <a
+                      href="mailto:info@maxvaluecredits.com"
                       className="text-base font-extrabold text-[#147FC3] hover:underline transition-all block break-all"
                     >
                       info@maxvaluecredits.com
@@ -266,7 +266,7 @@ Sent via MaxValue Credits Website`;
             </motion.div>
 
             {/* COLUMN 2: ENQUIRY FORM */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -274,7 +274,7 @@ Sent via MaxValue Credits Website`;
               className="lg:col-span-7"
             >
               <div className="bg-white rounded-2xl shadow-xl border border-zinc-200/90 p-8 md:p-10 relative overflow-hidden">
-                
+
                 {/* Decorative Top Accent Bar */}
                 <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#147FC3] via-[#FCA038] to-[#147FC3]" />
 
@@ -302,9 +302,9 @@ Sent via MaxValue Credits Website`;
                       </p>
                     </div>
 
-                    <a 
-                      href={whatsappUrl} 
-                      target="_blank" 
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="mt-2 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer"
                     >
@@ -313,7 +313,7 @@ Sent via MaxValue Credits Website`;
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
 
-                    <button 
+                    <button
                       onClick={() => {
                         setShowSuccess(false);
                         setFormData({ name: "", email: "", phone: "", whatsapp: "", enquiry: "" });
@@ -325,10 +325,10 @@ Sent via MaxValue Credits Website`;
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-left" noValidate>
-                    
+
                     {/* Row 1: Name & Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      
+
                       {/* Name Field */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700 flex items-center justify-between">
@@ -336,17 +336,16 @@ Sent via MaxValue Credits Website`;
                         </label>
                         <div className="relative">
                           <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                          <input 
-                            type="text" 
+                          <input
+                            type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter your full name"
-                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                              errors.name 
-                                ? "border-rose-400 ring-2 ring-rose-100" 
+                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.name
+                                ? "border-rose-400 ring-2 ring-rose-100"
                                 : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                            }`}
+                              }`}
                           />
                         </div>
                         {errors.name && (
@@ -363,17 +362,16 @@ Sent via MaxValue Credits Website`;
                         </label>
                         <div className="relative">
                           <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                          <input 
-                            type="email" 
+                          <input
+                            type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="name@example.com"
-                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                              errors.email 
-                                ? "border-rose-400 ring-2 ring-rose-100" 
+                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.email
+                                ? "border-rose-400 ring-2 ring-rose-100"
                                 : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                            }`}
+                              }`}
                           />
                         </div>
                         {errors.email && (
@@ -387,7 +385,7 @@ Sent via MaxValue Credits Website`;
 
                     {/* Row 2: Phone & WhatsApp */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      
+
                       {/* Phone Field */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700 flex items-center justify-between">
@@ -395,17 +393,16 @@ Sent via MaxValue Credits Website`;
                         </label>
                         <div className="relative">
                           <Phone className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                          <input 
-                            type="tel" 
+                          <input
+                            type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="0487 2422799 or Mobile"
-                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                              errors.phone 
-                                ? "border-rose-400 ring-2 ring-rose-100" 
+                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.phone
+                                ? "border-rose-400 ring-2 ring-rose-100"
                                 : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                            }`}
+                              }`}
                           />
                         </div>
                         {errors.phone && (
@@ -422,17 +419,16 @@ Sent via MaxValue Credits Website`;
                         </label>
                         <div className="relative">
                           <MessageSquare className="w-4 h-4 text-[#25D366] absolute left-3.5 top-3.5" />
-                          <input 
-                            type="tel" 
+                          <input
+                            type="tel"
                             name="whatsapp"
                             value={formData.whatsapp}
                             onChange={handleChange}
                             placeholder="WhatsApp mobile number"
-                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                              errors.whatsapp 
-                                ? "border-rose-400 ring-2 ring-rose-100" 
+                            className={`w-full pl-10 pr-4 py-3 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.whatsapp
+                                ? "border-rose-400 ring-2 ring-rose-100"
                                 : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                            }`}
+                              }`}
                           />
                         </div>
                         {errors.whatsapp && (
@@ -449,17 +445,16 @@ Sent via MaxValue Credits Website`;
                       <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700 flex items-center justify-between">
                         <span>Enquiry <span className="text-rose-500">*</span></span>
                       </label>
-                      <textarea 
+                      <textarea
                         name="enquiry"
                         rows={4}
                         value={formData.enquiry}
                         onChange={handleChange}
                         placeholder="Write your detailed enquiry here..."
-                        className={`w-full p-4 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.enquiry 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full p-4 rounded-lg border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.enquiry
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                       {errors.enquiry && (
                         <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
@@ -469,7 +464,7 @@ Sent via MaxValue Credits Website`;
                     </div>
 
                     {/* Submit Button */}
-                    <button 
+                    <button
                       type="submit"
                       disabled={isSubmitting}
                       className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-extrabold text-sm py-4 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99]"

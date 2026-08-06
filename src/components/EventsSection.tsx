@@ -43,9 +43,9 @@ export default function EventsSection() {
   return (
     <section className="relative w-full py-16 md:py-24 bg-white z-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        
+
         {/* Section Heading */}
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -57,22 +57,22 @@ export default function EventsSection() {
 
         {/* Main Grid: Left Column (Director Message Card), Right Column (Video + Playlist) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Left Column: Director Message Card (lg:span-4) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="lg:col-span-4 flex flex-col"
           >
-            <div 
+            <div
               onClick={() => handleSelectVideo(videos[0])}
               className="relative flex-grow min-h-[300px] lg:min-h-0 rounded-2xl overflow-hidden cursor-pointer shadow-md border border-zinc-100"
             >
               {/* Background Director Image */}
-              <img 
-                src="/director-portrait.png" 
+              <img
+                src="/director-portrait.png"
                 alt="7th Anniversary - Director Message"
                 className="absolute inset-0 w-full h-full object-cover select-none"
               />
@@ -91,7 +91,7 @@ export default function EventsSection() {
           </motion.div>
 
           {/* Right Column: Interactive Video Player & Playlist (lg:span-8) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -99,11 +99,11 @@ export default function EventsSection() {
             className="lg:col-span-8 bg-zinc-50 rounded-2xl p-6 md:p-8 flex flex-col justify-between border border-zinc-100 shadow-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center h-full">
-              
+
               {/* Sub-Column 1: Video Player Container (md:span-7 or 8) */}
               <div className="md:col-span-8 flex flex-col justify-center">
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-zinc-200">
-                  <iframe 
+                  <iframe
                     className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=${isPlaying ? 1 : 0}&rel=0`}
                     title={activeVideo.title}
@@ -119,25 +119,23 @@ export default function EventsSection() {
                   {videos.map((video) => {
                     const isActive = activeVideo.id === video.id;
                     return (
-                      <li 
+                      <li
                         key={video.id}
                         onClick={() => handleSelectVideo(video)}
                         className={`flex items-start gap-3 cursor-pointer group transition-all duration-300`}
                       >
                         {/* Dot indicator matching the orange in user screenshot */}
-                        <span 
-                          className={`w-3.5 h-3.5 rounded-full mt-1.5 shrink-0 transition-all duration-300 ${
-                            isActive 
-                              ? "bg-[#FCA038] scale-125 shadow-md shadow-[#FCA038]/50" 
+                        <span
+                          className={`w-3.5 h-3.5 rounded-full mt-1.5 shrink-0 transition-all duration-300 ${isActive
+                              ? "bg-[#FCA038] scale-125 shadow-md shadow-[#FCA038]/50"
                               : "bg-zinc-300 group-hover:bg-[#FCA038]/60 group-hover:scale-110"
-                          }`}
+                            }`}
                         />
-                        <span 
-                          className={`text-sm font-bold leading-snug transition-colors duration-300 ${
-                            isActive 
-                              ? "text-[#147FC3] font-black" 
+                        <span
+                          className={`text-sm font-bold leading-snug transition-colors duration-300 ${isActive
+                              ? "text-[#147FC3] font-black"
                               : "text-zinc-600 group-hover:text-[#147FC3]"
-                          }`}
+                            }`}
                         >
                           {video.label}
                         </span>

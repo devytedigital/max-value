@@ -5,15 +5,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { stateDistrictMap, branchDatabase, Branch } from "@/data/branchData";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Building2, 
-  MapPin, 
-  Phone, 
-  Smartphone, 
-  Mail, 
-  Clock, 
-  Search, 
-  Compass, 
+import {
+  Building2,
+  MapPin,
+  Phone,
+  Smartphone,
+  Mail,
+  Clock,
+  Search,
+  Compass,
   CheckCircle2,
   Navigation,
   AlertCircle
@@ -22,7 +22,7 @@ import {
 export default function BranchNetworkPage() {
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  
+
   // Rule: Do NOT display any branches before Search button is clicked
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Branch[]>([]);
@@ -60,7 +60,7 @@ export default function BranchNetworkPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-      
+
       {/* Navbar */}
       <Navbar />
 
@@ -94,10 +94,10 @@ export default function BranchNetworkPage() {
       {/* SEARCH CONTROLS SECTION */}
       <section className="relative w-full py-12 bg-zinc-50 border-b border-zinc-200/80">
         <div className="max-w-4xl mx-auto px-6 md:px-8">
-          
+
           <form onSubmit={handleSearch} className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-zinc-200/90 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              
+
               {/* Select State */}
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -134,11 +134,10 @@ export default function BranchNetworkPage() {
                     value={selectedDistrict}
                     onChange={handleDistrictChange}
                     disabled={!selectedState}
-                    className={`w-full pl-10 pr-8 py-3.5 rounded-xl border text-sm transition-all outline-none appearance-none font-bold text-zinc-800 cursor-pointer ${
-                      !selectedState 
-                        ? "bg-zinc-100 text-zinc-400 border-zinc-200 cursor-not-allowed" 
+                    className={`w-full pl-10 pr-8 py-3.5 rounded-xl border text-sm transition-all outline-none appearance-none font-bold text-zinc-800 cursor-pointer ${!selectedState
+                        ? "bg-zinc-100 text-zinc-400 border-zinc-200 cursor-not-allowed"
                         : "bg-zinc-50/50 focus:bg-white border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                    }`}
+                      }`}
                   >
                     <option value="">
                       {!selectedState ? "Select a State First" : "-- All Districts --"}
@@ -161,11 +160,10 @@ export default function BranchNetworkPage() {
             <button
               type="submit"
               disabled={!selectedState}
-              className={`w-full font-black text-sm py-4 px-6 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer active:scale-[0.99] ${
-                !selectedState 
-                  ? "bg-zinc-300 text-zinc-500 cursor-not-allowed shadow-none" 
+              className={`w-full font-black text-sm py-4 px-6 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer active:scale-[0.99] ${!selectedState
+                  ? "bg-zinc-300 text-zinc-500 cursor-not-allowed shadow-none"
                   : "bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white hover:shadow-lg"
-              }`}
+                }`}
             >
               <Search className="w-4 h-4" />
               <span>Search Branch Network</span>
@@ -178,7 +176,7 @@ export default function BranchNetworkPage() {
       {/* RESULTS DISPLAY SECTION */}
       <section className="relative w-full py-16 bg-white min-h-[400px]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          
+
           {!hasSearched ? (
             /* BEFORE SEARCH: DISPLAY INSTRUCTION PROMPT */
             <div className="py-16 px-6 text-center max-w-md mx-auto flex flex-col items-center">

@@ -27,7 +27,7 @@ const Counter = ({ value, suffix = "", duration = 1.8 }: { value: number; suffix
     const end = value;
     const totalMiliseconds = duration * 1000;
     const incrementTime = Math.max(Math.floor(totalMiliseconds / end), 16); // limit to ~60fps
-    
+
     const timer = setInterval(() => {
       start += Math.ceil(end / (totalMiliseconds / incrementTime));
       if (start >= end) {
@@ -51,9 +51,9 @@ const Counter = ({ value, suffix = "", duration = 1.8 }: { value: number; suffix
 export default function AboutStatsSection() {
   return (
     <section className="relative w-full z-20 flex flex-col justify-between min-h-[calc(100vh-76px)] lg:min-h-[calc(100vh-128px)] bg-white overflow-hidden">
-      
+
       {/* 1. TOP BLOCK: Corporate Info with split layout (Text Left, Image Right) */}
-      <div 
+      <div
         className="relative w-full flex-grow flex items-center py-16 md:py-20 px-6 md:px-8"
         style={{
           // Subtle logo watermark
@@ -62,9 +62,9 @@ export default function AboutStatsSection() {
         }}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
-          
+
           {/* Left Column: Heading and Text */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -72,7 +72,7 @@ export default function AboutStatsSection() {
             className="flex flex-col justify-center text-left"
           >
             <h2 className="text-3xl md:text-4xl font-black text-[#147FC3] tracking-tight mb-6">
-              Maxvalue Credits & <br className="hidden md:block"/>
+              Maxvalue Credits & <br className="hidden md:block" />
               Investments Ltd
             </h2>
             <p className="text-zinc-600 text-sm md:text-base leading-relaxed text-justify max-w-xl">
@@ -81,7 +81,7 @@ export default function AboutStatsSection() {
           </motion.div>
 
           {/* Right Column: Premium Framed Image (using public/happy-client.png) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -93,9 +93,9 @@ export default function AboutStatsSection() {
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#147FC3]/5 blur-xl pointer-events-none" />
 
             <div className="relative overflow-hidden bg-white rounded-none">
-              <img 
-                src="/happy-client.png" 
-                alt="Our Happy Clients at MaxValue" 
+              <img
+                src="/happy-client.png"
+                alt="Our Happy Clients at MaxValue"
                 className="w-full h-auto max-h-[320px] object-cover rounded-none"
               />
             </div>
@@ -107,9 +107,9 @@ export default function AboutStatsSection() {
       {/* 2. BOTTOM STATS BAR: Branches & Customers matching your clean minimal top-bordered style */}
       <div className="w-full py-12 px-6 bg-zinc-50/20">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-          
+
           {/* Stat 1: Branches (Clean design without dividing line) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -128,7 +128,7 @@ export default function AboutStatsSection() {
           </motion.div>
 
           {/* Stat 2: Customers (Clean design without dividing line) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

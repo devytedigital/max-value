@@ -91,12 +91,12 @@ export default function MediaPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-      
+
       {/* 3-Tier Navbar */}
       <Navbar />
 
       <main className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-white">
-        
+
         {/* Modern Segmented Control Tab Switcher */}
         <div className="flex justify-center mb-16 px-6">
           <div className="inline-flex p-1 bg-zinc-100 rounded-full border border-zinc-200/60 shadow-inner relative flex-wrap sm:flex-nowrap justify-center max-w-full">
@@ -106,9 +106,8 @@ export default function MediaPage() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative px-5 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-wider uppercase flex items-center gap-2 cursor-pointer transition-colors duration-300 z-10 ${
-                    isActive ? "text-white" : "text-zinc-550 hover:text-zinc-900"
-                  }`}
+                  className={`relative px-5 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-wider uppercase flex items-center gap-2 cursor-pointer transition-colors duration-300 z-10 ${isActive ? "text-white" : "text-zinc-550 hover:text-zinc-900"
+                    }`}
                 >
                   {isActive && (
                     <motion.div
@@ -128,7 +127,7 @@ export default function MediaPage() {
         {/* Tab Content Area */}
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <AnimatePresence mode="wait">
-            
+
             {/* IMAGE GALLERY CONTENT */}
             {activeTab === "image" && (
               <motion.div
@@ -140,7 +139,7 @@ export default function MediaPage() {
                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
               >
                 {galleryItems.map((item) => (
-                  <Link 
+                  <Link
                     key={item.id}
                     href={`/media/gallery/${item.id}`}
                     className="flex flex-col bg-transparent group cursor-pointer text-left"
@@ -243,7 +242,7 @@ export default function MediaPage() {
                         </span>
                       </div>
                     </div>
-                    
+
                     <a
                       href={doc.href}
                       className="p-3 rounded-full text-zinc-500 hover:text-white bg-white hover:bg-[#147FC3] border border-zinc-200 hover:border-[#147FC3] transition-all duration-300 cursor-pointer shadow-xs"
@@ -277,7 +276,7 @@ export default function MediaPage() {
               >
                 <X className="h-5 w-5" />
               </button>
-              
+
               <video
                 src={activeVideoUrl}
                 controls

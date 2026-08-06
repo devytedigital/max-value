@@ -27,10 +27,10 @@ export default function ServicesSection() {
       description: "Get on the road quickly with our hassle-free vehicle financing. Offering high loan-to-value options and swift processing times.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M15 55C15 50 18 45 25 43L35 32C38 29 42 28 47 28H73C77 28 80 30 82 33L88 43C92 45 95 50 95 55V68C95 70 93 72 91 72H83C83 67 79 63 74 63C69 63 65 67 65 72H35C35 67 31 63 26 63C21 63 17 67 17 72H9C7 72 5 70 5 68V55H15Z" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
+          <path
+            d="M15 55C15 50 18 45 25 43L35 32C38 29 42 28 47 28H73C77 28 80 30 82 33L88 43C92 45 95 50 95 55V68C95 70 93 72 91 72H83C83 67 79 63 74 63C69 63 65 67 65 72H35C35 67 31 63 26 63C21 63 17 67 17 72H9C7 72 5 70 5 68V55H15Z"
+            strokeWidth="3.5"
+            strokeLinecap="round"
             strokeLinejoin="round"
           />
           <circle cx="26" cy="72" r="8" strokeWidth="3.5" fill="none" />
@@ -47,18 +47,18 @@ export default function ServicesSection() {
       description: "Empower your business with tailored funding. Perfect for expansion, buying stock, working capital, or infrastructure development.",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M15 75H32C35 75 38 73 40 70L56 46C58 43 61 41 65 41H84C87 41 89 43 89 46C89 49 87 51 84 51H70L65 54C62 57 60 61 60 65V75H85" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <path
+            d="M15 75H32C35 75 38 73 40 70L56 46C58 43 61 41 65 41H84C87 41 89 43 89 46C89 49 87 51 84 51H70L65 54C62 57 60 61 60 65V75H85"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path d="M15 65H5V85H15V65Z" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path 
-            d="M50 26C50 19 42 13 42 13C42 13 34 19 34 26C30 28 28 33 28 38C28 46 34 51 42 51C50 51 56 46 56 38C56 33 54 28 50 26Z" 
-            strokeWidth="3" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <path
+            d="M50 26C50 19 42 13 42 13C42 13 34 19 34 26C30 28 28 33 28 38C28 46 34 51 42 51C50 51 56 46 56 38C56 33 54 28 50 26Z"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path d="M34 26C37 27 47 27 50 26" strokeWidth="2.5" />
           <circle cx="39" cy="34" r="2" fill="#FCA038" />
@@ -204,7 +204,7 @@ export default function ServicesSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
-        
+
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2
@@ -226,7 +226,7 @@ export default function ServicesSection() {
         {/* ========================================================================= */}
         <div className="hidden lg:flex flex-wrap justify-center gap-y-16 gap-x-20">
           {services.map((service, idx) => (
-            <motion.div 
+            <motion.div
               key={service.id + "-desktop"}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -270,10 +270,10 @@ export default function ServicesSection() {
         {/* MOBILE AUTOMATIC CAROUSEL GRID (Md/Sm screens: 2 rows, 2 columns layout) */}
         {/* ========================================================================= */}
         <div className="lg:hidden block">
-          
+
           {/* Carousel Viewport Container */}
           <div className="relative w-full flex items-center min-h-[300px] md:min-h-[310px]">
-            
+
             {/* Sliding Track */}
             <div className="w-full px-4 overflow-visible relative">
               <AnimatePresence initial={false} mode="popLayout">
@@ -286,7 +286,7 @@ export default function ServicesSection() {
                   className="w-full grid grid-cols-2 gap-x-6 gap-y-8"
                 >
                   {mobilePages[currentPage].map((service, idx) => (
-                    <div 
+                    <div
                       key={service.id + "-mobile-" + idx}
                       className="group flex flex-col items-center text-center px-2 py-2"
                     >
@@ -319,11 +319,10 @@ export default function ServicesSection() {
                   setCurrentPage(index);
                   startAutoplay();
                 }}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  index === currentPage 
-                    ? "w-8 bg-[#147FC3]" 
+                className={`h-2.5 rounded-full transition-all duration-300 ${index === currentPage
+                    ? "w-8 bg-[#147FC3]"
                     : "w-2.5 bg-zinc-200 hover:bg-zinc-300"
-                }`}
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}

@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  Clock, 
-  Phone, 
-  Mail, 
-  Search, 
-  Headphones, 
-  Menu, 
+import {
+  Clock,
+  Phone,
+  Mail,
+  Search,
+  Headphones,
+  Menu,
   X as CloseIcon,
   ChevronRight,
   ChevronDown
@@ -51,7 +51,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > 10) {
         setIsScrolled(true);
       } else {
@@ -110,208 +110,204 @@ export default function Navbar() {
 
   return (
     <>
-      <div className={`w-full z-50 fixed top-0 left-0 right-0 select-none font-sans transition-all duration-300 ease-in-out ${
-      isVisible ? "translate-y-0" : "-translate-y-full"
-    } ${
-      isScrolled 
-        ? "bg-[#0c141c]/20 backdrop-blur-xl border-b border-white/10 shadow-lg" 
-        : "bg-transparent border-b border-transparent"
-    }`}>
-      {/* Subtle background grid lines pattern */}
-      <div className={`absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] transition-opacity duration-300 ${
-        isScrolled ? "opacity-100" : "opacity-0"
-      }`} />
-      
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
-        <div className="h-20 lg:h-22 flex items-center w-full">
-          
-          {/* DESKTOP NAVBAR VIEW */}
-          <div className="hidden lg:flex items-center justify-between w-full gap-6">
-            {/* Logo brand left */}
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center">
-                <div className="flex items-center justify-center">
-                  <img 
-                    src="/maxvalue-logo.png" 
-                    alt="MAXVALUE Credits and Investments LTD" 
-                    className="h-9 md:h-10 w-auto object-contain"
-                  />
+      <div className={`w-full z-50 fixed top-0 left-0 right-0 select-none font-sans transition-all duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${isScrolled
+          ? "bg-[#0c141c]/20 backdrop-blur-xl border-b border-white/10 shadow-lg"
+          : "bg-transparent border-b border-transparent"
+        }`}>
+        {/* Subtle background grid lines pattern */}
+        <div className={`absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0"
+          }`} />
+
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+          <div className="h-20 lg:h-22 flex items-center w-full">
+
+            {/* DESKTOP NAVBAR VIEW */}
+            <div className="hidden lg:flex items-center justify-between w-full gap-6">
+              {/* Logo brand left */}
+              <div className="flex items-center">
+                <Link href="/" className="flex items-center">
+                  <div className="flex items-center justify-center">
+                    <img
+                      src="/maxvalue-logo.png"
+                      alt="MAXVALUE Credits and Investments LTD"
+                      className="h-9 md:h-10 w-auto object-contain"
+                    />
+                  </div>
+                </Link>
+              </div>
+
+              {/* Centered navigation pill capsule (Desktop only) */}
+              <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-1.5 py-1 backdrop-blur-xl shadow-inner">
+                <div className="flex items-center gap-1 bg-transparent">
+                  {menuItems.map((item) => {
+                    const isCorporate = item === "CORPORATE";
+                    const isServices = item === "OUR SERVICES";
+                    const isContactUs = item === "CONTACT US";
+                    const isActive = activeMenu === item;
+                    const href = getHref(item);
+                    const hasDropdown = isCorporate || isServices || isContactUs;
+
+                    const linkClass = `px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300 flex items-center gap-0.5 cursor-pointer select-none ${isActive
+                        ? "bg-white text-zinc-950 shadow-md font-bold"
+                        : "text-white/70 hover:text-white hover:bg-white/5"
+                      }`;
+
+                    return (
+                      <div key={item} className="relative group py-0.5">
+                        {href ? (
+                          <Link href={href} className={linkClass} onClick={() => setActiveMenu(item)}>
+                            <span>{item}</span>
+                            {hasDropdown && (
+                              <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
+                            )}
+                          </Link>
+                        ) : (
+                          <button className={linkClass}>
+                            <span>{item}</span>
+                            {hasDropdown && (
+                              <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
+                            )}
+                          </button>
+                        )}
+
+                        {/* Submenu Dropdowns */}
+                        {isCorporate && (
+                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                            <Link
+                              href="/about-us"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              ABOUT US
+                            </Link>
+                            <Link
+                              href="/board-of-directors"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              BOARD OF DIRECTORS
+                            </Link>
+                          </div>
+                        )}
+
+                        {isServices && (
+                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                            <Link
+                              href="/gold-loan"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              GOLD LOAN
+                            </Link>
+                            <Link
+                              href="/vehicle-loan"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              VEHICLE LOAN
+                            </Link>
+                            <Link
+                              href="/business-loan"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              BUSINESS LOAN
+                            </Link>
+                            <Link
+                              href="/microfinance"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              MICROFINANCE
+                            </Link>
+                            <Link
+                              href="/money-transfer"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              MONEY TRANSFER
+                            </Link>
+                          </div>
+                        )}
+
+                        {isContactUs && (
+                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                            <Link
+                              href="/contact-us"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              CONTACT US
+                            </Link>
+                            <Link
+                              href="/grievance"
+                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                            >
+                              GRIEVANCE REDRESSAL
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-              </Link>
-            </div>
+              </div>
 
-            {/* Centered navigation pill capsule (Desktop only) */}
-            <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-1.5 py-1 backdrop-blur-xl shadow-inner">
-              <div className="flex items-center gap-1 bg-transparent">
-                {menuItems.map((item) => {
-                  const isCorporate = item === "CORPORATE";
-                  const isServices = item === "OUR SERVICES";
-                  const isContactUs = item === "CONTACT US";
-                  const isActive = activeMenu === item;
-                  const href = getHref(item);
-                  const hasDropdown = isCorporate || isServices || isContactUs;
+              {/* Right Action Block */}
+              <div className="flex items-center">
+                {/* Gold Live Price Indicator */}
+                <div className="flex flex-col text-right pr-3 border-r border-white/10 mr-3">
+                  <span className="text-[8.5px] uppercase tracking-widest text-zinc-400 font-bold leading-none">Gold Live Price</span>
+                  <span className="text-xs font-bold text-[#FCA038] mt-0.5 leading-none">
+                    ₹13,279<span className="text-[9.5px] text-zinc-550 font-medium font-sans">/g</span>
+                  </span>
+                </div>
 
-                  const linkClass = `px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300 flex items-center gap-0.5 cursor-pointer select-none ${
-                    isActive 
-                      ? "bg-white text-zinc-950 shadow-md font-bold" 
-                      : "text-white/70 hover:text-white hover:bg-white/5"
-                  }`;
-
-                  return (
-                    <div key={item} className="relative group py-0.5">
-                      {href ? (
-                        <Link href={href} className={linkClass} onClick={() => setActiveMenu(item)}>
-                          <span>{item}</span>
-                          {hasDropdown && (
-                            <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
-                          )}
-                        </Link>
-                      ) : (
-                        <button className={linkClass}>
-                          <span>{item}</span>
-                          {hasDropdown && (
-                            <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-300" />
-                          )}
-                        </button>
-                      )}
-
-                      {/* Submenu Dropdowns */}
-                      {isCorporate && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
-                          <Link 
-                            href="/about-us"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            ABOUT US
-                          </Link>
-                          <Link 
-                            href="/board-of-directors"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            BOARD OF DIRECTORS
-                          </Link>
-                        </div>
-                      )}
-
-                      {isServices && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
-                          <Link 
-                            href="/gold-loan"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            GOLD LOAN
-                          </Link>
-                          <Link 
-                            href="/vehicle-loan"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            VEHICLE LOAN
-                          </Link>
-                          <Link 
-                            href="/business-loan"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            BUSINESS LOAN
-                          </Link>
-                          <Link 
-                            href="/microfinance"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            MICROFINANCE
-                          </Link>
-                          <Link 
-                            href="/money-transfer"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            MONEY TRANSFER
-                          </Link>
-                        </div>
-                      )}
-
-                      {isContactUs && (
-                        <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
-                          <Link 
-                            href="/contact-us"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            CONTACT US
-                          </Link>
-                          <Link 
-                            href="/grievance"
-                            className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                          >
-                            GRIEVANCE REDRESSAL
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                {/* Pay Now Button */}
+                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+                  Pay Now
+                </button>
               </div>
             </div>
 
-            {/* Right Action Block */}
-            <div className="flex items-center">
-              {/* Gold Live Price Indicator */}
-              <div className="flex flex-col text-right pr-3 border-r border-white/10 mr-3">
-                <span className="text-[8.5px] uppercase tracking-widest text-zinc-400 font-bold leading-none">Gold Live Price</span>
-                <span className="text-xs font-bold text-[#FCA038] mt-0.5 leading-none">
-                  ₹13,279<span className="text-[9.5px] text-zinc-550 font-medium font-sans">/g</span>
-                </span>
+            {/* MOBILE/TABLET NAVBAR VIEW */}
+            <div className="flex lg:hidden items-center justify-between w-full relative">
+              {/* Left: Hamburger menu toggle icon */}
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="p-2 -ml-2 rounded-lg text-white hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+
+              {/* Center: Centered brand logo */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <Link href="/" className="flex items-center justify-center">
+                  <img
+                    src="/maxvalue-logo.png"
+                    alt="MAXVALUE Credits and Investments LTD"
+                    className="h-8 w-auto object-contain"
+                  />
+                </Link>
               </div>
 
-              {/* Pay Now Button */}
-              <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+              {/* Right: Action Button (Pay Now) */}
+              <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[11px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
                 Pay Now
               </button>
             </div>
+
           </div>
-
-          {/* MOBILE/TABLET NAVBAR VIEW */}
-          <div className="flex lg:hidden items-center justify-between w-full relative">
-            {/* Left: Hamburger menu toggle icon */}
-            <button 
-              onClick={() => setMobileMenuOpen(true)}
-              className="p-2 -ml-2 rounded-lg text-white hover:bg-white/10 transition-colors cursor-pointer"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-
-            {/* Center: Centered brand logo */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <Link href="/" className="flex items-center justify-center">
-                <img 
-                  src="/maxvalue-logo.png" 
-                  alt="MAXVALUE Credits and Investments LTD" 
-                  className="h-8 w-auto object-contain"
-                />
-              </Link>
-            </div>
-
-            {/* Right: Action Button (Pay Now) */}
-            <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[11px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
-              Pay Now
-            </button>
-          </div>
-
         </div>
-      </div>
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[999] lg:hidden flex justify-start">
-          <div 
+          <div
             onClick={() => setMobileMenuOpen(false)}
             className="fixed inset-0 bg-white/60 backdrop-blur-sm"
           />
 
           <div data-lenis-prevent className="relative w-4/5 max-w-xs h-full bg-white text-zinc-900 shadow-2xl flex flex-col justify-between z-10 transition-transform overflow-hidden animate-none">
-            
+
             {/* Header (Sticky at top) */}
             <div className="flex justify-between items-center py-5 px-5 border-b border-zinc-100 bg-white">
               <span className="font-black text-sm text-[#FCA038] tracking-wider">NAVIGATE</span>
-              <button 
+              <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-1 rounded-full text-zinc-500 hover:text-zinc-900 cursor-pointer"
               >
@@ -330,7 +326,7 @@ export default function Navbar() {
                 >
                   HOME
                 </Link>
-                
+
                 {/* CORPORATE Accordion */}
                 <div className="py-2">
                   <button

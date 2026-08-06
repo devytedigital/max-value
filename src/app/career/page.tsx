@@ -4,12 +4,12 @@ import { useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Briefcase, 
-  MapPin, 
-  Clock, 
-  Send, 
-  CheckCircle2, 
+import {
+  Briefcase,
+  MapPin,
+  Clock,
+  Send,
+  CheckCircle2,
   AlertCircle,
   FileText,
   Upload,
@@ -143,7 +143,7 @@ export default function CareerPage() {
     setFormData(prev => ({ ...prev, jobAppliedFor: jobTitle }));
     setIsModalOpen(true);
     setShowSuccess(false);
-    
+
     // Scroll to form if modal or in-page form
     setTimeout(() => {
       formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -242,8 +242,8 @@ export default function CareerPage() {
     const fileName = resumeFile ? resumeFile.name : "Not Provided";
     const fileSize = resumeFile ? `${(resumeFile.size / (1024 * 1024)).toFixed(2)} MB` : "";
 
-    const messageText = 
-`*NEW JOB APPLICATION - MAXVALUE CAREERS*
+    const messageText =
+      `*NEW JOB APPLICATION - MAXVALUE CAREERS*
 ----------------------------------------
 💼 *Job Applied For:* ${formData.jobAppliedFor}
 👤 *Name (as per Aadhaar):* ${formData.name.trim()}
@@ -274,7 +274,7 @@ Sent via MaxValue Careers Portal`;
 
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-      
+
       {/* Navbar */}
       <Navbar />
 
@@ -289,9 +289,9 @@ Sent via MaxValue Careers Portal`;
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left Content */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -314,16 +314,16 @@ Sent via MaxValue Careers Portal`;
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-                <a 
-                  href="#job-listings-section" 
+                <a
+                  href="#job-listings-section"
                   className="inline-flex items-center gap-2 bg-[#FCA038] hover:bg-[#e08922] text-white font-extrabold text-xs py-3.5 px-7 rounded-lg transition-all shadow-md hover:shadow-lg uppercase tracking-wider active:scale-95 cursor-pointer"
                 >
                   Explore Openings
                   <ChevronRight className="w-4 h-4" />
                 </a>
 
-                <a 
-                  href="#application-form-section" 
+                <a
+                  href="#application-form-section"
                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs py-3.5 px-7 rounded-lg transition-all uppercase tracking-wider cursor-pointer"
                 >
                   Apply Directly
@@ -332,16 +332,16 @@ Sent via MaxValue Careers Portal`;
             </motion.div>
 
             {/* Right Banner Graphic/Photo */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               className="lg:col-span-5 relative"
             >
               <div className="relative mx-auto max-w-[420px] aspect-[4/5] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop" 
-                  alt="Career Opportunities at Max Value" 
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop"
+                  alt="Career Opportunities at Max Value"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#147FC3]/60 via-transparent to-transparent" />
@@ -366,7 +366,7 @@ Sent via MaxValue Careers Portal`;
       {/* JOB LISTINGS SECTION */}
       <section id="job-listings-section" className="relative w-full py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          
+
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-black tracking-widest text-[#FCA038] uppercase">CURRENT OPENINGS</span>
             <h2 className="text-3xl md:text-4xl font-black text-[#147FC3] tracking-tight uppercase mt-2">
@@ -380,7 +380,7 @@ Sent via MaxValue Careers Portal`;
 
           <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
             {jobListings.map((job) => (
-              <motion.div 
+              <motion.div
                 key={job.id}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -446,9 +446,9 @@ Sent via MaxValue Careers Portal`;
       {/* APPLICATION FORM SECTION */}
       <section id="application-form-section" ref={formSectionRef} className="relative w-full py-16 md:py-24 bg-[#F8FAFC]">
         <div className="max-w-4xl mx-auto px-6 md:px-8">
-          
+
           <div className="bg-white rounded-3xl shadow-xl border border-zinc-200/90 p-8 md:p-12 relative overflow-hidden text-left">
-            
+
             {/* Top Gold Accent Line */}
             <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#147FC3] via-[#FCA038] to-[#147FC3]" />
 
@@ -479,9 +479,9 @@ Sent via MaxValue Careers Portal`;
                   </p>
                 </div>
 
-                <a 
-                  href={whatsappUrl} 
-                  target="_blank" 
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="mt-3 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-extrabold text-xs py-4 px-8 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer uppercase tracking-wider"
                 >
@@ -490,7 +490,7 @@ Sent via MaxValue Careers Portal`;
                   <ExternalLink className="w-4 h-4" />
                 </a>
 
-                <button 
+                <button
                   onClick={() => {
                     setShowSuccess(false);
                     setResumeFile(null);
@@ -502,7 +502,7 @@ Sent via MaxValue Careers Portal`;
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
-                
+
                 {/* 1. Job Applied For (Pre-filled / Selectable) */}
                 <div className="flex flex-col gap-2">
                   <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -510,7 +510,7 @@ Sent via MaxValue Careers Portal`;
                   </label>
                   <div className="relative">
                     <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                    <select 
+                    <select
                       name="jobAppliedFor"
                       value={formData.jobAppliedFor}
                       onChange={handleChange}
@@ -530,7 +530,7 @@ Sent via MaxValue Careers Portal`;
 
                 {/* 2. Name & Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   {/* Name (as per Aadhaar) */}
                   <div className="flex flex-col gap-2">
                     <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -538,17 +538,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Enter full name as on Aadhaar"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.name 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.name
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.name && (
@@ -565,17 +564,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="name@example.com"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.email 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.email
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.email && (
@@ -589,7 +587,7 @@ Sent via MaxValue Careers Portal`;
 
                 {/* 3. Date of Birth & State */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   {/* Date of Birth */}
                   <div className="flex flex-col gap-2">
                     <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -597,17 +595,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Calendar className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="dob"
                         value={formData.dob}
                         onChange={handleChange}
                         placeholder="DD-MM-YYYY (e.g. 15-08-1995)"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.dob 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.dob
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.dob && (
@@ -624,17 +621,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <MapPin className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
                         placeholder="e.g. Kerala, Tamil Nadu, Karnataka"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.state 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.state
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.state && (
@@ -648,7 +644,7 @@ Sent via MaxValue Careers Portal`;
 
                 {/* 4. Current City & Experience */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   {/* Current City */}
                   <div className="flex flex-col gap-2">
                     <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -656,17 +652,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Building2 className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
                         placeholder="e.g. Kochi, Thrissur, Bangalore"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.city 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.city
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.city && (
@@ -683,17 +678,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Clock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         name="experienceMonths"
                         value={formData.experienceMonths}
                         onChange={handleChange}
                         placeholder="e.g. 24 (0 for fresher)"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.experienceMonths 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.experienceMonths
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.experienceMonths && (
@@ -707,7 +701,7 @@ Sent via MaxValue Careers Portal`;
 
                 {/* 5. Current Industry & Current Employer */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   {/* Current Industry */}
                   <div className="flex flex-col gap-2">
                     <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
@@ -715,17 +709,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Building className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="industry"
                         value={formData.industry}
                         onChange={handleChange}
                         placeholder="e.g. Banking / NBFC / Telecom / Retail"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.industry 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.industry
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.industry && (
@@ -742,17 +735,16 @@ Sent via MaxValue Careers Portal`;
                     </label>
                     <div className="relative">
                       <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="employer"
                         value={formData.employer}
                         onChange={handleChange}
                         placeholder="e.g. Current Company Name or N/A"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                          errors.employer 
-                            ? "border-rose-400 ring-2 ring-rose-100" 
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.employer
+                            ? "border-rose-400 ring-2 ring-rose-100"
                             : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
+                          }`}
                       />
                     </div>
                     {errors.employer && (
@@ -771,17 +763,16 @@ Sent via MaxValue Careers Portal`;
                   </label>
                   <div className="relative">
                     <DollarSign className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="ctc"
                       value={formData.ctc}
                       onChange={handleChange}
                       placeholder="e.g. ₹3,50,000 / annum (or Fresher)"
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${
-                        errors.ctc 
-                          ? "border-rose-400 ring-2 ring-rose-100" 
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.ctc
+                          ? "border-rose-400 ring-2 ring-rose-100"
                           : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                      }`}
+                        }`}
                     />
                   </div>
                   {errors.ctc && (
@@ -796,15 +787,15 @@ Sent via MaxValue Careers Portal`;
                   <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
                     Upload Resume (PDF, DOC, or DOCX files only) <span className="text-rose-500">*</span>
                   </label>
-                  
+
                   <div className="relative border-2 border-dashed border-zinc-300 hover:border-[#147FC3] rounded-2xl p-6 bg-zinc-50/50 hover:bg-white transition-all text-center flex flex-col items-center justify-center cursor-pointer group">
-                    <input 
-                      type="file" 
+                    <input
+                      type="file"
                       accept=".pdf,.doc,.docx"
                       onChange={handleFileChange}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     />
-                    
+
                     <div className="w-12 h-12 rounded-full bg-amber-50 text-[#FCA038] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                       <Upload className="w-6 h-6" />
                     </div>
@@ -834,7 +825,7 @@ Sent via MaxValue Careers Portal`;
                 </div>
 
                 {/* Submit Button */}
-                <button 
+                <button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-black text-sm py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99] mt-2"

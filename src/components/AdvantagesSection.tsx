@@ -99,10 +99,10 @@ export default function AdvantagesSection() {
 
   return (
     <section className="relative w-full py-16 bg-white z-20 overflow-hidden">
-      
+
       {/* 1. Header (Centered title) */}
       <div className="text-center max-w-3xl mx-auto mb-12 px-6">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

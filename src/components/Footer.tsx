@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
+import {
+  MapPin,
+  Phone,
+  Mail,
   ChevronUp,
   PhoneCall,
   Calendar,
@@ -82,10 +82,10 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-white text-zinc-600 pt-12 font-sans relative select-none border-t-2 border-[#FCA038]">
-      
+
       {/* Footer Main Columns */}
       <div className="max-w-7xl mx-auto px-6 md:px-8 pb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-        
+
         {/* Column 1: Corporate Office */}
         <div className="flex flex-col text-left">
           <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5 uppercase">
@@ -233,10 +233,10 @@ export default function Footer() {
       </div>
 
       {/* Floating Badges */}
-      
+
       {/* 2. Scroll to Top Button (Bottom Right) */}
       {showScrollTop && (
-        <button 
+        <button
           onClick={handleScrollToTop}
           className="fixed bottom-6 right-6 z-[49] h-10 w-10 bg-[#147FC3] text-white hover:bg-[#FCA038] active:scale-95 flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer rounded-sm"
           aria-label="Scroll to Top"

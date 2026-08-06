@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "lenis/react";
-import { 
-  ArrowRight, 
-  TrendingUp, 
-  ShieldCheck, 
-  Sparkles, 
-  Globe, 
+import {
+  ArrowRight,
+  TrendingUp,
+  ShieldCheck,
+  Sparkles,
+  Globe,
   ChevronDown
 } from "lucide-react";
 
@@ -81,7 +81,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
 
   const handleDismiss = () => {
     localStorage.setItem("maxValueSplashDismissed", "true");
-    
+
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
@@ -147,10 +147,10 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
       {showSplash && (
         <motion.div
           initial={{ opacity: 1, y: 0 }}
-          exit={{ 
-            opacity: 0, 
-            y: "-100%", 
-            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
+          exit={{
+            opacity: 0,
+            y: "-100%",
+            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
           }}
           className="fixed inset-0 z-[9999] bg-white flex flex-col justify-center overflow-hidden font-sans select-none"
           onWheel={handleWheel}
@@ -176,11 +176,10 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
                     setTimeout(() => setIsAnimating(false), 800);
                   }
                 }}
-                className={`w-3 h-3 rounded-full border transition-all duration-300 ${
-                  currentSlide === idx
-                    ? "bg-[#147FC3] border-[#147FC3] scale-125 shadow-sm"
-                    : "bg-transparent border-zinc-300 hover:border-[#147FC3]"
-                }`}
+                className={`w-3 h-3 rounded-full border transition-all duration-300 ${currentSlide === idx
+                  ? "bg-[#147FC3] border-[#147FC3] scale-125 shadow-sm"
+                  : "bg-transparent border-zinc-300 hover:border-[#147FC3]"
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -196,7 +195,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
             <div className="w-full h-full flex flex-col items-center justify-center text-center px-6 relative">
               <div className="max-w-2xl flex flex-col items-center">
                 <h1 className="text-xl md:text-2xl font-semibold text-zinc-900 tracking-tight leading-tight">
-                  Welcome to <br/>
+                  Welcome to <br />
                   <span className="text-[#147FC3]">MaxValue Credits & Investments LTD</span>
                 </h1>
               </div>
@@ -228,7 +227,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
                       desc: "Fixed and compounding investment tools optimized to achieve targeted financial milestones."
                     }
                   ].map((service, index) => (
-                    <div 
+                    <div
                       key={index}
                       className="p-6 rounded-2xl bg-white border border-zinc-200/80 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-all duration-300"
                     >

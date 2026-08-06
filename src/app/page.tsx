@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
 import ServicesSection from "@/components/ServicesSection";
 import AboutStatsSection from "@/components/AboutStatsSection";
@@ -14,21 +13,6 @@ import EventsSection from "@/components/EventsSection";
 const SplashModal = dynamic(() => import("@/components/SplashModal"), { ssr: false });
 
 export default function Home() {
-  // Hero Banner Slider Settings
-  const [activeSlide, setActiveSlide] = useState(0);
-  const heroImages = [
-    "https://maxvaluecredits.com/wp-content/uploads/2025/07/Landing-Page-1.jpg",
-    "https://maxvaluecredits.com/wp-content/uploads/2025/07/Landing-Page-2.jpg",
-    "https://maxvaluecredits.com/wp-content/uploads/2025/07/Landing-Page-3.jpg"
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroImages.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white">
       {/* Splash Modal overlay for new users */}
@@ -43,22 +27,8 @@ export default function Home() {
 
       <Navbar />
 
-      {/* Hero Section */}
-      {/* Auto-Playing Hero Image Banner Slider */}
-      <div className="relative w-full overflow-hidden h-screen bg-white z-20 group">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeSlide}
-            src={heroImages[activeSlide]}
-            alt={`MaxValue Banner ${activeSlide + 1}`}
-            className="w-full h-full object-cover select-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-          />
-        </AnimatePresence>
-      </div>
+      {/* Hero Section with Video Background and Animated Text Slides */}
+      <HeroSection />
 
       {/* Services Section */}
       <ServicesSection />
