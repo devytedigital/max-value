@@ -260,19 +260,17 @@ export default function BranchNetworkPage() {
                         
                         {/* Branch Name */}
                         <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Building2 className="w-3 h-3 text-[#147FC3]/80" />
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                             Branch Name
                           </span>
-                          <span className="text-[13px] font-extrabold text-zinc-900 mt-1.5 leading-snug uppercase tracking-tight">
+                          <span className="text-[13px] font-extrabold text-zinc-900 mt-1.5 leading-snug tracking-tight">
                             {branch.name}
                           </span>
                         </div>
 
                         {/* Region/District & State */}
                         <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <MapPin className="w-3 h-3 text-[#147FC3]/80" />
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                             City / District
                           </span>
                           <span className="text-[13px] font-extrabold text-zinc-900 mt-1.5 leading-snug tracking-tight">
@@ -282,8 +280,7 @@ export default function BranchNetworkPage() {
 
                         {/* Landmark */}
                         <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Navigation className="w-3 h-3 text-[#FCA038]/80" />
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                             Landmark
                           </span>
                           <span className="text-xs font-semibold text-zinc-700 mt-1.5 leading-snug">
@@ -293,9 +290,8 @@ export default function BranchNetworkPage() {
 
                         {/* PIN Code */}
                         <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <span className="text-[#FCA038]/80 text-[10px] font-black">#</span>
-                            PIN Code
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
+                            Pin Code
                           </span>
                           <span className="text-xs font-semibold text-zinc-700 mt-1.5 font-mono">
                             {branch.pinCode}
@@ -304,8 +300,7 @@ export default function BranchNetworkPage() {
 
                         {/* Phone */}
                         <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Phone className="w-3 h-3 text-[#147FC3]/80" />
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                             Landline Phone
                           </span>
                           <a 
@@ -318,8 +313,7 @@ export default function BranchNetworkPage() {
 
                         {/* Email */}
                         <div className="flex flex-col min-w-0">
-                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Mail className="w-3 h-3 text-[#FCA038]/80" />
+                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                             Email Address
                           </span>
                           <a 
@@ -335,8 +329,7 @@ export default function BranchNetworkPage() {
 
                       {/* Full-width address cell (adapted from Vehicle info) */}
                       <div className="border-t border-zinc-100 pt-4 text-left">
-                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                          <MapPin className="w-3 h-3 text-zinc-400" />
+                        <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
                           Office Address
                         </span>
                         <p className="text-[11px] font-semibold text-zinc-500 mt-1.5 leading-relaxed">
