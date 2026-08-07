@@ -351,33 +351,23 @@ export default function BranchNetworkPage() {
                         <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
                           Office Address
                         </span>
-                        <p className="text-xs font-semibold text-zinc-650 mt-1.5 leading-relaxed">
+                        <p className="text-[11px] font-semibold text-zinc-500 mt-1 leading-relaxed">
                           {branch.address}
                         </p>
+                        
+                        {/* Underlined Blue View Google Map Link */}
+                        {branch.location && (
+                          <a
+                            href={branch.location}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#147FC3] hover:underline font-extrabold text-xs inline-flex items-center gap-1.5 mt-2.5 transition-all"
+                          >
+                            <Compass className="w-3.5 h-3.5" />
+                            View Google Map
+                          </a>
+                        )}
                       </div>
-
-                      {/* Embedded Map */}
-                      {branch.location && (
-                        <div className="w-full h-36 rounded-2xl overflow-hidden border border-zinc-200 mt-2 relative shadow-sm hover:border-[#147FC3]/30 transition-colors">
-                          <iframe
-                            title={`Google Map of ${branch.name}`}
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
-                            src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                              (() => {
-                                try {
-                                  const url = new URL(branch.location);
-                                  return url.searchParams.get("q") || url.searchParams.get("query") || branch.location;
-                                } catch (e) {
-                                  return branch.location;
-                                }
-                              })()
-                            )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
 
                       {/* Bottom button: Call Branch using mobile number */}
                       <div className="pt-2">
