@@ -254,19 +254,19 @@ export default function BranchNetworkPage() {
                     className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
                   >
                     <div className="flex flex-col flex-1 justify-between gap-6">
-                                          {/* Top Header Row: Working Hours */}
+                                      {/* Top Header Row: Working Hours */}
                       <div className="flex items-center justify-between gap-4">
                         
                         {/* Working Hours */}
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#147FC3] shrink-0">
+                          <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#147FC3] shrink-0 border border-sky-100/80">
                             <Clock className="w-5 h-5" />
                           </div>
                           <div className="flex flex-col min-w-0">
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
+                            <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block">
                               Working Hours
                             </span>
-                            <span className="text-[11px] sm:text-xs font-extrabold text-zinc-800 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
+                            <span className="text-xs font-extrabold text-zinc-800 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
                               {branch.workingHours}
                             </span>
                           </div>
@@ -279,52 +279,57 @@ export default function BranchNetworkPage() {
                         
                         {/* Branch Name */}
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <Building2 className="w-3 h-3 text-[#147FC3]/80" />
                             Branch Name
                           </span>
-                          <span className="text-xs sm:text-sm font-extrabold text-zinc-900 mt-1 leading-snug uppercase">
+                          <span className="text-[13px] font-extrabold text-zinc-900 mt-1.5 leading-snug uppercase tracking-tight">
                             {branch.name}
                           </span>
                         </div>
 
                         {/* Region/District & State */}
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <MapPin className="w-3 h-3 text-[#147FC3]/80" />
                             City / District
                           </span>
-                          <span className="text-xs sm:text-sm font-extrabold text-zinc-900 mt-1 leading-snug">
+                          <span className="text-[13px] font-extrabold text-zinc-900 mt-1.5 leading-snug tracking-tight">
                             {branch.district}, {branch.state}
                           </span>
                         </div>
 
                         {/* Landmark */}
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <Navigation className="w-3 h-3 text-[#FCA038]/80" />
                             Landmark
                           </span>
-                          <span className="text-xs font-bold text-zinc-700 mt-1 leading-snug">
+                          <span className="text-xs font-semibold text-zinc-700 mt-1.5 leading-snug">
                             {branch.landmark}
                           </span>
                         </div>
 
                         {/* PIN Code */}
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-455 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <span className="text-[#FCA038]/80 text-[10px] font-black">#</span>
                             PIN Code
                           </span>
-                          <span className="text-xs font-bold text-zinc-700 mt-1 font-mono">
+                          <span className="text-xs font-semibold text-zinc-700 mt-1.5 font-mono">
                             {branch.pinCode}
                           </span>
                         </div>
 
                         {/* Phone */}
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <Phone className="w-3 h-3 text-[#147FC3]/80" />
                             Landline Phone
                           </span>
                           <a 
                             href={`tel:${branch.phone}`} 
-                            className="text-xs font-extrabold text-[#147FC3] hover:underline mt-1"
+                            className="text-xs font-extrabold text-[#147FC3] hover:text-[#147FC3]/80 hover:underline mt-1.5 transition-colors"
                           >
                             {branch.phone}
                           </a>
@@ -332,12 +337,13 @@ export default function BranchNetworkPage() {
 
                         {/* Email */}
                         <div className="flex flex-col min-w-0">
-                          <span className="text-[10px] font-bold text-zinc-455 uppercase tracking-wider">
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <Mail className="w-3 h-3 text-[#FCA038]/80" />
                             Email Address
                           </span>
                           <a 
                             href={`mailto:${branch.email}`} 
-                            className="text-xs font-extrabold text-[#147FC3] hover:underline mt-1 truncate block"
+                            className="text-xs font-extrabold text-[#147FC3] hover:text-[#147FC3]/80 hover:underline mt-1.5 truncate block transition-colors"
                             title={branch.email}
                           >
                             {branch.email}
@@ -348,10 +354,11 @@ export default function BranchNetworkPage() {
 
                       {/* Full-width address cell (adapted from Vehicle info) */}
                       <div className="border-t border-zinc-100 pt-4 text-left">
-                        <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                        <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                          <MapPin className="w-3 h-3 text-zinc-400" />
                           Office Address
                         </span>
-                        <p className="text-[11px] font-semibold text-zinc-500 mt-1 leading-relaxed">
+                        <p className="text-[11px] font-semibold text-zinc-500 mt-1.5 leading-relaxed">
                           {branch.address}
                         </p>
                         
@@ -361,9 +368,9 @@ export default function BranchNetworkPage() {
                             href={branch.location}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#147FC3] hover:underline font-extrabold text-xs inline-flex items-center gap-1.5 mt-2.5 transition-all"
+                            className="text-[#147FC3] hover:underline font-extrabold text-xs inline-flex items-center gap-1.5 mt-3 transition-all duration-200 group/map"
                           >
-                            <Compass className="w-3.5 h-3.5" />
+                            <Compass className="w-3.5 h-3.5 group-hover/map:rotate-45 transition-transform duration-300" />
                             View Google Map
                           </a>
                         )}
@@ -373,7 +380,7 @@ export default function BranchNetworkPage() {
                       <div className="pt-2">
                         <a
                           href={`tel:${branch.mobile}`}
-                          className="w-full py-3.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl text-center text-xs font-extrabold tracking-wide transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-lg shadow-zinc-950/15"
+                          className="w-full py-3.5 bg-zinc-900 hover:bg-[#147FC3] text-white rounded-2xl text-center text-xs font-extrabold tracking-wide transition-all duration-200 flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-lg shadow-zinc-900/10 hover:shadow-[#147FC3]/20 hover:-translate-y-0.5"
                         >
                           <Phone className="w-4 h-4 text-white" />
                           Call Branch: {branch.mobile}
