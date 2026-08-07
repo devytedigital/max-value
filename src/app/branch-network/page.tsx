@@ -16,7 +16,8 @@ import {
   Compass,
   CheckCircle2,
   Navigation,
-  AlertCircle
+  AlertCircle,
+  Map
 } from "lucide-react";
 
 export default function BranchNetworkPage() {
@@ -250,141 +251,135 @@ export default function BranchNetworkPage() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white rounded-2xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
+                    className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
                   >
                     <div className="flex flex-col flex-1 justify-between gap-6">
                       
-                      {/* Top content: Name and details */}
-                      <div className="space-y-4">
-                        {/* Branch Name */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-[#147FC3]/10 text-[#147FC3] flex items-center justify-center shrink-0">
-                            <Building2 className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-extrabold uppercase text-[#FCA038] tracking-wider block">
-                              BRANCH NAME
-                            </span>
-                            <h3 className="text-lg font-black text-zinc-955 uppercase tracking-tight group-hover:text-[#147FC3] transition-colors">
-                              {branch.name}
-                            </h3>
-                          </div>
-                        </div>
-
-                        {/* Details */}
-                        <div className="space-y-3.5 text-xs text-zinc-700">
-                          {/* Address */}
-                          <div className="flex items-start gap-2.5">
-                            <MapPin className="w-4 h-4 text-[#147FC3] shrink-0 mt-0.5" />
-                            <div>
-                              <span className="font-bold text-zinc-900 block">Address:</span>
-                              <span className="text-zinc-650">{branch.address}</span>
-                            </div>
-                          </div>
-
-                          {/* Landmark */}
-                          <div className="flex items-start gap-2.5">
-                            <Navigation className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
-                            <div>
-                              <span className="font-bold text-zinc-900 block">Landmark:</span>
-                              <span className="text-zinc-650">{branch.landmark}</span>
-                            </div>
-                          </div>
-
-                          {/* PIN Code */}
-                          <div className="flex items-center gap-2.5">
-                            <span className="w-4 h-4 rounded-full bg-zinc-100 text-zinc-600 font-extrabold text-[9px] flex items-center justify-center shrink-0">
-                              PIN
-                            </span>
-                            <div>
-                              <span className="font-bold text-zinc-900">PIN Code: </span>
-                              <span className="text-zinc-700 font-mono font-bold">{branch.pinCode}</span>
-                            </div>
-                          </div>
-
-                          {/* Phone & Mobile */}
-                          <div className="grid grid-cols-1 gap-2 pt-2 border-t border-zinc-100">
-                            <div className="flex items-center gap-2.5">
-                              <Phone className="w-3.5 h-3.5 text-[#147FC3] shrink-0" />
-                              <div>
-                                <span className="font-bold text-zinc-900">Phone: </span>
-                                <a href={`tel:${branch.phone}`} className="text-[#147FC3] font-semibold hover:underline">
-                                  {branch.phone}
-                                </a>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-2.5">
-                              <Smartphone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                              <div>
-                                <span className="font-bold text-zinc-900">Mobile: </span>
-                                <a href={`tel:${branch.mobile}`} className="text-emerald-700 font-semibold hover:underline">
-                                  {branch.mobile}
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Email */}
-                          <div className="flex items-center gap-2.5 pt-2 border-t border-zinc-100">
-                            <Mail className="w-3.5 h-3.5 text-[#FCA038] shrink-0" />
-                            <div className="truncate">
-                              <span className="font-bold text-zinc-900">Email: </span>
-                              <a href={`mailto:${branch.email}`} className="text-[#147FC3] font-semibold hover:underline truncate">
-                                {branch.email}
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Mini Map Preview Frame */}
-                        {branch.location && (
-                          <div className="w-full h-32 rounded-xl overflow-hidden border border-zinc-200 mt-4 relative shadow-sm hover:border-[#147FC3]/30 transition-colors">
-                            <iframe
-                              title={`Google Map of ${branch.name}`}
-                              width="100%"
-                              height="100%"
-                              style={{ border: 0 }}
-                              src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                                (() => {
-                                  try {
-                                    const url = new URL(branch.location);
-                                    return url.searchParams.get("q") || url.searchParams.get("query") || branch.location;
-                                  } catch (e) {
-                                    return branch.location;
-                                  }
-                                })()
-                              )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-                              loading="lazy"
-                            />
-                          </div>
-                        )}
-
-                      </div>
-
-                      {/* Bottom content: Hours and Map link button */}
-                      <div className="space-y-4 pt-2 border-t border-zinc-100">
+                      {/* Top Header Row: Working Hours & Google Map clickable URL square */}
+                      <div className="flex items-center justify-between gap-4">
+                        
                         {/* Working Hours */}
-                        <div className="flex items-center gap-2.5 bg-amber-50/50 p-2.5 rounded-lg border border-amber-200/50">
-                          <Clock className="w-3.5 h-3.5 text-[#FCA038] shrink-0" />
-                          <div>
-                            <span className="font-extrabold text-zinc-900">Working Hours: </span>
-                            <span className="text-zinc-800 font-bold">{branch.workingHours}</span>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#147FC3] shrink-0">
+                            <Clock className="w-5 h-5" />
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
+                              Working Hours
+                            </span>
+                            <span className="text-[11px] sm:text-xs font-extrabold text-zinc-800 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
+                              {branch.workingHours}
+                            </span>
                           </div>
                         </div>
 
-                        {/* View Google Map Button */}
+                        {/* Clickable Map QR-style Box */}
                         {branch.location && (
                           <a
                             href={branch.location}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full py-3 bg-[#147FC3] hover:bg-[#147FC3]/90 text-white rounded-xl text-center text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#147FC3]/10 hover:-translate-y-0.5 active:scale-98"
+                            className="w-14 h-14 rounded-2xl border border-zinc-205 bg-zinc-50 hover:bg-sky-50 hover:border-sky-200 flex flex-col items-center justify-center text-[#147FC3] shrink-0 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                            title="Open Google Map in new tab"
                           >
-                            <Compass className="w-4 h-4 text-white" />
-                            View Google Map
+                            <Map className="w-5 h-5" />
+                            <span className="text-[8px] font-black uppercase text-zinc-500 mt-1">Show Map</span>
                           </a>
                         )}
+
+                      </div>
+
+                      {/* Main fields Grid (adapted from Jeremy insurance card) */}
+                      <div className="grid grid-cols-2 gap-y-4 gap-x-6 border-t border-zinc-100 pt-5 text-left flex-1">
+                        
+                        {/* Branch Name */}
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                            Branch Name
+                          </span>
+                          <span className="text-xs sm:text-sm font-extrabold text-zinc-900 mt-1 leading-snug uppercase">
+                            {branch.name}
+                          </span>
+                        </div>
+
+                        {/* Region/District & State */}
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                            City / District
+                          </span>
+                          <span className="text-xs sm:text-sm font-extrabold text-zinc-900 mt-1 leading-snug">
+                            {branch.district}, {branch.state}
+                          </span>
+                        </div>
+
+                        {/* Landmark */}
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                            Landmark
+                          </span>
+                          <span className="text-xs font-bold text-zinc-700 mt-1 leading-snug">
+                            {branch.landmark}
+                          </span>
+                        </div>
+
+                        {/* PIN Code */}
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-455 uppercase tracking-wider">
+                            PIN Code
+                          </span>
+                          <span className="text-xs font-bold text-zinc-700 mt-1 font-mono">
+                            {branch.pinCode}
+                          </span>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                            Landline Phone
+                          </span>
+                          <a 
+                            href={`tel:${branch.phone}`} 
+                            className="text-xs font-extrabold text-[#147FC3] hover:underline mt-1"
+                          >
+                            {branch.phone}
+                          </a>
+                        </div>
+
+                        {/* Email */}
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[10px] font-bold text-zinc-455 uppercase tracking-wider">
+                            Email Address
+                          </span>
+                          <a 
+                            href={`mailto:${branch.email}`} 
+                            className="text-xs font-extrabold text-[#147FC3] hover:underline mt-1 truncate block"
+                            title={branch.email}
+                          >
+                            {branch.email}
+                          </a>
+                        </div>
+
+                      </div>
+
+                      {/* Full-width address cell (adapted from Vehicle info) */}
+                      <div className="border-t border-zinc-100 pt-4 text-left">
+                        <span className="text-[10px] font-bold text-zinc-450 uppercase tracking-wider">
+                          Office Address
+                        </span>
+                        <p className="text-xs font-semibold text-zinc-650 mt-1.5 leading-relaxed">
+                          {branch.address}
+                        </p>
+                      </div>
+
+                      {/* Bottom button: Call Branch using mobile number (adapted from Update Policy) */}
+                      <div className="pt-2">
+                        <a
+                          href={`tel:${branch.mobile}`}
+                          className="w-full py-3.5 bg-zinc-955 hover:bg-zinc-800 text-white rounded-2xl text-center text-xs font-extrabold tracking-wide transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-lg shadow-zinc-950/15"
+                        >
+                          <Phone className="w-4 h-4 text-white" />
+                          Call Branch: {branch.mobile}
+                        </a>
                       </div>
 
                     </div>
