@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +22,8 @@ export default function AdminLoginPage() {
     // Mock validation trigger
     setTimeout(() => {
       if (email.trim() === "admin@gmail.com" && password === "12345678") {
-        alert("Authentication successful! (Ready for custom admin routing)");
+        localStorage.setItem("admin_token", "mv_authenticated_token");
+        router.push("/admin");
         setLoading(false);
       } else {
         setError("Invalid email or password. Please use admin@gmail.com / 12345678");

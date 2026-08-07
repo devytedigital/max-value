@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { stateDistrictMap, branchDatabase, Branch } from "@/data/branchData";
@@ -22,6 +22,29 @@ import {
 export default function BranchNetworkPage() {
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+
+  // Dynamic API states
+  const [allBranches, setAllBranches] = useState<Branch[]>([]);
+  const [apiLoading, setApiLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBranchesFromApi = async () => {
+      try {
+        const response = await fetch("/api/branches");
+        if (response.ok) {
+          const data = await response.json();
+          setAllBranches(data);
+        } else {
+          setAllBranches(branchDatabase); // fallback
+        }
+      } catch (err) {
+        setAllBranches(branchDatabase); // fallback
+      } finally {
+        setApiLoading(false);
+      }
+    };
+    fetchBranchesFromApi();
+  }, []);
 
   // Rule: Do NOT display any branches before Search button is clicked
   const [hasSearched, setHasSearched] = useState<boolean>(false);
@@ -48,7 +71,10 @@ export default function BranchNetworkPage() {
     e.preventDefault();
     if (!selectedState) return;
 
-    const filtered = branchDatabase.filter((b) => {
+    // Use dynamic branches, fallback to static if not loaded yet
+    const sourceDb = allBranches.length > 0 ? allBranches : branchDatabase;
+
+    const filtered = sourceDb.filter((b) => {
       const matchState = b.state === selectedState;
       const matchDistrict = selectedDistrict === "" || b.district === selectedDistrict;
       return matchState && matchDistrict;

@@ -14,7 +14,7 @@ export interface Branch {
 }
 
 export const stateDistrictMap: Record<string, string[]> = {
-  "Kerala": [
+  Kerala: [
     "Kollam",
     "Thrissur",
     "Ernakulam",
@@ -24,7 +24,7 @@ export const stateDistrictMap: Record<string, string[]> = {
     "Palakkad",
     "Kottayam",
     "Alappuzha",
-    "Kannur"
+    "Kannur",
   ],
   "Tamil Nadu": [
     "Chennai",
@@ -32,21 +32,16 @@ export const stateDistrictMap: Record<string, string[]> = {
     "Madurai",
     "Salem",
     "Tiruchirappalli",
-    "Erode"
+    "Erode",
   ],
-  "Karnataka": [
+  Karnataka: [
     "Bengaluru Urban",
     "Mysuru",
     "Dakshina Kannada (Mangaluru)",
     "Dharwad (Hubballi)",
-    "Udupi"
+    "Udupi",
   ],
-  "Andhra Pradesh": [
-    "Visakhapatnam",
-    "NTR (Vijayawada)",
-    "Guntur",
-    "Tirupati"
-  ]
+  "Andhra Pradesh": ["Visakhapatnam", "NTR (Vijayawada)", "Guntur", "Tirupati"],
 };
 
 export const branchDatabase: Branch[] = [
@@ -63,7 +58,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600512",
     email: "chathanoor@maxvaluecredits.com",
     location: "Near Kollam District Co-operative Bank",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   {
     id: "kollam-main",
@@ -77,7 +72,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600515",
     email: "kollam@maxvaluecredits.com",
     location: "Chinnakada Junction",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // KERALA - THRISSUR
   {
@@ -92,7 +87,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8714771854",
     email: "thrissur@maxvaluecredits.com",
     location: "MG Road, Swaraj Round",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   {
     id: "triprayar-branch",
@@ -106,7 +101,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600520",
     email: "triprayar@maxvaluecredits.com",
     location: "Triprayar Temple Road",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // KERALA - ERNAKULAM
   {
@@ -121,7 +116,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600530",
     email: "infopark@maxvaluecredits.com",
     location: "Kakkanad Infopark Road",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   {
     id: "mg-road-kochi",
@@ -135,7 +130,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600535",
     email: "kochi@maxvaluecredits.com",
     location: "MG Road Metro Station",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // KERALA - THIRUVANANTHAPURAM
   {
@@ -150,7 +145,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600540",
     email: "tvm@maxvaluecredits.com",
     location: "East Fort MG Road",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // KERALA - KOZHIKODE
   {
@@ -165,7 +160,7 @@ export const branchDatabase: Branch[] = [
     mobile: "8590600550",
     email: "calicut@maxvaluecredits.com",
     location: "Mavoor Road Bus Stand",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
 
   // TAMIL NADU - CHENNAI
@@ -181,7 +176,7 @@ export const branchDatabase: Branch[] = [
     mobile: "9445012340",
     email: "tnagar@maxvaluecredits.com",
     location: "Usman Road Panagal Park",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // TAMIL NADU - COIMBATORE
   {
@@ -196,7 +191,7 @@ export const branchDatabase: Branch[] = [
     mobile: "9445012350",
     email: "coimbatore@maxvaluecredits.com",
     location: "Cross Cut Road Gandhipuram",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
 
   // KARNATAKA - BENGALURU URBAN
@@ -212,7 +207,7 @@ export const branchDatabase: Branch[] = [
     mobile: "9880012340",
     email: "koramangala@maxvaluecredits.com",
     location: "80 Feet Road Koramangala",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // KARNATAKA - MYSURU
   {
@@ -227,7 +222,7 @@ export const branchDatabase: Branch[] = [
     mobile: "9880012360",
     email: "mysuru@maxvaluecredits.com",
     location: "K.R. Circle Sayyaji Rao Road",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
 
   // ANDHRA PRADESH - VISAKHAPATNAM
@@ -243,7 +238,7 @@ export const branchDatabase: Branch[] = [
     mobile: "9989012340",
     email: "vizag@maxvaluecredits.com",
     location: "Dwarakanagar RTC Complex",
-    workingHours: "9:30 AM to 5:30 PM"
+    workingHours: "9:30 AM to 5:30 PM",
   },
   // ANDHRA PRADESH - NTR (VIJAYAWADA)
   {
@@ -258,6 +253,6 @@ export const branchDatabase: Branch[] = [
     mobile: "9989012350",
     email: "vijayawada@maxvaluecredits.com",
     location: "Governorpet MG Road",
-    workingHours: "9:30 AM to 5:30 PM"
-  }
+    workingHours: "9:30 AM to 5:30 PM",
+  },
 ];
