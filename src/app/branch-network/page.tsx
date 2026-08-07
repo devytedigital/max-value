@@ -251,31 +251,12 @@ export default function BranchNetworkPage() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group relative overflow-hidden"
+                    className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-5 md:p-6 flex flex-col h-full justify-between group relative overflow-hidden"
                   >
-                    <div className="flex flex-col flex-1 justify-between gap-6">
-                                      {/* Top Header Row: Working Hours */}
-                      <div className="flex items-center justify-between gap-4">
-                        
-                        {/* Working Hours */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#147FC3] shrink-0 border border-sky-100/80">
-                            <Clock className="w-5 h-5" />
-                          </div>
-                          <div className="flex flex-col min-w-0">
-                            <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block">
-                              Working Hours
-                            </span>
-                            <span className="text-xs font-extrabold text-zinc-800 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
-                              {branch.workingHours}
-                            </span>
-                          </div>
-                        </div>
-
-                      </div>
+                    <div className="flex flex-col flex-1 justify-between gap-4">
 
                       {/* Main fields Grid (adapted from Jeremy insurance card) */}
-                      <div className="grid grid-cols-2 gap-y-4 gap-x-6 border-t border-zinc-100 pt-5 text-left flex-1">
+                      <div className="grid grid-cols-2 gap-y-3.5 gap-x-6 text-left flex-1">
                         
                         {/* Branch Name */}
                         <div className="flex flex-col">
