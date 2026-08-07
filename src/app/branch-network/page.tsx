@@ -92,11 +92,16 @@ export default function BranchNetworkPage() {
       <Navbar />
 
       {/* TOP HERO BANNER SECTION */}
-      <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-[#147FC3] text-white overflow-hidden">
+      <section 
+        className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-zinc-900 text-white overflow-hidden bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/branch-locater.png')" }}
+      >
+        {/* Dark Overlay to make text pop with high contrast */}
+        <div className="absolute inset-0 bg-zinc-950/75 z-0 pointer-events-none" />
+
         {/* Background glow & grid effects */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-          <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-[#FCA038]/20 blur-[120px]" />
+          <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-[#FCA038]/10 blur-[120px]" />
           <div className="absolute -top-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-[80px]" />
         </div>
 
