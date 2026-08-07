@@ -254,8 +254,7 @@ export default function BranchNetworkPage() {
                     className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
                   >
                     <div className="flex flex-col flex-1 justify-between gap-6">
-                      
-                      {/* Top Header Row: Working Hours & Google Map clickable URL square */}
+                                          {/* Top Header Row: Working Hours */}
                       <div className="flex items-center justify-between gap-4">
                         
                         {/* Working Hours */}
@@ -272,20 +271,6 @@ export default function BranchNetworkPage() {
                             </span>
                           </div>
                         </div>
-
-                        {/* Clickable Map QR-style Box */}
-                        {branch.location && (
-                          <a
-                            href={branch.location}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-14 h-14 rounded-2xl border border-zinc-205 bg-zinc-50 hover:bg-sky-50 hover:border-sky-200 flex flex-col items-center justify-center text-[#147FC3] shrink-0 transition-all hover:scale-105 active:scale-95 cursor-pointer"
-                            title="Open Google Map in new tab"
-                          >
-                            <Map className="w-5 h-5" />
-                            <span className="text-[8px] font-black uppercase text-zinc-500 mt-1">Show Map</span>
-                          </a>
-                        )}
 
                       </div>
 
@@ -371,11 +356,34 @@ export default function BranchNetworkPage() {
                         </p>
                       </div>
 
-                      {/* Bottom button: Call Branch using mobile number (adapted from Update Policy) */}
+                      {/* Embedded Map */}
+                      {branch.location && (
+                        <div className="w-full h-36 rounded-2xl overflow-hidden border border-zinc-200 mt-2 relative shadow-sm hover:border-[#147FC3]/30 transition-colors">
+                          <iframe
+                            title={`Google Map of ${branch.name}`}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                              (() => {
+                                try {
+                                  const url = new URL(branch.location);
+                                  return url.searchParams.get("q") || url.searchParams.get("query") || branch.location;
+                                } catch (e) {
+                                  return branch.location;
+                                }
+                              })()
+                            )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+
+                      {/* Bottom button: Call Branch using mobile number */}
                       <div className="pt-2">
                         <a
                           href={`tel:${branch.mobile}`}
-                          className="w-full py-3.5 bg-zinc-955 hover:bg-zinc-800 text-white rounded-2xl text-center text-xs font-extrabold tracking-wide transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-lg shadow-zinc-950/15"
+                          className="w-full py-3.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl text-center text-xs font-extrabold tracking-wide transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-lg shadow-zinc-950/15"
                         >
                           <Phone className="w-4 h-4 text-white" />
                           Call Branch: {branch.mobile}
