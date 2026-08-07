@@ -159,9 +159,44 @@ export default function AdminBranchesPage() {
     e.preventDefault();
     setFormError("");
 
-    const { name, state, district, address, pinCode, mobile } = formData;
-    if (!name.trim() || !state || !district || !address.trim() || !pinCode.trim() || !mobile.trim()) {
-      setFormError("Please fill out all required fields: Name, State, District, Address, Pin Code, Mobile.");
+    const {
+      name,
+      state,
+      district,
+      address,
+      landmark,
+      pinCode,
+      phone,
+      mobile,
+      email,
+      location,
+      workingHours
+    } = formData;
+
+    if (
+      !name.trim() ||
+      !state.trim() ||
+      !district.trim() ||
+      !address.trim() ||
+      !landmark.trim() ||
+      !pinCode.trim() ||
+      !phone.trim() ||
+      !mobile.trim() ||
+      !email.trim() ||
+      !location.trim() ||
+      !workingHours.trim()
+    ) {
+      setFormError("All fields are required. Please fill out every field in the form.");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      setFormError("Invalid email address. The email field must include an '@' character.");
+      return;
+    }
+
+    if (!location.startsWith("http://") && !location.startsWith("https://")) {
+      setFormError("Invalid Google Maps URL. The Location field must be a valid link starting with 'http://' or 'https://'.");
       return;
     }
 
@@ -625,11 +660,12 @@ export default function AdminBranchesPage() {
                   {/* Landmark */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Landmark
+                      Landmark <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="landmark"
+                      required
                       placeholder="e.g. Opposite Bus Station"
                       value={formData.landmark}
                       onChange={handleInputChange}
@@ -672,26 +708,28 @@ export default function AdminBranchesPage() {
                   {/* Phone contact */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Landline Phone
+                      Landline Phone <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="phone"
+                      required
                       placeholder="e.g. 0474 - 2512345"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-705 outline-none focus:border-[#147FC3] focus:bg-white"
+                      className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-755 outline-none focus:border-[#147FC3] focus:bg-white"
                     />
                   </div>
 
                   {/* Email address */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Email Address
+                      Email Address <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="email"
                       name="email"
+                      required
                       placeholder="e.g. chathannur@maxvaluecredits.com"
                       value={formData.email}
                       onChange={handleInputChange}
@@ -702,11 +740,12 @@ export default function AdminBranchesPage() {
                   {/* Working Hours */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Working Hours
+                      Working Hours <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="workingHours"
+                      required
                       placeholder="e.g. 9:30 AM - 5:30 PM (Mon-Sat)"
                       value={formData.workingHours}
                       onChange={handleInputChange}
@@ -717,11 +756,12 @@ export default function AdminBranchesPage() {
                   {/* Location Coordinate maps Link */}
                   <div className="flex flex-col md:col-span-2">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Google Maps URL Link
+                      Google Maps URL Link <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="location"
+                      required
                       placeholder="e.g. https://maps.google.com/..."
                       value={formData.location}
                       onChange={handleInputChange}
