@@ -106,10 +106,7 @@ export default function BranchNetworkPage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-[#FCA038] text-xs font-extrabold uppercase tracking-wider mb-6">
-            <Building2 className="w-3.5 h-3.5" />
-            <span>Branch Locator</span>
-          </div>
+
 
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-tight max-w-4xl mb-4">
             Find A Branch <span className="text-[#FCA038]">Near You</span>
