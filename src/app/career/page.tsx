@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,79 +38,106 @@ interface JobListing {
   requirements: string[];
 }
 
+const fallbackListings: JobListing[] = [
+  {
+    id: "customer-care-executive",
+    title: "CUSTOMER CARE EXECUTIVE",
+    department: "Customer Support & Operations",
+    location: "Kochi / Thrissur / Regional Branches",
+    type: "Full Time",
+    experience: "0 - 3 Years",
+    description: "We are looking for dedicated Customer Care Executives to handle customer inquiries, guide borrowers on our loan products, and deliver exceptional service standards.",
+    requirements: [
+      "Excellent communication skills in Malayalam and English (Tamil/Kannada is a plus)",
+      "Basic computer proficiency and call handling etiquette",
+      "Problem-solving mindset and customer-first approach"
+    ]
+  },
+  {
+    id: "branch-manager-gold-loan",
+    title: "BRANCH MANAGER - GOLD LOAN",
+    department: "Branch Sales & Operations",
+    location: "Triprayar / Calicut / Regional Offices",
+    type: "Full Time",
+    experience: "3 - 6 Years",
+    description: "Lead branch business growth, oversee gold valuation workflows, ensure audit and regulatory compliance, and build lasting customer relationships.",
+    requirements: [
+      "Prior experience in NBFC/Banking gold loan branch management",
+      "Strong leadership and team management capabilities",
+      "Sound understanding of gold valuation standards and KYC compliance"
+    ]
+  },
+  {
+    id: "relationship-officer-field",
+    title: "RELATIONSHIP OFFICER - FIELD OPERATIONS",
+    department: "Microfinance & Field Sales",
+    location: "Multiple Locations (South India)",
+    type: "Full Time",
+    experience: "0 - 2 Years",
+    description: "Responsible for field customer onboarding, loan application verification, relationship management, and maintaining customer portfolio quality.",
+    requirements: [
+      "Two-wheeler with valid driving license",
+      "High motivation for field engagement and customer interaction",
+      "Good interpersonal and documentation skills"
+    ]
+  },
+  {
+    id: "credit-assessment-executive",
+    title: "CREDIT ASSESSMENT EXECUTIVE",
+    department: "Risk Management & Underwriting",
+    location: "Corporate Office, Thrissur",
+    type: "Full Time",
+    experience: "2 - 5 Years",
+    description: "Evaluate creditworthiness of business and vehicle loan applicants, verify financial statements, and prepare detailed risk assessment reports.",
+    requirements: [
+      "Degree in Commerce, Finance, or related field",
+      "Analytical mindset with experience in loan appraisal processes",
+      "Proficiency in financial documentation and credit risk analysis"
+    ]
+  },
+  {
+    id: "it-support-administrator",
+    title: "IT SUPPORT & SYSTEMS ADMINISTRATOR",
+    department: "Information Technology",
+    location: "Corporate Office, Kochi",
+    type: "Full Time",
+    experience: "1 - 4 Years",
+    description: "Manage branch IT infrastructure, network connectivity, system security access, and provide technical assistance to regional offices.",
+    requirements: [
+      "Diploma or B.Tech in IT / Computer Science",
+      "Hands-on experience in networking, hardware troubleshooting, and Windows Server",
+      "Quick problem-solving skills for branch technical issues"
+    ]
+  }
+];
+
 export default function CareerPage() {
-  const jobListings: JobListing[] = [
-    {
-      id: "customer-care-executive",
-      title: "CUSTOMER CARE EXECUTIVE",
-      department: "Customer Support & Operations",
-      location: "Kochi / Thrissur / Regional Branches",
-      type: "Full Time",
-      experience: "0 - 3 Years",
-      description: "We are looking for dedicated Customer Care Executives to handle customer inquiries, guide borrowers on our loan products, and deliver exceptional service standards.",
-      requirements: [
-        "Excellent communication skills in Malayalam and English (Tamil/Kannada is a plus)",
-        "Basic computer proficiency and call handling etiquette",
-        "Problem-solving mindset and customer-first approach"
-      ]
-    },
-    {
-      id: "branch-manager-gold-loan",
-      title: "BRANCH MANAGER - GOLD LOAN",
-      department: "Branch Sales & Operations",
-      location: "Triprayar / Calicut / Regional Offices",
-      type: "Full Time",
-      experience: "3 - 6 Years",
-      description: "Lead branch business growth, oversee gold valuation workflows, ensure audit and regulatory compliance, and build lasting customer relationships.",
-      requirements: [
-        "Prior experience in NBFC/Banking gold loan branch management",
-        "Strong leadership and team management capabilities",
-        "Sound understanding of gold valuation standards and KYC compliance"
-      ]
-    },
-    {
-      id: "relationship-officer-field",
-      title: "RELATIONSHIP OFFICER - FIELD OPERATIONS",
-      department: "Microfinance & Field Sales",
-      location: "Multiple Locations (South India)",
-      type: "Full Time",
-      experience: "0 - 2 Years",
-      description: "Responsible for field customer onboarding, loan application verification, relationship management, and maintaining customer portfolio quality.",
-      requirements: [
-        "Two-wheeler with valid driving license",
-        "High motivation for field engagement and customer interaction",
-        "Good interpersonal and documentation skills"
-      ]
-    },
-    {
-      id: "credit-assessment-executive",
-      title: "CREDIT ASSESSMENT EXECUTIVE",
-      department: "Risk Management & Underwriting",
-      location: "Corporate Office, Thrissur",
-      type: "Full Time",
-      experience: "2 - 5 Years",
-      description: "Evaluate creditworthiness of business and vehicle loan applicants, verify financial statements, and prepare detailed risk assessment reports.",
-      requirements: [
-        "Degree in Commerce, Finance, or related field",
-        "Analytical mindset with experience in loan appraisal processes",
-        "Proficiency in financial documentation and credit risk analysis"
-      ]
-    },
-    {
-      id: "it-support-administrator",
-      title: "IT SUPPORT & SYSTEMS ADMINISTRATOR",
-      department: "Information Technology",
-      location: "Corporate Office, Kochi",
-      type: "Full Time",
-      experience: "1 - 4 Years",
-      description: "Manage branch IT infrastructure, network connectivity, system security access, and provide technical assistance to regional offices.",
-      requirements: [
-        "Diploma or B.Tech in IT / Computer Science",
-        "Hands-on experience in networking, hardware troubleshooting, and Windows Server",
-        "Quick problem-solving skills for branch technical issues"
-      ]
-    }
-  ];
+  const [jobListings, setJobListings] = useState<JobListing[]>([]);
+  const [loadingJobs, setLoadingJobs] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoadingJobs(true);
+        const res = await fetch("/api/jobs");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setJobListings(data);
+          } else {
+            setJobListings(fallbackListings);
+          }
+        } else {
+          setJobListings(fallbackListings);
+        }
+      } catch (e) {
+        setJobListings(fallbackListings);
+      } finally {
+        setLoadingJobs(false);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   const [selectedJobTitle, setSelectedJobTitle] = useState<string>("CUSTOMER CARE EXECUTIVE");
   const [isModalOpen, setIsModalOpen] = useState(false);

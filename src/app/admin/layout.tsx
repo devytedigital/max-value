@@ -19,7 +19,8 @@ import {
   User,
   Clock,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Briefcase
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -57,6 +58,8 @@ export default function AdminLayout({
         return "Dashboard Overview";
       case "/admin/branches":
         return "Branch Management";
+      case "/admin/careers":
+        return "Careers Management";
       case "/admin/logs":
         return "System Activity Logs";
       case "/admin/settings":
@@ -70,6 +73,7 @@ export default function AdminLayout({
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Applications", href: "/admin/applications", icon: FileText, badge: "34" },
     { name: "Branch Network", href: "/admin/branches", icon: GitBranch },
+    { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
     { name: "System Logs", href: "/admin/logs", icon: Activity },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
