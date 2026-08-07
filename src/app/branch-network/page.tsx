@@ -250,102 +250,99 @@ export default function BranchNetworkPage() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white rounded-2xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
+                    className="bg-white rounded-2xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
                   >
-                    {/* Top Accent bar */}
-                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#147FC3] to-[#FCA038]" />
+                    <div className="flex flex-col flex-1 justify-between gap-6">
+                      
+                      {/* Top content: Name and details */}
+                      <div className="space-y-4">
+                        {/* Branch Name */}
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#147FC3]/10 text-[#147FC3] flex items-center justify-center shrink-0">
+                            <Building2 className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-extrabold uppercase text-[#FCA038] tracking-wider block">
+                              BRANCH NAME
+                            </span>
+                            <h3 className="text-lg font-black text-zinc-955 uppercase tracking-tight group-hover:text-[#147FC3] transition-colors">
+                              {branch.name}
+                            </h3>
+                          </div>
+                        </div>
 
-                    <div>
-                      {/* Branch Name */}
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-[#147FC3]/10 text-[#147FC3] flex items-center justify-center shrink-0">
-                          <Building2 className="w-5 h-5" />
+                        {/* Details */}
+                        <div className="space-y-3.5 text-xs text-zinc-700">
+                          {/* Address */}
+                          <div className="flex items-start gap-2.5">
+                            <MapPin className="w-4 h-4 text-[#147FC3] shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-zinc-900 block">Address:</span>
+                              <span className="text-zinc-650">{branch.address}</span>
+                            </div>
+                          </div>
+
+                          {/* Landmark */}
+                          <div className="flex items-start gap-2.5">
+                            <Navigation className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-zinc-900 block">Landmark:</span>
+                              <span className="text-zinc-650">{branch.landmark}</span>
+                            </div>
+                          </div>
+
+                          {/* PIN Code */}
+                          <div className="flex items-center gap-2.5">
+                            <span className="w-4 h-4 rounded-full bg-zinc-100 text-zinc-600 font-extrabold text-[9px] flex items-center justify-center shrink-0">
+                              PIN
+                            </span>
+                            <div>
+                              <span className="font-bold text-zinc-900">PIN Code: </span>
+                              <span className="text-zinc-700 font-mono font-bold">{branch.pinCode}</span>
+                            </div>
+                          </div>
+
+                          {/* Phone & Mobile */}
+                          <div className="grid grid-cols-1 gap-2 pt-2 border-t border-zinc-100">
+                            <div className="flex items-center gap-2.5">
+                              <Phone className="w-3.5 h-3.5 text-[#147FC3] shrink-0" />
+                              <div>
+                                <span className="font-bold text-zinc-900">Phone: </span>
+                                <a href={`tel:${branch.phone}`} className="text-[#147FC3] font-semibold hover:underline">
+                                  {branch.phone}
+                                </a>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2.5">
+                              <Smartphone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                              <div>
+                                <span className="font-bold text-zinc-900">Mobile: </span>
+                                <a href={`tel:${branch.mobile}`} className="text-emerald-700 font-semibold hover:underline">
+                                  {branch.mobile}
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Email */}
+                          <div className="flex items-center gap-2.5 pt-2 border-t border-zinc-100">
+                            <Mail className="w-3.5 h-3.5 text-[#FCA038] shrink-0" />
+                            <div className="truncate">
+                              <span className="font-bold text-zinc-900">Email: </span>
+                              <a href={`mailto:${branch.email}`} className="text-[#147FC3] font-semibold hover:underline truncate">
+                                {branch.email}
+                              </a>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <span className="text-[10px] font-extrabold uppercase text-[#FCA038] tracking-wider block">
-                            BRANCH NAME
-                          </span>
-                          <h3 className="text-lg font-black text-zinc-950 uppercase tracking-tight group-hover:text-[#147FC3] transition-colors">
-                            {branch.name}
-                          </h3>
-                        </div>
+
                       </div>
 
-                      <div className="space-y-3.5 text-xs text-zinc-700">
-                        {/* Address */}
-                        <div className="flex items-start gap-2.5">
-                          <MapPin className="w-4 h-4 text-[#147FC3] shrink-0 mt-0.5" />
-                          <div>
-                            <span className="font-bold text-zinc-900 block">Address:</span>
-                            <span className="text-zinc-600">{branch.address}</span>
-                          </div>
-                        </div>
-
-                        {/* Landmark */}
-                        <div className="flex items-start gap-2.5">
-                          <Navigation className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
-                          <div>
-                            <span className="font-bold text-zinc-900 block">Landmark:</span>
-                            <span className="text-zinc-600">{branch.landmark}</span>
-                          </div>
-                        </div>
-
-                        {/* PIN Code */}
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-4 h-4 rounded-full bg-zinc-100 text-zinc-600 font-extrabold text-[9px] flex items-center justify-center shrink-0">
-                            PIN
-                          </span>
-                          <div>
-                            <span className="font-bold text-zinc-900">PIN Code: </span>
-                            <span className="text-zinc-700 font-mono font-bold">{branch.pinCode}</span>
-                          </div>
-                        </div>
-
-                        {/* Phone & Mobile */}
-                        <div className="grid grid-cols-1 gap-2 pt-2 border-t border-zinc-100">
-                          <div className="flex items-center gap-2.5">
-                            <Phone className="w-3.5 h-3.5 text-[#147FC3] shrink-0" />
-                            <div>
-                              <span className="font-bold text-zinc-900">Phone: </span>
-                              <a href={`tel:${branch.phone}`} className="text-[#147FC3] font-semibold hover:underline">
-                                {branch.phone}
-                              </a>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2.5">
-                            <Smartphone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                            <div>
-                              <span className="font-bold text-zinc-900">Mobile: </span>
-                              <a href={`tel:${branch.mobile}`} className="text-emerald-700 font-semibold hover:underline">
-                                {branch.mobile}
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Email */}
-                        <div className="flex items-center gap-2.5 pt-2 border-t border-zinc-100">
-                          <Mail className="w-3.5 h-3.5 text-[#FCA038] shrink-0" />
-                          <div className="truncate">
-                            <span className="font-bold text-zinc-900">Email: </span>
-                            <a href={`mailto:${branch.email}`} className="text-[#147FC3] font-semibold hover:underline truncate">
-                              {branch.email}
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Location */}
-                        <div className="flex items-start gap-2.5">
-                          <Compass className="w-3.5 h-3.5 text-zinc-400 shrink-0 mt-0.5" />
-                          <div>
-                            <span className="font-bold text-zinc-900 block">Location:</span>
-                            <span className="text-zinc-600">{branch.location}</span>
-                          </div>
-                        </div>
-
+                      {/* Bottom content: Hours and Map link button */}
+                      <div className="space-y-4 pt-2 border-t border-zinc-100">
                         {/* Working Hours */}
-                        <div className="flex items-center gap-2.5 pt-2 border-t border-zinc-100 bg-amber-50/50 p-2.5 rounded-lg border border-amber-200/50">
+                        <div className="flex items-center gap-2.5 bg-amber-50/50 p-2.5 rounded-lg border border-amber-200/50">
                           <Clock className="w-3.5 h-3.5 text-[#FCA038] shrink-0" />
                           <div>
                             <span className="font-extrabold text-zinc-900">Working Hours: </span>
@@ -353,7 +350,20 @@ export default function BranchNetworkPage() {
                           </div>
                         </div>
 
+                        {/* View Google Map Button */}
+                        {branch.location && (
+                          <a
+                            href={branch.location}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full py-3 bg-[#147FC3] hover:bg-[#147FC3]/90 text-white rounded-xl text-center text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#147FC3]/10 hover:-translate-y-0.5 active:scale-98"
+                          >
+                            <Compass className="w-4 h-4 text-white" />
+                            View Google Map
+                          </a>
+                        )}
                       </div>
+
                     </div>
                   </motion.div>
                 ))}
