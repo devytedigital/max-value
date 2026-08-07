@@ -1,28 +1,6 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-import { branchDatabase } from "@/data/branchData";
-
-const dbPath = path.join(process.cwd(), "src", "data", "branches-db.json");
-
-// Helper function to get or initialize database
-async function getDatabase() {
-  try {
-    await fs.access(dbPath);
-    const data = await fs.readFile(dbPath, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    // If database doesn't exist, initialize with default records
-    await fs.mkdir(path.dirname(dbPath), { recursive: true });
-    await fs.writeFile(dbPath, JSON.stringify(branchDatabase, null, 2), "utf-8");
-    return branchDatabase;
-  }
-}
-
-// Helper to save database
-async function saveDatabase(data: any) {
-  await fs.writeFile(dbPath, JSON.stringify(data, null, 2), "utf-8");
-}
+import { db } from "@/lib/firebase";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 
 export async function GET(request: Request) {
   try {
@@ -31,30 +9,34 @@ export async function GET(request: Request) {
     const district = searchParams.get("district");
     const query = searchParams.get("q");
 
-    let branches = await getDatabase();
+    const querySnapshot = await getDocs(collection(db, "branches"));
+    let branches: any[] = [];
+    querySnapshot.forEach((doc) => {
+      branches.push({ id: doc.id, ...doc.data() });
+    });
 
     if (state) {
-      branches = branches.filter((b: any) => b.state.toLowerCase() === state.toLowerCase());
+      branches = branches.filter((b: any) => b.state?.toLowerCase() === state.toLowerCase());
     }
 
     if (district) {
-      branches = branches.filter((b: any) => b.district.toLowerCase() === district.toLowerCase());
+      branches = branches.filter((b: any) => b.district?.toLowerCase() === district.toLowerCase());
     }
 
     if (query) {
       const q = query.toLowerCase();
       branches = branches.filter(
         (b: any) =>
-          b.name.toLowerCase().includes(q) ||
-          b.address.toLowerCase().includes(q) ||
-          b.landmark.toLowerCase().includes(q) ||
-          b.district.toLowerCase().includes(q)
+          b.name?.toLowerCase().includes(q) ||
+          b.address?.toLowerCase().includes(q) ||
+          b.landmark?.toLowerCase().includes(q) ||
+          b.district?.toLowerCase().includes(q)
       );
     }
 
     return NextResponse.json(branches);
   } catch (error: any) {
-    return NextResponse.json({ error: "Failed to read database: " + error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to read Firestore collection: " + error.message }, { status: 500 });
   }
 }
 
@@ -83,16 +65,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const branches = await getDatabase();
+    // Retrieve existing IDs to perform client-side slug de-duplication
+    const querySnapshot = await getDocs(collection(db, "branches"));
+    const existingIds: string[] = [];
+    querySnapshot.forEach((doc) => {
+      existingIds.push(doc.id);
+    });
 
     // Create unique ID / slug
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     let id = `${slug}-${district.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
     
-    // De-duplicate ID just in case
+    // De-duplicate ID
     let counter = 1;
     const baseId = id;
-    while (branches.some((b: any) => b.id === id)) {
+    while (existingIds.includes(id)) {
       id = `${baseId}-${counter}`;
       counter++;
     }
@@ -112,11 +99,11 @@ export async function POST(request: Request) {
       workingHours
     };
 
-    branches.push(newBranch);
-    await saveDatabase(branches);
+    // Save in Firestore document
+    await setDoc(doc(db, "branches", id), newBranch);
 
     return NextResponse.json(newBranch, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json({ error: "Failed to create branch: " + error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to create Firestore document: " + error.message }, { status: 500 });
   }
 }

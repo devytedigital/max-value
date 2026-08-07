@@ -1,19 +1,6 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-
-const dbPath = path.join(process.cwd(), "src", "data", "branches-db.json");
-
-// Helper function to read database
-async function getDatabase() {
-  const data = await fs.readFile(dbPath, "utf-8");
-  return JSON.parse(data);
-}
-
-// Helper function to save database
-async function saveDatabase(data: any) {
-  await fs.writeFile(dbPath, JSON.stringify(data, null, 2), "utf-8");
-}
+import { db } from "@/lib/firebase";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 export async function GET(
   request: Request,
@@ -21,16 +8,16 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const branches = await getDatabase();
-    const branch = branches.find((b: any) => b.id === id);
+    const docRef = doc(db, "branches", id);
+    const docSnap = await getDoc(docRef);
 
-    if (!branch) {
+    if (!docSnap.exists()) {
       return NextResponse.json({ error: "Branch not found" }, { status: 404 });
     }
 
-    return NextResponse.json(branch);
+    return NextResponse.json({ id: docSnap.id, ...docSnap.data() });
   } catch (error: any) {
-    return NextResponse.json({ error: "Failed to fetch branch: " + error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch branch from Firestore: " + error.message }, { status: 500 });
   }
 }
 
@@ -41,27 +28,31 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const branches = await getDatabase();
     
-    const index = branches.findIndex((b: any) => b.id === id);
-    if (index === -1) {
+    const docRef = doc(db, "branches", id);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
       return NextResponse.json({ error: "Branch not found" }, { status: 404 });
     }
 
     // Merge updates
-    const updatedBranch = {
-      ...branches[index],
+    const updates = {
       ...body,
-      id, // Keep the same ID
-      name: body.name ? body.name.toUpperCase() : branches[index].name
+      name: body.name ? body.name.toUpperCase() : undefined
     };
 
-    branches[index] = updatedBranch;
-    await saveDatabase(branches);
+    // Remove undefined properties to prevent Firestore payload errors
+    Object.keys(updates).forEach((key) => {
+      if (updates[key] === undefined) {
+        delete updates[key];
+      }
+    });
 
-    return NextResponse.json(updatedBranch);
+    await updateDoc(docRef, updates);
+
+    return NextResponse.json({ id, ...docSnap.data(), ...updates });
   } catch (error: any) {
-    return NextResponse.json({ error: "Failed to update branch: " + error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to update Firestore document: " + error.message }, { status: 500 });
   }
 }
 
@@ -71,18 +62,17 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const branches = await getDatabase();
-    
-    const index = branches.findIndex((b: any) => b.id === id);
-    if (index === -1) {
+    const docRef = doc(db, "branches", id);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
       return NextResponse.json({ error: "Branch not found" }, { status: 404 });
     }
 
-    branches.splice(index, 1);
-    await saveDatabase(branches);
+    await deleteDoc(docRef);
 
-    return NextResponse.json({ success: true, message: `Branch ${id} successfully deleted.` });
+    return NextResponse.json({ success: true, message: `Branch ${id} successfully deleted from Firestore.` });
   } catch (error: any) {
-    return NextResponse.json({ error: "Failed to delete branch: " + error.message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to delete Firestore document: " + error.message }, { status: 500 });
   }
 }

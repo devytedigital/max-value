@@ -194,5 +194,19 @@
     "email": "vijayawada@maxvaluecredits.com",
     "location": "Governorpet MG Road",
     "workingHours": "9:30 AM to 5:30 PM"
+  },
+  {
+    "id": "edavannaparaaa-malappuram",
+    "name": "EDAVANNAPARAAA",
+    "state": "Kerala",
+    "district": "Malappuram",
+    "address": "nil ...............",
+    "landmark": "kondotty",
+    "pinCode": "124578",
+    "phone": "748716",
+    "mobile": "7418529630",
+    "email": "sgbdjk@gmail.com",
+    "location": "kkd",
+    "workingHours": "9:30 AM - 5:30 PM (Mon-Sat)"
   }
 ]

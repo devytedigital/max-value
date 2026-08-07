@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,4 +19,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 // Initialize Analytics (safely checks if window is defined for Server-Side Rendering)
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
 
-export { app, analytics };
+// Initialize Firestore
+const db = getFirestore(app);
+
+export { app, analytics, db };
