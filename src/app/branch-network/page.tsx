@@ -251,7 +251,7 @@ export default function BranchNetworkPage() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group hover:border-[#147FC3]/40 relative overflow-hidden"
+                    className="bg-white rounded-3xl border border-zinc-200/90 shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col h-full justify-between group relative overflow-hidden"
                   >
                     <div className="flex flex-col flex-1 justify-between gap-6">
                                       {/* Top Header Row: Working Hours */}
