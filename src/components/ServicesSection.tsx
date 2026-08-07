@@ -87,27 +87,7 @@ export default function ServicesSection() {
         </svg>
       )
     },
-    {
-      id: "transfer",
-      title: "Money Transfer",
-      subtitle: "Instant & Secure Remittances",
-      description: "Transfer money instantly and safely anywhere across the country. Enjoy secure gateways, minor service fees, and real-time alerts.",
-      icon: (
-        <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="24" y="10" width="44" height="76" rx="6" strokeWidth="3.5" />
-          <path d="M24 18H68" strokeWidth="1.5" />
-          <path d="M24 76H68" strokeWidth="1.5" />
-          <circle cx="46" cy="81" r="2.5" className="fill-current" />
-          <path d="M52 82L62 68C64 65 68 64 71 66C74 68 75 72 73 75L62 90" strokeWidth="3" strokeLinecap="round" />
-          <path d="M52 82C48 78 45 70 48 64C50 60 55 58 59 61L65 67" strokeWidth="3" strokeLinecap="round" />
-          <path d="M52 60L52 46C52 42 55 39 59 39C63 39 66 42 66 46V68" strokeWidth="3" strokeLinecap="round" />
-          <path d="M74 25H88M88 25L83 20M88 25L83 30" stroke="#FCA038" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M88 35H74M74 35L79 30M74 35L79 40" stroke="#FCA038" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="46" cy="35" r="9" className="fill-[#FCA038]/15 stroke-[#FCA038]" strokeWidth="2" />
-          <path d="M43 32H49M43 35H49M45 32C45 32 47 33 47 35C47 37 45 38 45 38H49M45.5 37L48 40" stroke="#FCA038" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      )
-    },
+
     {
       id: "gold",
       title: "Gold Loan",
@@ -132,7 +112,7 @@ export default function ServicesSection() {
   // Group pages for mobile: 2x2 grid slides. We wrap around to keep it clean and fully populated.
   const mobilePages = [
     [services[0], services[1], services[2], services[3]],
-    [services[4], services[0], services[1], services[2]],
+    [services[2], services[3], services[0], services[1]],
   ];
 
   const totalPages = mobilePages.length; // 2 pages
@@ -196,7 +176,7 @@ export default function ServicesSection() {
 
 
   return (
-    <section className="relative py-20 bg-white z-20 overflow-hidden">
+    <section className="relative py-20 bg-transparent z-20 overflow-hidden">
       {/* Background glow effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#FCA038]/3 blur-[100px]" />

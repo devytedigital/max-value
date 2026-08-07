@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Briefcase,
   MapPin,
   Clock,
   Send,
   CheckCircle2,
   AlertCircle,
-  FileText,
   Upload,
   User,
   Mail,
@@ -19,12 +17,9 @@ import {
   Building,
   Building2,
   DollarSign,
-  ChevronRight,
   X,
-  Sparkles,
-  ExternalLink,
-  Award,
-  Users
+  ArrowUpRight,
+  Briefcase
 } from "lucide-react";
 
 interface JobListing {
@@ -114,6 +109,28 @@ const fallbackListings: JobListing[] = [
 export default function CareerPage() {
   const [jobListings, setJobListings] = useState<JobListing[]>([]);
   const [loadingJobs, setLoadingJobs] = useState<boolean>(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedJobTitle, setSelectedJobTitle] = useState<string>("CUSTOMER CARE EXECUTIVE");
+
+  const [formData, setFormData] = useState({
+    jobAppliedFor: "CUSTOMER CARE EXECUTIVE",
+    name: "",
+    email: "",
+    dob: "",
+    state: "",
+    city: "",
+    experienceMonths: "",
+    industry: "",
+    employer: "",
+    ctc: "",
+  });
+
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeError, setResumeError] = useState<string>("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -139,49 +156,30 @@ export default function CareerPage() {
     fetchJobs();
   }, []);
 
-  const [selectedJobTitle, setSelectedJobTitle] = useState<string>("CUSTOMER CARE EXECUTIVE");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Lock body scroll when drawer is open to prevent background scrolling
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isDrawerOpen]);
 
-  const [formData, setFormData] = useState({
-    jobAppliedFor: "CUSTOMER CARE EXECUTIVE",
-    name: "",
-    email: "",
-    dob: "",
-    state: "",
-    city: "",
-    experienceMonths: "",
-    industry: "",
-    employer: "",
-    ctc: "",
-  });
-
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
-  const [resumeError, setResumeError] = useState<string>("");
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [whatsappUrl, setWhatsappUrl] = useState("");
-
-  const formSectionRef = useRef<HTMLDivElement>(null);
-
-  const openApplyModal = (jobTitle: string) => {
+  const openApplyDrawer = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
-    setFormData(prev => ({ ...prev, jobAppliedFor: jobTitle }));
-    setIsModalOpen(true);
+    setFormData((prev) => ({ ...prev, jobAppliedFor: jobTitle }));
+    setIsDrawerOpen(true);
     setShowSuccess(false);
-
-    // Scroll to form if modal or in-page form
-    setTimeout(() => {
-      formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -269,8 +267,7 @@ export default function CareerPage() {
     const fileName = resumeFile ? resumeFile.name : "Not Provided";
     const fileSize = resumeFile ? `${(resumeFile.size / (1024 * 1024)).toFixed(2)} MB` : "";
 
-    const messageText =
-      `*NEW JOB APPLICATION - MAXVALUE CAREERS*
+    const messageText = `*NEW JOB APPLICATION - MAXVALUE CAREERS*
 ----------------------------------------
 💼 *Job Applied For:* ${formData.jobAppliedFor}
 👤 *Name (as per Aadhaar):* ${formData.name.trim()}
@@ -299,588 +296,588 @@ Sent via MaxValue Careers Portal`;
     }, 600);
   };
 
-  return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+  // Filter job listings (all jobs shown since filter bar is removed)
+  const filteredJobs = jobListings;
 
+  // Find active job details to show in drawer
+  const activeJob = jobListings.find((j) => j.title === selectedJobTitle);
+
+  return (
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
       {/* Navbar */}
       <Navbar />
 
-      {/* TOP HERO BANNER SECTION */}
-      <section className="relative w-full pt-28 pb-20 md:pt-36 md:pb-28 bg-[#147FC3] text-white overflow-hidden">
-        {/* Background glow & grid effects */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-          <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-[#FCA038]/20 blur-[120px]" />
-          <div className="absolute -top-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-[80px]" />
-        </div>
+      {/* Ambient soft glow at top right matching corporate brand colours (Orange & Blue) */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-radial from-[#FCA038]/8 via-[#147FC3]/4 to-transparent blur-[120px] pointer-events-none z-0" />
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* Main Content Area - Aligned margins/padding (max-w-7xl px-6 md:px-8) matching other pages */}
+      <main className="max-w-7xl mx-auto px-6 md:px-8 pt-36 pb-28 relative z-10">
+        {/* We're Hiring badge using corporate gold accent */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center justify-center px-4.5 py-1.5 rounded-full border border-[#FCA038] text-xs font-semibold text-[#FCA038] mb-6 select-none bg-[#FCA038]/5 backdrop-blur-xs shadow-2xs"
+        >
+          We&apos;re hiring!
+        </motion.div>
 
-            {/* Left Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-7 text-left"
-            >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-[#FCA038] text-xs font-extrabold uppercase tracking-wider mb-6">
-                <Briefcase className="w-3.5 h-3.5" />
-                <span>Careers At Max Value</span>
-              </div>
+        {/* Hero Headers */}
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-905 mb-6 leading-[1.05]"
+        >
+          Be part of our mission
+        </motion.h1>
 
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-tight mb-4">
-                Build Your Career With <br />
-                <span className="text-[#FCA038]">Max Value</span>
-              </h1>
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-zinc-600 text-lg md:text-xl max-w-2xl leading-relaxed mb-12 font-medium"
+        >
+          We&apos;re looking for passionate people to join us on our mission. We value
+          flat hierarchies, clear communication, and full ownership and responsibility.
+        </motion.p>
 
-              <div className="w-20 h-1.5 bg-[#FCA038] rounded-full mb-6" />
 
-              <p className="text-white/90 text-sm md:text-base leading-relaxed mb-8 max-w-xl">
-                Join a dynamic, fast-growing financial institution committed to empowering individuals, small businesses, and communities across South India. Explore rewarding opportunities to shape your future with us.
+
+        {/* Job Listings List */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="space-y-0"
+        >
+          {loadingJobs ? (
+            <div className="py-20 text-center flex flex-col items-center justify-center gap-4">
+              <div className="w-8 h-8 border-3 border-[#147FC3] border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm font-bold text-zinc-500">Loading open listings...</p>
+            </div>
+          ) : filteredJobs.length === 0 ? (
+            <div className="py-20 text-center border-t border-zinc-200">
+              <p className="text-base font-bold text-zinc-500">
+                No job postings found under this category.
               </p>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#job-listings-section"
-                  className="inline-flex items-center gap-2 bg-[#FCA038] hover:bg-[#e08922] text-white font-extrabold text-xs py-3.5 px-7 rounded-lg transition-all shadow-md hover:shadow-lg uppercase tracking-wider active:scale-95 cursor-pointer"
-                >
-                  Explore Openings
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-
-                <a
-                  href="#application-form-section"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-xs py-3.5 px-7 rounded-lg transition-all uppercase tracking-wider cursor-pointer"
-                >
-                  Apply Directly
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Right Banner Graphic/Photo */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="lg:col-span-5 relative"
-            >
-              <div className="relative mx-auto max-w-[420px] aspect-[4/5] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop"
-                  alt="Career Opportunities at Max Value"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#147FC3]/60 via-transparent to-transparent" />
-              </div>
-
-              {/* Floating feature badge */}
-              <div className="absolute -bottom-6 -left-6 bg-white text-zinc-900 rounded-xl p-4 shadow-xl border border-zinc-100 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-50 text-[#FCA038] flex items-center justify-center font-black">
-                  <Award className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide">Work Environment</p>
-                  <p className="text-xs font-black text-zinc-800">Growth & Leadership Focus</p>
-                </div>
-              </div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* JOB LISTINGS SECTION */}
-      <section id="job-listings-section" className="relative w-full py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-black tracking-widest text-[#FCA038] uppercase">CURRENT OPENINGS</span>
-            <h2 className="text-3xl md:text-4xl font-black text-[#147FC3] tracking-tight uppercase mt-2">
-              Explore Job Opportunities
-            </h2>
-            <div className="w-16 h-1 bg-[#FCA038] mx-auto mt-4 mb-3" />
-            <p className="text-zinc-500 text-xs md:text-sm">
-              Click "Apply Now" on any open position to complete your application.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
-            {jobListings.map((job) => (
-              <motion.div
+            </div>
+          ) : (
+            filteredJobs.map((job) => (
+              <div
                 key={job.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl border border-zinc-200/90 shadow-sm hover:shadow-md transition-all p-6 md:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 text-left group hover:border-[#147FC3]/40"
+                className="border-t border-zinc-200 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 group transition-all duration-300 hover:bg-[#147FC3]/[0.01] rounded-xl px-4 -mx-4"
               >
+                {/* Left job text info */}
                 <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span className="px-3 py-1 rounded-full bg-[#147FC3]/10 text-[#147FC3] text-[11px] font-bold uppercase tracking-wider">
-                      {job.department}
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-amber-50 text-[#FCA038] border border-amber-200/60 text-[11px] font-bold uppercase tracking-wider">
-                      {job.type}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-black text-zinc-900 tracking-tight uppercase group-hover:text-[#147FC3] transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-zinc-900 transition-colors">
                     {job.title}
                   </h3>
-
-                  <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-zinc-500 mt-2 mb-4">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#147FC3]" />
-                      {job.location}
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1.5">
-                      <Briefcase className="w-3.5 h-3.5 text-[#FCA038]" />
-                      Experience: {job.experience}
-                    </span>
-                  </div>
-
-                  <p className="text-zinc-600 text-xs md:text-sm leading-relaxed mb-4">
+                  <p className="text-zinc-550 text-sm md:text-base mt-2 max-w-2xl leading-relaxed font-medium">
                     {job.description}
                   </p>
 
-                  <div className="space-y-1">
-                    {job.requirements.map((req, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-zinc-500">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                        <span>{req}</span>
-                      </div>
-                    ))}
+                  {/* Metadata Badges */}
+                  <div className="flex flex-wrap gap-2.5 mt-4">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-200 text-[11px] font-semibold text-zinc-755 bg-white shadow-2xs select-none">
+                      <MapPin className="w-3.5 h-3.5 text-[#147FC3]" />
+                      {job.location}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-200 text-[11px] font-semibold text-zinc-755 bg-white shadow-2xs select-none">
+                      <Clock className="w-3.5 h-3.5 text-[#147FC3]" />
+                      {job.type}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-200 text-[11px] font-semibold text-zinc-755 bg-white shadow-2xs select-none">
+                      <Briefcase className="w-3.5 h-3.5 text-[#147FC3]" />
+                      {job.experience}
+                    </span>
                   </div>
                 </div>
 
-                <div className="shrink-0 lg:self-center">
+                {/* Right apply links */}
+                <div className="shrink-0 flex items-center md:self-center">
                   <button
-                    onClick={() => openApplyModal(job.title)}
-                    className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-extrabold text-xs py-3.5 px-6 rounded-xl transition-all shadow-sm hover:shadow-md cursor-pointer uppercase tracking-wider"
+                    onClick={() => openApplyDrawer(job.title)}
+                    className="inline-flex items-center gap-1 text-base md:text-lg font-bold text-zinc-900 hover:text-[#147FC3] transition-colors cursor-pointer group/btn self-start"
                   >
-                    <span>Apply Now</span>
-                    <ChevronRight className="w-4 h-4" />
+                    Apply
+                    <ArrowUpRight className="w-4.5 h-4.5 text-[#147FC3] transition-transform duration-350 ease-out group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
                   </button>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* APPLICATION FORM SECTION */}
-      <section id="application-form-section" ref={formSectionRef} className="relative w-full py-16 md:py-24 bg-[#F8FAFC]">
-        <div className="max-w-4xl mx-auto px-6 md:px-8">
-
-          <div className="bg-white rounded-3xl shadow-xl border border-zinc-200/90 p-8 md:p-12 relative overflow-hidden text-left">
-
-            {/* Top Gold Accent Line */}
-            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#147FC3] via-[#FCA038] to-[#147FC3]" />
-
-            <div className="mb-10 text-left">
-              <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#147FC3] uppercase mb-1">
-                <FileText className="w-4 h-4 text-[#FCA038]" />
-                CAREER APPLICATION
               </div>
-              <h2 className="text-3xl font-black text-zinc-900 tracking-tight uppercase">
-                APPLY FOR JOB
-              </h2>
-              <p className="text-zinc-500 text-xs md:text-sm mt-1">
-                Fill in the details below. Submitting will compile all form fields and redirect you to WhatsApp for direct processing.
-              </p>
-            </div>
+            ))
+          )}
+          {/* Bottom border to close the list */}
+          <div className="border-t border-zinc-200" />
+        </motion.div>
+      </main>
 
-            {showSuccess ? (
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center flex flex-col items-center gap-4 my-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                  <CheckCircle2 className="w-9 h-9" />
-                </div>
+      {/* Slide-Over Drawer Application Form */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDrawerOpen(false)}
+              className="fixed inset-0 bg-black z-50 cursor-pointer"
+            />
+
+            {/* Sliding Panel */}
+            <motion.div
+              data-lenis-prevent
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 220 }}
+              className="fixed inset-y-0 right-0 w-full sm:max-w-2xl bg-[#FAF9F6] shadow-2xl z-50 flex flex-col h-full border-l border-zinc-200"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-zinc-200 bg-white flex items-center justify-between">
                 <div>
-                  <h3 className="text-xl font-black text-emerald-900 uppercase">
-                    Redirecting to WhatsApp!
-                  </h3>
-                  <p className="text-xs md:text-sm text-emerald-700 mt-2 max-w-md">
-                    All application details for <strong>{formData.jobAppliedFor}</strong> have been formatted. Click the button below to complete sending your application via WhatsApp.
+                  <h2 className="text-2xl font-bold text-zinc-900 leading-tight">
+                    Apply for Position
+                  </h2>
+                  <p className="text-zinc-550 text-xs mt-1 font-medium">
+                    Applying for:{" "}
+                    <span className="font-bold text-zinc-900">
+                      {formData.jobAppliedFor}
+                    </span>
                   </p>
                 </div>
-
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-extrabold text-xs py-4 px-8 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer uppercase tracking-wider"
-                >
-                  <Send className="w-4 h-4 fill-white" />
-                  <span>Send Job Application Via WhatsApp</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-
                 <button
-                  onClick={() => {
-                    setShowSuccess(false);
-                    setResumeFile(null);
-                  }}
-                  className="text-xs font-bold text-zinc-500 hover:text-zinc-900 underline mt-3 cursor-pointer"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-all cursor-pointer shadow-2xs"
                 >
-                  Apply For Another Position
+                  <X className="w-5 h-5" />
                 </button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
 
-                {/* 1. Job Applied For (Pre-filled / Selectable) */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                    Job Applied For <span className="text-rose-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                    <select
-                      name="jobAppliedFor"
-                      value={formData.jobAppliedFor}
-                      onChange={handleChange}
-                      className="w-full pl-10 pr-8 py-3 rounded-xl border border-zinc-300 text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20 appearance-none font-bold text-zinc-800 cursor-pointer"
-                    >
-                      <option value="CUSTOMER CARE EXECUTIVE">CUSTOMER CARE EXECUTIVE</option>
-                      <option value="BRANCH MANAGER - GOLD LOAN">BRANCH MANAGER - GOLD LOAN</option>
-                      <option value="RELATIONSHIP OFFICER - FIELD OPERATIONS">RELATIONSHIP OFFICER - FIELD OPERATIONS</option>
-                      <option value="CREDIT ASSESSMENT EXECUTIVE">CREDIT ASSESSMENT EXECUTIVE</option>
-                      <option value="IT SUPPORT & SYSTEMS ADMINISTRATOR">IT SUPPORT & SYSTEMS ADMINISTRATOR</option>
-                    </select>
-                    <div className="absolute right-3.5 top-4 pointer-events-none text-zinc-400 text-xs">
-                      ▼
-                    </div>
-                  </div>
-                </div>
+              {/* Scrollable Form Body */}
+              <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+                {/* Role specifications card */}
+                {activeJob && (
+                  <div className="p-5 bg-white border border-zinc-200 rounded-2xl shadow-3xs">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5 select-none">
+                      Role Overview
+                    </h3>
+                    <p className="text-xs text-zinc-600 leading-relaxed mb-4 font-medium">
+                      {activeJob.description}
+                    </p>
 
-                {/* 2. Name & Email */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                  {/* Name (as per Aadhaar) */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Name (as per Aadhaar) <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Enter full name as on Aadhaar"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.name
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.name && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.name}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Email <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="name@example.com"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.email
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.email && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.email}
-                      </span>
-                    )}
-                  </div>
-
-                </div>
-
-                {/* 3. Date of Birth & State */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                  {/* Date of Birth */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Date of Birth (dd-mm-yyyy) <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Calendar className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="dob"
-                        value={formData.dob}
-                        onChange={handleChange}
-                        placeholder="DD-MM-YYYY (e.g. 15-08-1995)"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.dob
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.dob && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.dob}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Current Location (State) */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Current Location (State) <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <MapPin className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleChange}
-                        placeholder="e.g. Kerala, Tamil Nadu, Karnataka"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.state
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.state && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.state}
-                      </span>
-                    )}
-                  </div>
-
-                </div>
-
-                {/* 4. Current City & Experience */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                  {/* Current City */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Current City <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Building2 className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        placeholder="e.g. Kochi, Thrissur, Bangalore"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.city
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.city && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.city}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Total Work Experience (in months) */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Total Work Experience (in months) <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Clock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="number"
-                        name="experienceMonths"
-                        value={formData.experienceMonths}
-                        onChange={handleChange}
-                        placeholder="e.g. 24 (0 for fresher)"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.experienceMonths
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.experienceMonths && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.experienceMonths}
-                      </span>
-                    )}
-                  </div>
-
-                </div>
-
-                {/* 5. Current Industry & Current Employer */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                  {/* Current Industry */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Current Industry <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Building className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="industry"
-                        value={formData.industry}
-                        onChange={handleChange}
-                        placeholder="e.g. Banking / NBFC / Telecom / Retail"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.industry
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.industry && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.industry}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Current Employer */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                      Current Employer <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        name="employer"
-                        value={formData.employer}
-                        onChange={handleChange}
-                        placeholder="e.g. Current Company Name or N/A"
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.employer
-                            ? "border-rose-400 ring-2 ring-rose-100"
-                            : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                          }`}
-                      />
-                    </div>
-                    {errors.employer && (
-                      <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                        <AlertCircle className="w-3 h-3" /> {errors.employer}
-                      </span>
-                    )}
-                  </div>
-
-                </div>
-
-                {/* 6. Current Annual CTC */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                    Current Annual CTC <span className="text-rose-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <DollarSign className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                    <input
-                      type="text"
-                      name="ctc"
-                      value={formData.ctc}
-                      onChange={handleChange}
-                      placeholder="e.g. ₹3,50,000 / annum (or Fresher)"
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-zinc-50/50 focus:bg-white ${errors.ctc
-                          ? "border-rose-400 ring-2 ring-rose-100"
-                          : "border-zinc-300 focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/20"
-                        }`}
-                    />
-                  </div>
-                  {errors.ctc && (
-                    <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                      <AlertCircle className="w-3 h-3" /> {errors.ctc}
-                    </span>
-                  )}
-                </div>
-
-                {/* 7. Upload Resume (PDF, DOC, or DOCX files only) */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
-                    Upload Resume (PDF, DOC, or DOCX files only) <span className="text-rose-500">*</span>
-                  </label>
-
-                  <div className="relative border-2 border-dashed border-zinc-300 hover:border-[#147FC3] rounded-2xl p-6 bg-zinc-50/50 hover:bg-white transition-all text-center flex flex-col items-center justify-center cursor-pointer group">
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                    />
-
-                    <div className="w-12 h-12 rounded-full bg-amber-50 text-[#FCA038] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                      <Upload className="w-6 h-6" />
-                    </div>
-
-                    {resumeFile ? (
-                      <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-200">
-                        <CheckCircle2 className="w-4 h-4" />
-                        <span>Selected: {resumeFile.name} ({(resumeFile.size / (1024 * 1024)).toFixed(2)} MB)</span>
+                    {activeJob.requirements && activeJob.requirements.length > 0 && (
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 select-none">
+                          Key Requirements
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {activeJob.requirements.map((req, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2 text-xs text-zinc-600 font-medium"
+                            >
+                              <CheckCircle2 className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
+                              <span className="leading-tight">{req}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    ) : (
-                      <>
-                        <p className="text-sm font-bold text-zinc-800">
-                          Click to browse or drop your resume here
-                        </p>
-                        <p className="text-xs text-zinc-400 mt-1">
-                          Supports PDF, DOC, DOCX (Max 10MB)
-                        </p>
-                      </>
                     )}
                   </div>
+                )}
 
-                  {resumeError && (
-                    <span className="text-xs text-rose-500 font-semibold flex items-center gap-1 mt-0.5">
-                      <AlertCircle className="w-3 h-3" /> {resumeError}
-                    </span>
-                  )}
-                </div>
+                {showSuccess ? (
+                  <div className="bg-white border border-zinc-200 rounded-2xl p-8 text-center flex flex-col items-center gap-5 shadow-sm">
+                    <div className="w-16 h-16 rounded-full bg-[#147FC3] text-white flex items-center justify-center shadow-md">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-zinc-900 uppercase tracking-tight">
+                        Application Compiled!
+                      </h3>
+                      <p className="text-xs md:text-sm text-zinc-500 mt-2 max-w-md font-medium leading-relaxed">
+                        All details for <strong>{formData.jobAppliedFor}</strong> have been
+                        formatted. Click the button below to send your application details
+                        and attach your resume directly via WhatsApp.
+                      </p>
+                    </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-black text-sm py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99] mt-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Submitting Application...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit Application Via WhatsApp</span>
-                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </>
-                  )}
-                </button>
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-4 px-6 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer uppercase tracking-wider"
+                    >
+                      <Send className="w-4 h-4 fill-white text-white" />
+                      <span>Send via WhatsApp</span>
+                    </a>
 
-              </form>
-            )}
+                    <button
+                      onClick={() => {
+                        setShowSuccess(false);
+                        setResumeFile(null);
+                      }}
+                      className="text-xs font-bold text-zinc-500 hover:text-zinc-900 underline mt-2 cursor-pointer"
+                    >
+                      Apply For Another Position
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                    {/* Job Position Dropdown */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        Job Applied For <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                        <select
+                          name="jobAppliedFor"
+                          value={formData.jobAppliedFor}
+                          onChange={(e) => {
+                            handleChange(e);
+                            setSelectedJobTitle(e.target.value);
+                          }}
+                          className="w-full pl-10 pr-8 py-3 rounded-xl border border-zinc-200 text-sm transition-all outline-none bg-white focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] appearance-none font-bold text-zinc-800 cursor-pointer shadow-3xs"
+                        >
+                          {jobListings.map((job) => (
+                            <option key={job.id} value={job.title}>
+                              {job.title}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="absolute right-4 top-4.5 pointer-events-none text-zinc-400 text-[10px]">
+                          ▼
+                        </div>
+                      </div>
+                    </div>
 
-          </div>
+                    {/* Name */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        Name (as per Aadhaar) <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder="Enter your full name"
+                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            errors.name
+                              ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                              : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                          }`}
+                        />
+                      </div>
+                      {errors.name && (
+                        <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                          <AlertCircle className="w-3.5 h-3.5" /> {errors.name}
+                        </span>
+                      )}
+                    </div>
 
-        </div>
-      </section>
+                    {/* Email */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        Email <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="name@example.com"
+                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            errors.email
+                              ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                              : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                          }`}
+                        />
+                      </div>
+                      {errors.email && (
+                        <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                          <AlertCircle className="w-3.5 h-3.5" /> {errors.email}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Date of Birth */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        Date of Birth (dd-mm-yyyy) <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Calendar className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                        <input
+                          type="text"
+                          name="dob"
+                          value={formData.dob}
+                          onChange={handleChange}
+                          placeholder="DD-MM-YYYY (e.g. 15-08-1995)"
+                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            errors.dob
+                              ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                              : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                          }`}
+                        />
+                      </div>
+                      {errors.dob && (
+                        <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                          <AlertCircle className="w-3.5 h-3.5" /> {errors.dob}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Location: State & City */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* State */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          State <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <MapPin className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="text"
+                            name="state"
+                            value={formData.state}
+                            onChange={handleChange}
+                            placeholder="e.g. Kerala"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.state
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.state && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.state}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* City */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          City <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <Building2 className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleChange}
+                            placeholder="e.g. Kochi"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.city
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.city && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.city}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Experience in months & Industry */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Experience (months) */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          Experience (months) <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <Clock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="number"
+                            name="experienceMonths"
+                            value={formData.experienceMonths}
+                            onChange={handleChange}
+                            placeholder="e.g. 24"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.experienceMonths
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.experienceMonths && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.experienceMonths}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Industry */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          Current Industry <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <Building className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="text"
+                            name="industry"
+                            value={formData.industry}
+                            onChange={handleChange}
+                            placeholder="e.g. Banking / NBFC"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.industry
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.industry && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.industry}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Employer & CTC */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Employer */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          Current Employer <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="text"
+                            name="employer"
+                            value={formData.employer}
+                            onChange={handleChange}
+                            placeholder="e.g. Company Name"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.employer
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.employer && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.employer}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* CTC */}
+                      <div className="flex flex-col gap-2">
+                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                          Current Annual CTC <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <DollarSign className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
+                          <input
+                            type="text"
+                            name="ctc"
+                            value={formData.ctc}
+                            onChange={handleChange}
+                            placeholder="e.g. 3.5 Lakhs"
+                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.ctc
+                                ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
+                                : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
+                            }`}
+                          />
+                        </div>
+                        {errors.ctc && (
+                          <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.ctc}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Resume Upload */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        Upload Resume (PDF, DOC, DOCX) <span className="text-rose-500">*</span>
+                      </label>
+                      <div className="relative border-2 border-dashed border-zinc-200 hover:border-[#147FC3] rounded-2xl p-6 bg-white transition-all text-center flex flex-col items-center justify-center cursor-pointer group shadow-3xs">
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleFileChange}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+
+                        <div className="w-12 h-12 rounded-full bg-zinc-50 border border-zinc-100 text-[#147FC3] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-3xs">
+                          <Upload className="w-5 h-5" />
+                        </div>
+
+                        {resumeFile ? (
+                          <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs bg-emerald-50/50 px-4 py-2 rounded-xl border border-emerald-200">
+                            <CheckCircle2 className="w-4 h-4" />
+                            <span>
+                              Selected: {resumeFile.name} (
+                              {(resumeFile.size / (1024 * 1024)).toFixed(2)} MB)
+                            </span>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-xs font-bold text-zinc-800">
+                              Click to browse or drop your resume here
+                            </p>
+                            <p className="text-[10px] text-zinc-400 mt-1">
+                              Supports PDF, DOC, DOCX (Max 10MB)
+                            </p>
+                          </>
+                        )}
+                      </div>
+
+                      {resumeError && (
+                        <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
+                          <AlertCircle className="w-3.5 h-3.5" /> {resumeError}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-bold text-xs py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99] mt-2 select-none"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Preparing Application...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Submit via WhatsApp</span>
+                          <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <Footer />
-
     </div>
   );
 }

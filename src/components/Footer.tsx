@@ -81,7 +81,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-white text-zinc-600 pt-12 font-sans relative select-none border-t-2 border-[#FCA038]">
+    <footer className="w-full bg-[#FAF9F6] text-zinc-600 pt-12 font-sans relative select-none border-t-2 border-[#FCA038]">
 
       {/* Footer Main Columns */}
       <div className="max-w-7xl mx-auto px-6 md:px-8 pb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -194,7 +194,7 @@ export default function Footer() {
             Useful Links
           </h4>
           <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
-            {["About Company", "Gold Loan", "Vehicle Loan", "Business Loan", "Microfinance", "Money Transfer"].map((link) => (
+            {["About Company", "Gold Loan", "Vehicle Loan", "Business Loan", "Microfinance"].map((link) => (
               <li key={link}>
                 <a href="#" className="hover:text-[#147FC3] transition-colors">
                   {link}
@@ -221,7 +221,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Copyright Bar */}
-      <div className="w-full bg-zinc-50 py-4 px-6 md:px-8 border-t border-zinc-100">
+      <div className="w-full bg-zinc-950/5 py-4 px-6 md:px-8 border-t border-zinc-200/50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-bold tracking-wide uppercase text-zinc-500">
           <span>
             Maxvalue Credits and Investments Ltd. &copy; 2026 All rights reserved

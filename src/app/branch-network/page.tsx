@@ -86,7 +86,7 @@ export default function BranchNetworkPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans font-medium">
 
       {/* Navbar */}
       <Navbar />
@@ -121,7 +121,7 @@ export default function BranchNetworkPage() {
       </section>
 
       {/* SEARCH CONTROLS SECTION */}
-      <section className="relative w-full py-12 bg-zinc-50 border-b border-zinc-200/80">
+      <section className="relative w-full py-12 bg-transparent border-b border-zinc-200/80">
         <div className="max-w-4xl mx-auto px-6 md:px-8">
 
           <form onSubmit={handleSearch} className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-zinc-200/90 text-left">
@@ -203,7 +203,7 @@ export default function BranchNetworkPage() {
       </section>
 
       {/* RESULTS DISPLAY SECTION */}
-      <section className="relative w-full py-16 bg-white min-h-[400px]">
+      <section className="relative w-full py-16 bg-transparent min-h-[400px]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
 
           {!hasSearched ? (

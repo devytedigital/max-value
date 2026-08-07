@@ -42,7 +42,7 @@ export default function NewsPage() {
   const featuredArticle = newsArticles[0];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
       
       {/* Navbar */}
       <Navbar />
@@ -145,7 +145,7 @@ export default function NewsPage() {
       )}
 
       {/* CATEGORY FILTER SWITCHER */}
-      <section className="relative w-full pt-12 pb-6 bg-white">
+      <section className="relative w-full pt-12 pb-6 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-start gap-2 overflow-x-auto pb-4 scrollbar-none">
             {categories.map((cat) => {
@@ -169,7 +169,7 @@ export default function NewsPage() {
       </section>
 
       {/* NEWS ARTICLES GRID */}
-      <section className="relative w-full py-12 bg-white">
+      <section className="relative w-full py-12 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           {filteredArticles.length === 0 ? (

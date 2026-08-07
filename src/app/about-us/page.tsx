@@ -39,13 +39,13 @@ export default function AboutUsPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
 
       {/* 3-Tier Navbar */}
       <Navbar />
 
       {/* SECTION 1: TRUST & DEPENDABILITY */}
-      <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-28 bg-white">
+      <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-28 bg-transparent">
         {/* Decorative Grid Background */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,127,195,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,127,195,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
@@ -231,7 +231,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* SECTION 4: POLICY DOWNLOADS */}
-      <section className="relative w-full py-16 md:py-20 bg-white">
+      <section className="relative w-full py-16 md:py-20 bg-transparent">
         {/* Subtle background curved lines element */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,#147FC3_0%,transparent_50%)]" />

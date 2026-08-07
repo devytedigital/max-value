@@ -41,7 +41,7 @@ export default function EventsSection() {
   };
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-white z-20 overflow-hidden">
+    <section className="relative w-full py-16 md:py-24 bg-transparent z-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
 
         {/* Section Heading */}

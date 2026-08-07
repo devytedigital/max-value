@@ -108,7 +108,7 @@ Sent via MaxValue Credits Website`;
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
 
       {/* 3-Tier Navbar */}
       <Navbar />
@@ -154,7 +154,7 @@ Sent via MaxValue Credits Website`;
       </section>
 
       {/* MAIN CONTENT SECTION: CONTACT INFO & ENQUIRY FORM */}
-      <section className="relative w-full py-16 md:py-24 bg-[#F8FAFC]">
+      <section className="relative w-full py-16 md:py-24 bg-transparent">
         {/* Subtle grid background */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,127,195,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,127,195,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />

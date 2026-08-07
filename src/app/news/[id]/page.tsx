@@ -39,12 +39,12 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
   const relatedArticles = newsArticles.filter(item => item.id !== article.id).slice(0, 3);
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans font-medium">
       
       {/* Navbar */}
       <Navbar />
 
-      <main className="relative w-full pt-28 pb-20 md:pt-36 md:pb-28 bg-white">
+      <main className="relative w-full pt-28 pb-20 md:pt-36 md:pb-28 bg-transparent">
         
         {/* HEADER & ARTICLE INTRO */}
         <article className="max-w-4xl mx-auto px-6 md:px-8 text-left">

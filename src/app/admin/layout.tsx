@@ -20,7 +20,9 @@ import {
   Clock,
   ChevronRight,
   ShieldCheck,
-  Briefcase
+  Briefcase,
+  Image as ImageIcon,
+  ChevronDown
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -34,6 +36,7 @@ export default function AdminLayout({
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [mediaOpen, setMediaOpen] = useState(false);
   const [notifications, setNotifications] = useState([
     { id: 1, text: "New Gold Loan application submitted", time: "5 mins ago", unread: true },
     { id: 2, text: "System backup completed successfully", time: "1 hour ago", unread: true },
@@ -60,6 +63,8 @@ export default function AdminLayout({
         return "Branch Management";
       case "/admin/careers":
         return "Careers Management";
+      case "/admin/media":
+        return "Media Gallery Management";
       case "/admin/logs":
         return "System Activity Logs";
       case "/admin/settings":
@@ -69,13 +74,27 @@ export default function AdminLayout({
     }
   };
 
-  const navItems = [
+  interface NavItem {
+    name: string;
+    href?: string;
+    icon: any;
+    badge?: string;
+    subItems?: { name: string; href: string }[];
+  }
+
+  const navItems: NavItem[] = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-    { name: "Applications", href: "/admin/applications", icon: FileText, badge: "34" },
     { name: "Branch Network", href: "/admin/branches", icon: GitBranch },
     { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
-    { name: "System Logs", href: "/admin/logs", icon: Activity },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    {
+      name: "Media Management",
+      icon: ImageIcon,
+      subItems: [
+        { name: "Photo Gallery", href: "/admin/media/gallery" },
+        { name: "Video Gallery", href: "/admin/media/videos" },
+        { name: "Documents", href: "/admin/media/documents" }
+      ]
+    },
   ];
 
   const handleLogout = () => {
@@ -91,6 +110,9 @@ export default function AdminLayout({
   useEffect(() => {
     setIsMobileOpen(false);
     setShowNotifications(false);
+    if (pathname?.startsWith("/admin/media")) {
+      setMediaOpen(true);
+    }
   }, [pathname]);
 
   // Loading skeleton screen while verification takes place
@@ -161,9 +183,54 @@ export default function AdminLayout({
         {/* Sidebar Nav links */}
         <nav className="flex-1 px-4 py-8 space-y-1.5 overflow-y-auto">
           {navItems.map((item) => {
+            if (item.subItems) {
+              const isSubActive = pathname?.startsWith("/admin/media");
+              return (
+                <div key={item.name} className="space-y-1 select-none">
+                  {/* Dropdown Toggle Header */}
+                  <div
+                    onClick={() => setMediaOpen(!mediaOpen)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                      isSubActive && !mediaOpen
+                        ? "bg-slate-900 text-white"
+                        : "hover:bg-slate-900 hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <item.icon className="w-4.5 h-4.5 text-zinc-500" />
+                      <span>{item.name}</span>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${mediaOpen ? "rotate-180 text-white" : ""}`} />
+                  </div>
+
+                  {/* Collapsible Subitems */}
+                  {mediaOpen && (
+                    <div className="pl-6 space-y-1 mt-1 transition-all duration-200">
+                      {item.subItems.map((sub) => {
+                        const isSubLinkActive = pathname === sub.href;
+                        return (
+                          <Link key={sub.name} href={sub.href} className="block group">
+                            <div
+                              className={`flex items-center justify-between px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
+                                isSubLinkActive
+                                  ? "bg-[#147FC3] text-white shadow-sm shadow-[#147FC3]/10"
+                                  : "text-zinc-400 hover:text-white hover:bg-slate-900/50"
+                              }`}
+                            >
+                              <span>{sub.name}</span>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             const isActive = pathname === item.href;
             return (
-              <Link key={item.name} href={item.href} className="block group">
+              <Link key={item.name} href={item.href || "#"} className="block group">
                 <div
                   className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isActive
@@ -178,7 +245,7 @@ export default function AdminLayout({
                   {item.badge && (
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        isActive ? "bg-white/20 text-white" : "bg-slate-900 text-amber-400 border border-slate-800"
+                        isActive ? "bg-white/20 text-white" : "bg-slate-900 text-amber-450 border border-slate-800"
                       }`}
                     >
                       {item.badge}
@@ -264,9 +331,54 @@ export default function AdminLayout({
 
               <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
                 {navItems.map((item) => {
+                  if (item.subItems) {
+                    const isSubActive = pathname?.startsWith("/admin/media");
+                    return (
+                      <div key={item.name} className="space-y-1 select-none text-left">
+                        {/* Dropdown Toggle Header */}
+                        <div
+                          onClick={() => setMediaOpen(!mediaOpen)}
+                          className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                            isSubActive && !mediaOpen
+                              ? "bg-slate-900 text-white"
+                              : "hover:bg-slate-900 hover:text-white"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <item.icon className="w-4.5 h-4.5 text-zinc-500" />
+                            <span>{item.name}</span>
+                          </div>
+                          <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${mediaOpen ? "rotate-180 text-white" : ""}`} />
+                        </div>
+
+                        {/* Collapsible Subitems */}
+                        {mediaOpen && (
+                          <div className="pl-6 space-y-1 mt-1 transition-all duration-200">
+                            {item.subItems.map((sub) => {
+                              const isSubLinkActive = pathname === sub.href;
+                              return (
+                                <Link key={sub.name} href={sub.href} className="block">
+                                  <div
+                                    className={`flex items-center justify-between px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
+                                      isSubLinkActive
+                                        ? "bg-[#147FC3] text-white shadow-sm"
+                                        : "text-zinc-400 hover:text-white hover:bg-slate-900/50"
+                                    }`}
+                                  >
+                                    <span>{sub.name}</span>
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
                   const isActive = pathname === item.href;
                   return (
-                    <Link key={item.name} href={item.href} className="block">
+                    <Link key={item.name} href={item.href || "#"} className="block">
                       <div
                         className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
                           isActive

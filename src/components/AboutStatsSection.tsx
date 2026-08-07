@@ -50,7 +50,7 @@ const Counter = ({ value, suffix = "", duration = 1.8 }: { value: number; suffix
 
 export default function AboutStatsSection() {
   return (
-    <section className="relative w-full z-20 flex flex-col justify-between min-h-[calc(100vh-76px)] lg:min-h-[calc(100vh-128px)] bg-white overflow-hidden">
+    <section className="relative w-full z-20 flex flex-col justify-between min-h-[calc(100vh-76px)] lg:min-h-[calc(100vh-128px)] bg-transparent overflow-hidden">
 
       {/* 1. TOP BLOCK: Corporate Info with split layout (Text Left, Image Right) */}
       <div

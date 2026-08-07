@@ -188,7 +188,7 @@ Sent via MaxValue Credits Website`;
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
 
       {/* Navbar & Top spacing */}
       <Navbar />
@@ -280,7 +280,7 @@ Sent via MaxValue Credits Website`;
       </section>
 
       {/* CORE VALUE INTRODUCTION STATEMENT */}
-      <section className="relative w-full py-16 md:py-24 bg-white">
+      <section className="relative w-full py-16 md:py-24 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
@@ -312,7 +312,7 @@ Sent via MaxValue Credits Website`;
       </section>
 
       {/* WHY CHOOSE MAX VALUE (VISUAL GRID) */}
-      <section className="relative w-full py-16 md:py-24 bg-white">
+      <section className="relative w-full py-16 md:py-24 bg-transparent">
         {/* Subtle grid background */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,127,195,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,127,195,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
@@ -363,7 +363,7 @@ Sent via MaxValue Credits Website`;
       </section>
 
       {/* FREQUENTLY ASKED QUESTIONS */}
-      <section className="relative w-full py-16 md:py-24 bg-white">
+      <section className="relative w-full py-16 md:py-24 bg-transparent">
         <div className="max-w-4xl mx-auto px-6 md:px-8">
 
           <div className="text-center mb-16 flex flex-col items-center">
@@ -417,7 +417,7 @@ Sent via MaxValue Credits Website`;
       </section>
 
       {/* QUICK ENQUIRY SECTION */}
-      <section id="enquiry-section" className="relative w-full py-16 md:py-24 bg-[#F8FAFC]">
+      <section id="enquiry-section" className="relative w-full py-16 md:py-24 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -640,7 +640,6 @@ Sent via MaxValue Credits Website`;
                           <option value="Vehicle Loan">Vehicle Loan</option>
                           <option value="Business Loan">Business Loan</option>
                           <option value="Microfinance">Microfinance</option>
-                          <option value="Money Transfer">Money Transfer</option>
                         </select>
                         <div className="absolute right-3.5 top-4 pointer-events-none text-zinc-400 text-xs">
                           ▼

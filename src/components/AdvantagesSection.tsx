@@ -98,7 +98,7 @@ export default function AdvantagesSection() {
   ];
 
   return (
-    <section className="relative w-full py-16 bg-white z-20 overflow-hidden">
+    <section className="relative w-full py-16 bg-transparent z-20 overflow-hidden">
 
       {/* 1. Header (Centered title) */}
       <div className="text-center max-w-3xl mx-auto mb-12 px-6">

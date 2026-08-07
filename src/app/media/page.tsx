@@ -1,75 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { galleryItems } from "@/data/galleryData";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, FileText, Image as ImageIcon, PlayCircle, X, ArrowRight } from "lucide-react";
+import { Download, FileText, Image as ImageIcon, PlayCircle, X, ArrowRight, Loader2 } from "lucide-react";
 
 export default function MediaPage() {
   const [activeTab, setActiveTab] = useState<"image" | "video" | "download">("image");
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [videoItems, setVideoItems] = useState<any[]>([]);
+  const [documentItems, setDocumentItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const videos = [
-    {
-      category: "Corporate Video",
-      title: "MaxValue Corporate Film 2026",
-      thumbnail: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-business-people-meeting-around-table-26036-large.mp4",
-    },
-    {
-      category: "Client Success",
-      title: "Gold Loan Processing Customer Story",
-      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hand-holding-gold-bars-close-up-40540-large.mp4",
-    },
-    {
-      category: "Annual Meet",
-      title: "Annual General Meet Highlights",
-      thumbnail: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-business-people-meeting-around-table-26036-large.mp4",
-    },
-    {
-      category: "Highlights",
-      title: "Inauguration Ceremony Summary",
-      thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hand-holding-gold-bars-close-up-40540-large.mp4",
-    },
-    {
-      category: "CSR Video",
-      title: "Community Outreach Highlights",
-      thumbnail: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-business-people-meeting-around-table-26036-large.mp4",
-    },
-    {
-      category: "Product Guide",
-      title: "Gold Loan Application Process Guide",
-      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hand-holding-gold-bars-close-up-40540-large.mp4",
-    },
-    {
-      category: "Event Stream",
-      title: "TARANG 2025 Event Recap Stream",
-      thumbnail: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-business-people-meeting-around-table-26036-large.mp4",
-    },
-    {
-      category: "Training Seminar",
-      title: "Customer Relations Management Seminar",
-      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-      videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-business-people-meeting-around-table-26036-large.mp4",
-    },
-  ];
+  useEffect(() => {
+    async function loadData() {
+      try {
+        setLoading(true);
+        const [resMedia, resVideos, resDocs] = await Promise.all([
+          fetch("/api/media"),
+          fetch("/api/videos"),
+          fetch("/api/documents")
+        ]);
 
-  const downloads = [
-    { name: "Interest Policy", type: "PDF Document", size: "1.2 MB", href: "#" },
-    { name: "Privacy Policy", type: "PDF Document", size: "845 KB", href: "#" },
-    { name: "Fair Practices Code", type: "PDF Document", size: "2.1 MB", href: "#" },
-    { name: "Recovery Policy", type: "PDF Document", size: "1.5 MB", href: "#" },
-    { name: "Charges & Fees Structure", type: "PDF Document", size: "620 KB", href: "#" },
-  ];
+        if (resMedia.ok) {
+          const mediaData = await resMedia.json();
+          setGalleryItems(mediaData);
+        }
+
+        if (resVideos.ok) {
+          const videoData = await resVideos.json();
+          setVideoItems(videoData);
+        }
+
+        if (resDocs.ok) {
+          const docData = await resDocs.json();
+          setDocumentItems(docData);
+        }
+      } catch (error) {
+        console.error("Failed to load media elements:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   const tabs = [
     {
@@ -90,12 +67,12 @@ export default function MediaPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
 
       {/* 3-Tier Navbar */}
       <Navbar />
 
-      <main className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-white">
+      <main className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-transparent">
 
         {/* Modern Segmented Control Tab Switcher */}
         <div className="flex justify-center mb-16 px-6">
@@ -125,7 +102,7 @@ export default function MediaPage() {
         </div>
 
         {/* Tab Content Area */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6">
           <AnimatePresence mode="wait">
 
             {/* IMAGE GALLERY CONTENT */}
@@ -136,39 +113,47 @@ export default function MediaPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+                className="w-full flex justify-center"
               >
-                {galleryItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/media/gallery/${item.id}`}
-                    className="flex flex-col bg-transparent group cursor-pointer text-left"
-                  >
-                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-xl transition-all duration-300 rounded-xl">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      {/* Hover Overlay Badge */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <span className="text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-                          View Gallery ({item.images.length} Photos) <ArrowRight className="w-3.5 h-3.5 text-[#FCA038]" />
-                        </span>
-                      </div>
-                    </div>
-                    {/* Details */}
-                    <div className="pt-4 text-left">
-                      <span className="text-[11px] font-semibold text-zinc-500 tracking-wider uppercase">
-                        {item.category}
-                      </span>
-                      <h3 className="text-[13px] md:text-[14px] font-extrabold text-zinc-900 mt-1.5 tracking-wider uppercase leading-snug group-hover:text-[#147FC3] transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
-                  </Link>
-                ))}
+                {loading ? (
+                  <div className="py-20 flex flex-col items-center justify-center">
+                    <Loader2 className="w-8 h-8 text-[#147FC3] animate-spin" />
+                    <span className="text-xs font-bold text-zinc-500 mt-4 uppercase tracking-widest">Loading Media Gallery...</span>
+                  </div>
+                ) : galleryItems.length === 0 ? (
+                  <div className="py-20 text-center">
+                    <ImageIcon className="w-12 h-12 text-zinc-300 mx-auto mb-4" />
+                    <h3 className="text-lg font-bold text-zinc-950">No Albums Found</h3>
+                    <p className="text-xs text-zinc-500 font-semibold max-w-sm mx-auto mt-1">
+                      Check back later, or add albums via the administrator console.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+                    {galleryItems.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/media/gallery/${item.id}`}
+                        className="flex flex-col bg-transparent group cursor-pointer text-left"
+                      >
+                        <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-all duration-300">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        {/* Details */}
+                        <div className="pt-4 text-left">
+                          <h3 className="text-[13px] md:text-[14px] font-extrabold text-zinc-900 tracking-wider uppercase leading-snug group-hover:text-[#147FC3] transition-colors line-clamp-2">
+                            {item.title}
+                          </h3>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -180,37 +165,45 @@ export default function MediaPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+                className="w-full text-center"
               >
-                {videos.map((item) => (
-                  <div
-                    key={item.title}
-                    onClick={() => setActiveVideoUrl(item.videoUrl)}
-                    className="flex flex-col bg-transparent cursor-pointer group text-left"
-                  >
-                    <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-shadow duration-300 rounded-xl">
-                      <img
-                        src={item.thumbnail}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      {/* Play Button Overlay */}
-                      <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/45 transition-colors duration-300">
-                        <PlayCircle className="h-12 w-12 text-white drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
-                      </div>
-                    </div>
-                    {/* Left-aligned details */}
-                    <div className="pt-4 text-left">
-                      <span className="text-[11px] font-semibold text-zinc-500 tracking-wider uppercase">
-                        {item.category}
-                      </span>
-                      <h3 className="text-[13px] md:text-[14px] font-extrabold text-zinc-900 mt-1.5 tracking-wider uppercase leading-snug group-hover:text-[#147FC3] transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
+                {videoItems.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center text-zinc-500 py-16">
+                    <PlayCircle className="w-12 h-12 text-zinc-300 mb-4" />
+                    <h3 className="text-base font-bold text-zinc-800">No Videos Uploaded</h3>
+                    <p className="text-xs text-zinc-400 font-semibold max-w-xs mt-1 leading-normal">
+                      Check back later for new corporate films, CSR videos, and event streams.
+                    </p>
                   </div>
-                ))}
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
+                    {videoItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex flex-col bg-transparent text-left"
+                      >
+                        <div className="w-full aspect-[16/10] overflow-hidden relative border border-zinc-200/80 bg-zinc-50 shadow-xs hover:shadow-md transition-shadow duration-300">
+                          {item.videoUrl.includes("youtube") || item.videoUrl.includes("youtu.be") || item.videoUrl.includes("/embed/") ? (
+                            <iframe
+                              src={item.videoUrl}
+                              title={item.title}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                              className="w-full h-full"
+                            />
+                          ) : (
+                            <video
+                              src={item.videoUrl}
+                              controls
+                              className="w-full h-full object-cover"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -222,36 +215,50 @@ export default function MediaPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto"
+                className="w-full text-center"
               >
-                {downloads.map((doc) => (
-                  <div
-                    key={doc.name}
-                    className="flex items-center justify-between p-5 bg-zinc-50 border border-zinc-200/60 rounded-2xl shadow-xs hover:bg-zinc-100/50 hover:border-zinc-300 transition-all"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 rounded-xl bg-red-50 text-red-500 border border-red-100">
-                        <FileText className="h-6 w-6" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="text-[14px] md:text-[15px] font-bold text-zinc-900">
-                          {doc.name}
-                        </h4>
-                        <span className="text-[11px] font-semibold text-zinc-500 mt-1 block">
-                          {doc.type} • {doc.size}
-                        </span>
-                      </div>
-                    </div>
-
-                    <a
-                      href={doc.href}
-                      className="p-3 rounded-full text-zinc-500 hover:text-white bg-white hover:bg-[#147FC3] border border-zinc-200 hover:border-[#147FC3] transition-all duration-300 cursor-pointer shadow-xs"
-                      title="Download Document"
-                    >
-                      <Download className="h-4.5 w-4.5" />
-                    </a>
+                {documentItems.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center text-zinc-500 py-16">
+                    <FileText className="w-12 h-12 text-zinc-300 mb-4" />
+                    <h3 className="text-base font-bold text-zinc-800">No Documents Uploaded</h3>
+                    <p className="text-xs text-zinc-400 font-semibold max-w-xs mt-1 leading-normal">
+                      Check back later for dynamic guidelines, policies, and file downloads.
+                    </p>
                   </div>
-                ))}
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto">
+                    {documentItems.map((doc) => (
+                      <div
+                        key={doc.id}
+                        className="flex items-center justify-between p-5 bg-zinc-50 border border-zinc-200/60 rounded-2xl shadow-xs hover:bg-zinc-100/50 hover:border-zinc-300 transition-all"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 rounded-xl bg-red-50 text-red-500 border border-red-100">
+                            <FileText className="h-6 w-6" />
+                          </div>
+                          <div className="text-left">
+                            <h4 className="text-[14px] md:text-[15px] font-bold text-zinc-900">
+                              {doc.name}
+                            </h4>
+                            <span className="text-[11px] font-semibold text-zinc-500 mt-1 block">
+                              {doc.type || "PDF Document"} • {doc.size || "Drive Link"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <a
+                          href={doc.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-3 rounded-full text-zinc-550 hover:text-white bg-white hover:bg-[#147FC3] border border-zinc-200 hover:border-[#147FC3] transition-all duration-300 cursor-pointer shadow-xs"
+                          title="Download Document"
+                        >
+                          <Download className="h-4.5 w-4.5" />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -277,12 +284,23 @@ export default function MediaPage() {
                 <X className="h-5 w-5" />
               </button>
 
-              <video
-                src={activeVideoUrl}
-                controls
-                autoPlay
-                className="w-full h-full object-contain"
-              />
+              {activeVideoUrl.includes("youtube") || activeVideoUrl.includes("youtu.be") || activeVideoUrl.includes("/embed/") ? (
+                <iframe
+                  src={activeVideoUrl}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              ) : (
+                <video
+                  src={activeVideoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                />
+              )}
             </div>
           </motion.div>
         )}

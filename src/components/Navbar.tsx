@@ -27,13 +27,26 @@ export default function Navbar() {
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const isLightPage =
+    pathname === "/career" ||
+    pathname === "/about-us" ||
+    pathname === "/board-of-directors" ||
+    pathname === "/media" ||
+    pathname?.startsWith("/media/gallery/") ||
+    (pathname?.startsWith("/news/") && pathname !== "/news") ||
+    pathname?.startsWith("/admin");
+
+  const isHeaderLight = isScrolled || isLightPage;
+
+  const useCapsule = (pathname === "/" || pathname === "") && !isScrolled;
+
   useEffect(() => {
     if (!pathname) return;
     if (pathname === "/" || pathname === "") {
       setActiveMenu("HOME");
     } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname.startsWith("/corporate")) {
       setActiveMenu("CORPORATE");
-    } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/traders-loan" || pathname === "/microfinance" || pathname === "/money-transfer") {
+    } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/traders-loan" || pathname === "/microfinance") {
       setActiveMenu("OUR SERVICES");
     } else if (pathname === "/media") {
       setActiveMenu("MEDIA");
@@ -111,15 +124,17 @@ export default function Navbar() {
   return (
     <>
       <div className={`w-full z-50 fixed top-0 left-0 right-0 select-none font-sans transition-all duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${isScrolled
-          ? "bg-[#0c141c]/20 backdrop-blur-xl border-b border-white/10 shadow-lg"
-          : "bg-transparent border-b border-transparent"
+        } ${isHeaderLight
+          ? "bg-[#FAF9F6]/90 backdrop-blur-xl border-b border-zinc-200/60 shadow-md"
+          : isScrolled
+            ? "bg-[#0c141c]/45 backdrop-blur-xl border-b border-white/10 shadow-lg"
+            : "bg-transparent border-b border-transparent"
         }`}>
         {/* Subtle background grid lines pattern */}
         <div className={`absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0"
           }`} />
 
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 relative z-10">
           <div className="h-20 lg:h-22 flex items-center w-full">
 
             {/* DESKTOP NAVBAR VIEW */}
@@ -138,7 +153,10 @@ export default function Navbar() {
               </div>
 
               {/* Centered navigation pill capsule (Desktop only) */}
-              <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-1.5 py-1 backdrop-blur-xl shadow-inner">
+              <div className={`hidden lg:flex items-center rounded-full px-1.5 py-1 border transition-all duration-300 ${useCapsule
+                  ? "bg-white/5 border-white/10 backdrop-blur-xl shadow-inner"
+                  : "bg-transparent border-transparent"
+                }`}>
                 <div className="flex items-center gap-1 bg-transparent">
                   {menuItems.map((item) => {
                     const isCorporate = item === "CORPORATE";
@@ -149,8 +167,12 @@ export default function Navbar() {
                     const hasDropdown = isCorporate || isServices || isContactUs;
 
                     const linkClass = `px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300 flex items-center gap-0.5 cursor-pointer select-none ${isActive
-                        ? "bg-white text-zinc-950 shadow-md font-bold"
-                        : "text-white/70 hover:text-white hover:bg-white/5"
+                        ? isHeaderLight
+                          ? "bg-[#147FC3] text-white shadow-md font-bold"
+                          : "bg-white text-zinc-950 shadow-md font-bold"
+                        : isHeaderLight
+                          ? "text-zinc-700 hover:text-[#147FC3] hover:bg-zinc-950/5"
+                          : "text-white/70 hover:text-white hover:bg-white/5"
                       }`;
 
                     return (
@@ -173,16 +195,25 @@ export default function Navbar() {
 
                         {/* Submenu Dropdowns */}
                         {isCorporate && (
-                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                          <div className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 border shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl ${isHeaderLight
+                              ? "bg-[#FAF9F6]/95 border-zinc-200/80"
+                              : "bg-[#0c141c]/40 border-white/10"
+                            }`}>
                             <Link
                               href="/about-us"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               ABOUT US
                             </Link>
                             <Link
                               href="/board-of-directors"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               BOARD OF DIRECTORS
                             </Link>
@@ -190,51 +221,69 @@ export default function Navbar() {
                         )}
 
                         {isServices && (
-                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                          <div className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 border shadow-2xl rounded-2xl py-4 px-5 min-w-[200px] flex flex-col gap-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl ${isHeaderLight
+                              ? "bg-[#FAF9F6]/95 border-zinc-200/80"
+                              : "bg-[#0c141c]/40 border-white/10"
+                            }`}>
                             <Link
                               href="/gold-loan"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               GOLD LOAN
                             </Link>
                             <Link
                               href="/vehicle-loan"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               VEHICLE LOAN
                             </Link>
                             <Link
                               href="/business-loan"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               BUSINESS LOAN
                             </Link>
                             <Link
                               href="/microfinance"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               MICROFINANCE
-                            </Link>
-                            <Link
-                              href="/money-transfer"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
-                            >
-                              MONEY TRANSFER
                             </Link>
                           </div>
                         )}
 
                         {isContactUs && (
-                          <div className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0c141c]/40 border border-white/10 shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl">
+                          <div className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 border shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl ${isHeaderLight
+                              ? "bg-[#FAF9F6]/95 border-zinc-200/80"
+                              : "bg-[#0c141c]/40 border-white/10"
+                            }`}>
                             <Link
                               href="/contact-us"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               CONTACT US
                             </Link>
                             <Link
                               href="/grievance"
-                              className="text-[11px] font-bold tracking-wider text-zinc-300 hover:text-[#FCA038] cursor-pointer transition-colors"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
                             >
                               GRIEVANCE REDRESSAL
                             </Link>
@@ -249,15 +298,21 @@ export default function Navbar() {
               {/* Right Action Block */}
               <div className="flex items-center">
                 {/* Gold Live Price Indicator */}
-                <div className="flex flex-col text-right pr-3 border-r border-white/10 mr-3">
-                  <span className="text-[8.5px] uppercase tracking-widest text-zinc-400 font-bold leading-none">Gold Live Price</span>
+                <div className={`flex flex-col text-right pr-3 border-r mr-3 transition-colors duration-300 ${isHeaderLight
+                    ? "border-zinc-200"
+                    : "border-white/10"
+                  }`}>
+                  <span className={`text-[8.5px] uppercase tracking-widest font-bold leading-none ${isHeaderLight
+                      ? "text-zinc-500"
+                      : "text-zinc-400"
+                    }`}>Gold Live Price</span>
                   <span className="text-xs font-bold text-[#FCA038] mt-0.5 leading-none">
-                    ₹13,279<span className="text-[9.5px] text-zinc-550 font-medium font-sans">/g</span>
+                    ₹13,279<span className={`text-[9.5px] font-medium font-sans ${isHeaderLight ? "text-zinc-500" : "text-zinc-550"}`}>/g</span>
                   </span>
                 </div>
 
                 {/* Pay Now Button */}
-                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
                   Pay Now
                 </button>
               </div>
@@ -268,7 +323,10 @@ export default function Navbar() {
               {/* Left: Hamburger menu toggle icon */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 -ml-2 rounded-lg text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className={`p-2 -ml-2 rounded-lg transition-colors cursor-pointer ${isHeaderLight
+                    ? "text-zinc-800 hover:bg-zinc-950/5"
+                    : "text-white hover:bg-white/10"
+                  }`}
               >
                 <Menu className="h-6 w-6" />
               </button>
@@ -302,10 +360,10 @@ export default function Navbar() {
             className="fixed inset-0 bg-white/60 backdrop-blur-sm"
           />
 
-          <div data-lenis-prevent className="relative w-4/5 max-w-xs h-full bg-white text-zinc-900 shadow-2xl flex flex-col justify-between z-10 transition-transform overflow-hidden animate-none">
+          <div data-lenis-prevent className="relative w-4/5 max-w-xs h-full bg-[#FAF9F6] text-zinc-900 shadow-2xl flex flex-col justify-between z-10 transition-transform overflow-hidden animate-none">
 
             {/* Header (Sticky at top) */}
-            <div className="flex justify-between items-center py-5 px-5 border-b border-zinc-100 bg-white">
+            <div className="flex justify-between items-center py-5 px-5 border-b border-zinc-200 bg-[#FAF9F6]">
               <span className="font-black text-sm text-[#FCA038] tracking-wider">NAVIGATE</span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -403,13 +461,6 @@ export default function Navbar() {
                       >
                         MICROFINANCE
                       </Link>
-                      <Link
-                        href="/money-transfer"
-                        onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
-                        className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
-                      >
-                        MONEY TRANSFER
-                      </Link>
                     </div>
                   )}
                 </div>
@@ -486,9 +537,9 @@ export default function Navbar() {
             </div>
 
             {/* Footer (Sticky at bottom) */}
-            <div className="flex flex-col gap-4 border-t border-zinc-150 p-5 bg-white text-center">
+            <div className="flex flex-col gap-4 border-t border-zinc-200 p-5 bg-[#FAF9F6] text-center">
               {/* Gold price display for mobile drawer */}
-              <div className="flex items-center justify-between bg-zinc-50 border border-zinc-200/85 rounded-xl p-3">
+              <div className="flex items-center justify-between bg-zinc-950/5 border border-zinc-200/85 rounded-xl p-3">
                 <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Gold Live Price</span>
                 <span className="text-sm font-black text-[#FCA038]">
                   ₹13,279 <span className="text-[10px] text-zinc-500 font-medium font-sans">/g</span>

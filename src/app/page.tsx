@@ -14,7 +14,7 @@ const SplashModal = dynamic(() => import("@/components/SplashModal"), { ssr: fal
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-white text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white">
+    <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-900 overflow-x-hidden selection:bg-[#147FC3] selection:text-white">
       {/* Splash Modal overlay for new users */}
       <SplashModal />
 

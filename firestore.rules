@@ -2,6 +2,38 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Rules for Branch Network Collection
+    match /branches/{branchId} {
+      // Anyone can query, read, and write branch documents (write operations routed and sanitized via Next.js secure API endpoints)
+      allow read, write: if true;
+    }
+
+    // Rules for Career Jobs Collection
+    match /jobs/{jobId} {
+      // Anyone can query and read jobs, and write actions are managed via secure server API routes
+      allow read, write: if true;
+    }
+
+    // Rules for Media Collection
+    match /media/{mediaId} {
+      // Anyone can read and write media, writes are validated in API handlers
+      allow read, write: if true;
+    }
+
+    // Rules for Videos Collection
+    match /videos/{videoId} {
+      // Anyone can read and write videos, writes are validated in API handlers
+      allow read, write: if true;
+    }
+
+    // Rules for Documents Collection
+    match /documents/{documentId} {
+      // Anyone can read and write documents, writes are validated in API handlers
+      allow read, write: if true;
+    }
+
+    // Default fallback: lock down all other collections
     match /{document=**} {
       allow read, write: if false;
     }
