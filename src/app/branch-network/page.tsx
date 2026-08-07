@@ -337,6 +337,29 @@ export default function BranchNetworkPage() {
                           </div>
                         </div>
 
+                        {/* Mini Map Preview Frame */}
+                        {branch.location && (
+                          <div className="w-full h-32 rounded-xl overflow-hidden border border-zinc-200 mt-4 relative shadow-sm hover:border-[#147FC3]/30 transition-colors">
+                            <iframe
+                              title={`Google Map of ${branch.name}`}
+                              width="100%"
+                              height="100%"
+                              style={{ border: 0 }}
+                              src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                                (() => {
+                                  try {
+                                    const url = new URL(branch.location);
+                                    return url.searchParams.get("q") || url.searchParams.get("query") || branch.location;
+                                  } catch (e) {
+                                    return branch.location;
+                                  }
+                                })()
+                              )}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+
                       </div>
 
                       {/* Bottom content: Hours and Map link button */}
