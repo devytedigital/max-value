@@ -20,7 +20,14 @@ import {
   TrendingUp,
   Mail,
   FileText,
-  AlertCircle
+  AlertCircle,
+  Coins,
+  Building2,
+  ShieldCheck,
+  Award,
+  Users,
+  MapPin,
+  ExternalLink
 } from "lucide-react";
 
 export default function NewsPage() {
@@ -60,14 +67,14 @@ export default function NewsPage() {
 
   const categories = [
     "All",
-    "Expansion & Growth",
+    "Gold Loan Updates",
+    "Branch Expansion",
+    "Microfinance & CSR",
+    "Business & Traders Credit",
     "Digital Innovation",
-    "Awards & Recognition",
-    "Community & CSR",
-    "Corporate Events",
-    "Product Launch",
-    "Press Release",
-    "Financial Update"
+    "Financial Results & Growth",
+    "Awards & Milestones",
+    "Press Releases"
   ];
 
   const filteredArticles = articles.filter((article) => {
@@ -103,20 +110,22 @@ export default function NewsPage() {
       <div className="w-full pt-20 md:pt-24 bg-zinc-950 text-white border-b border-zinc-800">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-2.5 flex flex-wrap items-center justify-between text-xs font-semibold gap-3">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#147FC3] text-[10px] font-black uppercase tracking-wider text-white">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#147FC3] text-[10px] font-black uppercase tracking-wider text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-              PRESS ROOM
+              MAX VALUE PRESS ROOM
             </span>
             <span className="text-zinc-400 hidden sm:inline">{currentDate}</span>
           </div>
 
           <div className="flex items-center gap-4 text-zinc-400 text-xs">
-            <span className="hidden md:inline text-zinc-500">Official Media Hub of Max Value Credits & Investments Ltd.</span>
+            <span className="hidden md:inline text-zinc-400">
+              Max Value Credits & Investments Ltd. (RBI Regulated NBFC)
+            </span>
             <Link 
-              href="/contact-us" 
+              href="/branch-network" 
               className="text-[#FCA038] hover:underline font-bold text-[11px] uppercase tracking-wider flex items-center gap-1"
             >
-              <Mail className="w-3 h-3" /> Media Desk
+              <MapPin className="w-3 h-3" /> 150+ Branches
             </Link>
           </div>
         </div>
@@ -139,17 +148,17 @@ export default function NewsPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center flex flex-col items-center">
           
           <span className="text-xs font-black uppercase tracking-widest text-[#FCA038] mb-3 flex items-center gap-2">
-            <Newspaper className="w-4 h-4" /> MAX VALUE EDITORIAL & MEDIA DESK
+            <Newspaper className="w-4 h-4" /> MAX VALUE CORPORATE MEDIA & COMMUNICATIONS DESK
           </span>
 
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-tight max-w-4xl mb-4">
-            Corporate News & <span className="text-[#FCA038]">Announcements</span>
+            Max Value News & <span className="text-[#FCA038]">Announcements</span>
           </h1>
 
           <div className="w-20 h-1.5 bg-[#FCA038] rounded-full mb-6" />
 
-          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-2xl mb-8">
-            Stay informed with official press announcements, branch milestones, financial innovation updates, and corporate growth stories across South India.
+          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-2xl mb-8 font-normal">
+            Stay updated with official Gold Loan developments, South India branch expansions, microfinance empowerment initiatives, and NBFC financial milestones from Max Value Credits & Investments Ltd.
           </p>
 
           {/* Search bar */}
@@ -157,7 +166,7 @@ export default function NewsPage() {
             <Search className="w-4 h-4 text-zinc-400 absolute left-4.5 top-4" />
             <input 
               type="text" 
-              placeholder="Search news releases, topics, or announcements..."
+              placeholder="Search by Gold Loans, Branch Network, Microfinance, or Press Releases..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/95 text-zinc-900 text-sm outline-none shadow-2xl placeholder:text-zinc-400 font-bold focus:ring-2 focus:ring-[#147FC3] backdrop-blur-sm transition-all"
@@ -200,7 +209,7 @@ export default function NewsPage() {
 
             <div className="hidden lg:flex items-center gap-2 text-xs font-bold text-zinc-400 shrink-0 pl-4 border-l border-zinc-200">
               <TrendingUp className="w-3.5 h-3.5 text-[#147FC3]" />
-              <span>{filteredArticles.length} Stories</span>
+              <span>{filteredArticles.length} News Articles</span>
             </div>
           </div>
         </div>
@@ -227,23 +236,74 @@ export default function NewsPage() {
             <p className="text-xs font-semibold text-rose-500 mt-1">Please refresh the page or check back shortly.</p>
           </div>
         ) : filteredArticles.length === 0 ? (
-          /* CLEAN EMPTY STATE (NO DEMO DATA) */
-          <div className="py-24 text-center text-zinc-500 bg-white rounded-3xl border border-zinc-200/90 shadow-sm p-8">
-            <Newspaper className="w-16 h-16 text-zinc-300 mx-auto mb-4" />
-            <h3 className="text-xl font-black text-zinc-800 uppercase tracking-tight">
-              {searchQuery ? "No Articles Found" : "No News Articles Published Yet"}
-            </h3>
-            <p className="text-sm font-semibold text-zinc-400 mt-2 max-w-md mx-auto leading-relaxed">
-              {searchQuery 
-                ? `We couldn't find any press releases matching "${searchQuery}". Try searching with different keywords.`
-                : "Stay tuned! Official press releases, branch inaugurations, and company announcements will appear here once published."}
-            </p>
+          /* ENHANCED BRANDED MAX VALUE EMPTY STATE */
+          <div className="py-16 bg-white rounded-3xl border border-zinc-200/90 shadow-sm p-8 text-center space-y-8">
+            <div className="w-16 h-16 rounded-2xl bg-[#147FC3]/10 text-[#147FC3] flex items-center justify-center mx-auto">
+              <Newspaper className="w-8 h-8" />
+            </div>
+
+            <div className="max-w-xl mx-auto space-y-2">
+              <h3 className="text-2xl font-black text-zinc-900 uppercase tracking-tight">
+                {searchQuery ? "No Matching News Found" : "Max Value Newsroom is Live"}
+              </h3>
+              <p className="text-sm font-medium text-zinc-500 leading-relaxed">
+                {searchQuery 
+                  ? `No publications found matching "${searchQuery}". Try selecting another category or resetting the search filter.`
+                  : "All official press releases, Gold Loan announcements, and branch expansion highlights will appear here dynamically as they are published by our media desk."}
+              </p>
+            </div>
+
+            {/* Quick Links / Explore Max Value Services */}
+            <div className="max-w-4xl mx-auto pt-6 border-t border-zinc-150">
+              <h4 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-4">
+                Explore Max Value Credit Solutions & Branch Network
+              </h4>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-left">
+                <Link 
+                  href="/gold-loan" 
+                  className="p-4 rounded-2xl bg-zinc-50 hover:bg-[#147FC3] hover:text-white transition-all group border border-zinc-200/80 cursor-pointer"
+                >
+                  <Coins className="w-5 h-5 text-[#FCA038] group-hover:text-white mb-2" />
+                  <h5 className="text-xs font-black uppercase tracking-tight">Express Gold Loans</h5>
+                  <p className="text-[11px] text-zinc-500 group-hover:text-white/80 mt-1">Instant appraisal & 3-minute disbursal</p>
+                </Link>
+
+                <Link 
+                  href="/microfinance" 
+                  className="p-4 rounded-2xl bg-zinc-50 hover:bg-[#147FC3] hover:text-white transition-all group border border-zinc-200/80 cursor-pointer"
+                >
+                  <Users className="w-5 h-5 text-[#147FC3] group-hover:text-white mb-2" />
+                  <h5 className="text-xs font-black uppercase tracking-tight">Microfinance</h5>
+                  <p className="text-[11px] text-zinc-500 group-hover:text-white/80 mt-1">Empowering women & rural livelihoods</p>
+                </Link>
+
+                <Link 
+                  href="/traders-loan" 
+                  className="p-4 rounded-2xl bg-zinc-50 hover:bg-[#147FC3] hover:text-white transition-all group border border-zinc-200/80 cursor-pointer"
+                >
+                  <Building2 className="w-5 h-5 text-[#FCA038] group-hover:text-white mb-2" />
+                  <h5 className="text-xs font-black uppercase tracking-tight">Traders Credit</h5>
+                  <p className="text-[11px] text-zinc-500 group-hover:text-white/80 mt-1">Working capital for retail merchants</p>
+                </Link>
+
+                <Link 
+                  href="/branch-network" 
+                  className="p-4 rounded-2xl bg-zinc-50 hover:bg-[#147FC3] hover:text-white transition-all group border border-zinc-200/80 cursor-pointer"
+                >
+                  <MapPin className="w-5 h-5 text-[#147FC3] group-hover:text-white mb-2" />
+                  <h5 className="text-xs font-black uppercase tracking-tight">Branch Network</h5>
+                  <p className="text-[11px] text-zinc-500 group-hover:text-white/80 mt-1">150+ locations across South India</p>
+                </Link>
+              </div>
+            </div>
+
             {searchQuery && (
               <button 
                 onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
-                className="mt-6 px-6 py-2.5 bg-zinc-900 hover:bg-[#147FC3] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-zinc-950 hover:bg-[#147FC3] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-colors cursor-pointer"
               >
-                Reset Filters
+                Reset Search Filters
               </button>
             )}
           </div>
@@ -258,11 +318,11 @@ export default function NewsPage() {
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 bg-[#FCA038] rounded-full" />
                     <h2 className="text-lg md:text-xl font-black uppercase text-zinc-950 tracking-tight">
-                      Editor's Spotlight & Featured Story
+                      Editor's Spotlight & Featured Announcement
                     </h2>
                   </div>
                   <span className="text-xs font-extrabold uppercase tracking-widest text-zinc-400">
-                    TOP STORY
+                    FEATURED STORY
                   </span>
                 </div>
 
@@ -279,6 +339,9 @@ export default function NewsPage() {
                           src={featuredArticle.bannerImage} 
                           alt={featuredArticle.title} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                          onError={(e: any) => {
+                            e.target.src = "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1200&q=80";
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent" />
                         
@@ -287,7 +350,7 @@ export default function NewsPage() {
                           {featuredArticle.category}
                         </span>
 
-                        {/* Bottom overlay text on mobile */}
+                        {/* Bottom overlay metadata */}
                         <div className="absolute bottom-5 left-5 right-5 text-white">
                           <div className="flex items-center gap-3 text-xs font-bold text-zinc-200 mb-2">
                             <span className="flex items-center gap-1">
@@ -317,7 +380,7 @@ export default function NewsPage() {
                         <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
                           <div className="flex items-center gap-2 text-xs font-bold text-zinc-500">
                             <User className="w-3.5 h-3.5 text-zinc-400" />
-                            <span>{featuredArticle.author || "Corporate Desk"}</span>
+                            <span>{featuredArticle.author || "Max Value Corporate Desk"}</span>
                           </div>
 
                           <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] group-hover:translate-x-1 transition-all">
@@ -332,7 +395,7 @@ export default function NewsPage() {
                   <div className="lg:col-span-4 flex flex-col gap-4">
                     <div className="bg-zinc-950 text-white p-5 rounded-2xl flex items-center gap-2">
                       <Flame className="w-5 h-5 text-[#FCA038]" />
-                      <span className="text-xs font-black uppercase tracking-wider">Trending Press Updates</span>
+                      <span className="text-xs font-black uppercase tracking-wider">Trending Max Value Updates</span>
                     </div>
 
                     <div className="flex flex-col gap-4 flex-1">
@@ -348,6 +411,9 @@ export default function NewsPage() {
                                 src={secArticle.bannerImage} 
                                 alt={secArticle.title} 
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                onError={(e: any) => {
+                                  e.target.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80";
+                                }}
                               />
                             </div>
 
@@ -393,7 +459,7 @@ export default function NewsPage() {
                   </h2>
                 </div>
                 <span className="text-xs font-extrabold uppercase tracking-widest text-zinc-400">
-                  LATEST ARTICLES
+                  LATEST RELEASES
                 </span>
               </div>
 
@@ -417,6 +483,9 @@ export default function NewsPage() {
                             src={article.bannerImage} 
                             alt={article.title} 
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            onError={(e: any) => {
+                              e.target.src = "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80";
+                            }}
                           />
                           <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-[#147FC3] text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                             {article.category}
@@ -450,7 +519,7 @@ export default function NewsPage() {
                       <div className="px-6 pb-6 pt-0 border-t border-zinc-100 pt-4 mt-auto">
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] font-semibold text-zinc-400">
-                            By {article.author || "Corporate Desk"}
+                            By {article.author || "Max Value Desk"}
                           </span>
                           
                           <span className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] group-hover:translate-x-1 transition-all">
@@ -467,20 +536,20 @@ export default function NewsPage() {
           </>
         )}
 
-        {/* 3. PRESS INQUIRY & MEDIA CONTACT BANNER */}
+        {/* 3. AT A GLANCE NBFC SUMMARY & MEDIA DESK BANNER */}
         <section className="bg-gradient-to-br from-zinc-950 to-zinc-900 text-white rounded-3xl p-8 md:p-12 border border-zinc-800 shadow-xl relative overflow-hidden">
           <div className="absolute right-0 top-0 w-96 h-96 bg-[#147FC3]/15 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FCA038] text-xs font-black uppercase tracking-wider border border-white/10">
-                <FileText className="w-3.5 h-3.5" /> MEDIA INQUIRIES & SPOKESPERSON DESK
+                <FileText className="w-3.5 h-3.5" /> MAX VALUE CREDITS CORPORATE COMMUNICATIONS
               </span>
               <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight">
-                Looking for Official Media Assets or Executive Statements?
+                Empowering Communities with Rapid & Transparent Credit
               </h3>
               <p className="text-zinc-300 text-xs md:text-sm font-medium leading-relaxed max-w-2xl">
-                Journalists, financial correspondents, and media representatives can reach our Corporate Communications desk for interview schedules, press kits, and verified corporate disclosures.
+                Max Value Credits & Investments Ltd. is an RBI-registered NBFC committed to financial inclusion through Gold Loans, Microfinance, Traders Credit, and MSME working capital across South India.
               </p>
             </div>
 
@@ -495,7 +564,7 @@ export default function NewsPage() {
                 href="/about-us"
                 className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-black uppercase tracking-wider rounded-2xl text-center transition-all border border-white/15 cursor-pointer"
               >
-                About Max Value
+                About Max Value Credits
               </Link>
             </div>
           </div>

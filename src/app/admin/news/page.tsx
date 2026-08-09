@@ -25,10 +25,10 @@ import {
   Quote,
   List,
   Clipboard,
-  Layers,
   Camera,
   Check,
-  RefreshCw
+  Building2,
+  Coins
 } from "lucide-react";
 
 interface ContentBlock {
@@ -59,36 +59,40 @@ interface NewsArticle {
 }
 
 const DEFAULT_CATEGORIES = [
-  "Expansion & Growth",
+  "Gold Loan Updates",
+  "Branch Expansion",
+  "Microfinance & CSR",
+  "Business & Traders Credit",
   "Digital Innovation",
-  "Awards & Recognition",
-  "Community & CSR",
-  "Corporate Events",
-  "Product Launch",
-  "Press Release",
-  "Financial Update"
+  "Financial Results & Growth",
+  "Awards & Milestones",
+  "Press Releases"
 ];
 
 const CURATED_IMAGE_PRESETS = [
   {
-    name: "Corporate Building",
+    name: "Gold Loan & Valuation",
+    url: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Branch Opening & Network",
     url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Fintech & Digital",
+    name: "Microfinance & Inclusion",
+    url: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Digital Credit Portal",
     url: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    name: "Leadership / Desk",
+    name: "Traders & MSME Finance",
+    url: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Corporate Executive Board",
     url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    name: "Award & Growth",
-    url: "https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    name: "Financial Inclusion",
-    url: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80"
   }
 ];
 
@@ -115,9 +119,9 @@ export default function AdminNewsPage() {
     supportingImages: SupportingImage[];
   }>({
     title: "",
-    category: "Expansion & Growth",
+    category: "Gold Loan Updates",
     date: "",
-    author: "Corporate Desk",
+    author: "Corporate Communications, Max Value Head Office",
     readTime: "3 min read",
     summary: "",
     bannerImage: "",
@@ -186,9 +190,9 @@ export default function AdminNewsPage() {
     setCurrentArticle(null);
     setFormData({
       title: "",
-      category: "Expansion & Growth",
+      category: "Gold Loan Updates",
       date: getTodayFormattedDate(),
-      author: "Corporate Desk",
+      author: "Corporate Communications, Max Value Head Office",
       readTime: "3 min read",
       summary: "",
       bannerImage: "",
@@ -205,9 +209,9 @@ export default function AdminNewsPage() {
     setCurrentArticle(article);
     setFormData({
       title: article.title,
-      category: article.category || "Expansion & Growth",
+      category: article.category || "Gold Loan Updates",
       date: article.date || getTodayFormattedDate(),
-      author: article.author || "Corporate Desk",
+      author: article.author || "Corporate Communications, Max Value Head Office",
       readTime: article.readTime || "3 min read",
       summary: article.summary,
       bannerImage: article.bannerImage,
@@ -385,7 +389,7 @@ export default function AdminNewsPage() {
         title: title.trim(),
         category: category.trim(),
         date: date.trim() || getTodayFormattedDate(),
-        author: author.trim() || "Corporate Desk",
+        author: author.trim() || "Corporate Communications, Max Value Head Office",
         readTime: readTime.trim() || "3 min read",
         summary: summary.trim(),
         bannerImage: bannerImage.trim(),
@@ -475,9 +479,14 @@ export default function AdminNewsPage() {
       {/* HEADER SECTION */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">NEWS & PRESS RELEASES</h1>
-          <p className="text-sm text-zinc-500 font-semibold mt-1">
-            Publish, edit, and manage corporate news articles, press updates, and media announcements.
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#FCA038]/20 text-[#FCA038] font-black text-[10px] uppercase tracking-wider">
+              Max Value Credits & Investments Ltd.
+            </span>
+          </div>
+          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">NEWSROOM & PRESS RELEASES</h1>
+          <p className="text-sm text-zinc-500 font-semibold mt-0.5">
+            Publish official announcements, Gold Loan rate updates, branch inaugurations, and microfinance achievements.
           </p>
         </div>
         <button
@@ -503,7 +512,7 @@ export default function AdminNewsPage() {
 
         <div className="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-[#FCA038]/15 text-[#FCA038] flex items-center justify-center font-bold">
-            <Tag className="w-6 h-6" />
+            <Coins className="w-6 h-6" />
           </div>
           <div>
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Active Categories</p>
@@ -513,11 +522,11 @@ export default function AdminNewsPage() {
 
         <div className="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-            <Sparkles className="w-6 h-6" />
+            <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Database Mode</p>
-            <h3 className="text-sm font-black text-emerald-600 uppercase">Live Firestore CRUD</h3>
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Corporate Hub</p>
+            <h3 className="text-sm font-black text-emerald-600 uppercase">Max Value News Desk</h3>
           </div>
         </div>
       </div>
@@ -530,7 +539,7 @@ export default function AdminNewsPage() {
           <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
           <input
             type="text"
-            placeholder="Search by article headline, topic, or author..."
+            placeholder="Search by article headline, branch expansion, gold loans, or author..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm focus:bg-white focus:border-[#147FC3] outline-none font-bold text-zinc-700 placeholder:text-zinc-400 transition-all"
@@ -563,7 +572,7 @@ export default function AdminNewsPage() {
         {loading ? (
           <div className="p-16 flex flex-col items-center justify-center gap-3">
             <div className="w-8 h-8 rounded-full border-4 border-zinc-200 border-t-[#147FC3] animate-spin" />
-            <p className="text-xs font-bold text-zinc-400">Loading News Database...</p>
+            <p className="text-xs font-bold text-zinc-400">Loading Max Value News Database...</p>
           </div>
         ) : error ? (
           <div className="p-16 text-center text-rose-500 font-bold text-sm">
@@ -574,16 +583,16 @@ export default function AdminNewsPage() {
           <div className="p-16 text-center text-zinc-400 font-bold text-sm flex flex-col items-center justify-center">
             <Newspaper className="w-12 h-12 mb-3 text-zinc-300" />
             No News Articles Found
-            {searchTerm && <span className="text-xs font-normal text-zinc-400 mt-1">Try adjusting your search criteria.</span>}
+            {searchTerm && <span className="text-xs font-normal text-zinc-400 mt-1">Try searching for Gold Loans, Branch Expansion, or Microfinance.</span>}
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
               <thead className="bg-zinc-50 text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-200">
                 <tr>
-                  <th className="p-4 pl-6">Article Headline & Image</th>
+                  <th className="p-4 pl-6">Article Headline & Media</th>
                   <th className="p-4">Category</th>
-                  <th className="p-4">Author</th>
+                  <th className="p-4">Author / Desk</th>
                   <th className="p-4">Publish Date</th>
                   <th className="p-4 text-right pr-6">Actions</th>
                 </tr>
@@ -715,10 +724,10 @@ export default function AdminNewsPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-zinc-900 tracking-tight">
-                      {currentArticle ? "EDIT NEWS ARTICLE" : "PUBLISH NEW ARTICLE"}
+                      {currentArticle ? "EDIT NEWS ARTICLE" : "PUBLISH MAX VALUE ANNOUNCEMENT"}
                     </h3>
                     <p className="text-xs text-zinc-400 font-bold mt-0.5">
-                      {currentArticle ? `Editing ID: ${currentArticle.id}` : "Publish an official announcement to the live news database."}
+                      {currentArticle ? `Editing ID: ${currentArticle.id}` : "Publish a verified press update to the Max Value corporate news portal."}
                     </p>
                   </div>
                 </div>
@@ -741,7 +750,7 @@ export default function AdminNewsPage() {
                   </div>
                 )}
 
-                {/* 1. MAIN BANNER IMAGE URL SETUP WITH ENHANCED LIVE PREVIEW & PASTE SHORTCUT */}
+                {/* 1. MAIN BANNER IMAGE URL SETUP */}
                 <div className="p-5 bg-zinc-50/80 border border-zinc-200/90 rounded-2xl space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -762,7 +771,7 @@ export default function AdminNewsPage() {
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Paste image link here (e.g. https://images.unsplash.com/... or /assets/news-cover.jpg)"
+                      placeholder="e.g. https://images.unsplash.com/photo-... or /assets/gold-loan-inauguration.jpg"
                       value={formData.bannerImage}
                       onChange={(e) => setFormData(prev => ({ ...prev, bannerImage: e.target.value }))}
                       className="flex-1 px-4 py-2.5 bg-white border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:border-[#147FC3] outline-none transition-all"
@@ -781,14 +790,14 @@ export default function AdminNewsPage() {
                   {/* Sample Presets Helper */}
                   <div className="flex flex-wrap items-center gap-1.5 pt-1">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mr-1">
-                      Quick Presets:
+                      Max Value Presets:
                     </span>
                     {CURATED_IMAGE_PRESETS.map((preset) => (
                       <button
                         key={preset.name}
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, bannerImage: preset.url }))}
-                        className="px-2.5 py-1 bg-white hover:bg-zinc-200/80 border border-zinc-200 rounded-lg text-[10px] font-bold text-zinc-600 transition-colors cursor-pointer"
+                        className="px-2.5 py-1 bg-white hover:bg-[#147FC3] hover:text-white border border-zinc-200 rounded-lg text-[10px] font-bold text-zinc-600 transition-colors cursor-pointer"
                       >
                         {preset.name}
                       </button>
@@ -819,7 +828,7 @@ export default function AdminNewsPage() {
                   )}
                 </div>
 
-                {/* 2. CORE DETAILS (Title, Category, Author, Date, Read Time) */}
+                {/* 2. CORE DETAILS */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   
                   {/* Title */}
@@ -829,7 +838,7 @@ export default function AdminNewsPage() {
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Max Value Expands Branch Network to Over 150 Locations Across South India"
+                      placeholder="e.g. Max Value Expands Gold Loan & Microfinance Network with 25 New Branches Across Kerala & Tamil Nadu"
                       value={formData.title}
                       onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                       className="px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:bg-white focus:border-[#147FC3] outline-none transition-all"
@@ -857,11 +866,11 @@ export default function AdminNewsPage() {
                   {/* Author */}
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                      Author / Desk
+                      Author / Department Desk
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Corporate Desk, Technology Desk"
+                      placeholder="e.g. Corporate Communications, Max Value Head Office"
                       value={formData.author}
                       onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
                       className="px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 focus:bg-white focus:border-[#147FC3] outline-none transition-all"
@@ -905,14 +914,14 @@ export default function AdminNewsPage() {
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="Short 1-2 sentence overview shown in the article preview cards and lead headline..."
+                    placeholder="e.g. Max Value Credits & Investments Ltd. marks significant growth with new branch openings, bringing doorstep gold valuation and microfinance loans to over 100,000 customers..."
                     value={formData.summary}
                     onChange={(e) => setFormData(prev => ({ ...prev, summary: e.target.value }))}
                     className="px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 focus:bg-white focus:border-[#147FC3] outline-none transition-all resize-none leading-relaxed"
                   />
                 </div>
 
-                {/* 4. FULL ARTICLE CONTENT BUILDER (Including Inline Images) */}
+                {/* 4. FULL ARTICLE CONTENT BUILDER */}
                 <div className="border-t border-zinc-150 pt-5 space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
@@ -993,7 +1002,7 @@ export default function AdminNewsPage() {
                                 <span className="w-2 h-2 rounded-full bg-[#147FC3] shrink-0" />
                                 <input
                                   type="text"
-                                  placeholder="List bullet item..."
+                                  placeholder="e.g. Doorstep Gold Loan appraisal within 3 minutes..."
                                   value={item}
                                   onChange={(e) => handleListItemChange(bIdx, itemIdx, e.target.value)}
                                   className="flex-1 px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3]"
@@ -1012,7 +1021,7 @@ export default function AdminNewsPage() {
                               onClick={() => handleAddListItem(bIdx)}
                               className="text-[11px] font-bold text-[#147FC3] hover:underline flex items-center gap-1 cursor-pointer mt-1"
                             >
-                              <PlusCircle className="w-3 h-3" /> Add item
+                              <PlusCircle className="w-3 h-3" /> Add point
                             </button>
                           </div>
                         ) : block.type === "image" ? (
@@ -1020,7 +1029,7 @@ export default function AdminNewsPage() {
                             <div className="flex gap-2 items-center">
                               <input
                                 type="text"
-                                placeholder="Paste inline image URL..."
+                                placeholder="Paste inline image URL (e.g. branch counter, ceremony)..."
                                 value={block.url || ""}
                                 onChange={(e) => handleContentImageChange(bIdx, "url", e.target.value)}
                                 className="flex-1 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
@@ -1028,7 +1037,7 @@ export default function AdminNewsPage() {
                             </div>
                             <input
                               type="text"
-                              placeholder="Photo caption (e.g. Dignitaries at the press conference)..."
+                              placeholder="Photo caption (e.g. Dignitaries and management at the branch opening ceremony)..."
                               value={block.caption || ""}
                               onChange={(e) => handleContentImageChange(bIdx, "caption", e.target.value)}
                               className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
@@ -1044,9 +1053,9 @@ export default function AdminNewsPage() {
                             rows={block.type === "heading" ? 1 : 3}
                             placeholder={
                               block.type === "heading"
-                                ? "Subheading title..."
+                                ? "Subheading title (e.g. Accelerating Financial Inclusion Across South India)..."
                                 : block.type === "quote"
-                                ? "Notable executive quote or testimonial..."
+                                ? "Notable quote (e.g. 'Our mission is to empower everyday families and traders with rapid, dignified credit')..."
                                 : "Write paragraph text..."
                             }
                             value={block.text || ""}
@@ -1112,7 +1121,7 @@ export default function AdminNewsPage() {
                             <div className="flex gap-2">
                               <input
                                 type="text"
-                                placeholder="Image URL (e.g. https://images.unsplash.com/...)"
+                                placeholder="Paste Image URL (e.g. https://images.unsplash.com/...)"
                                 value={img.url}
                                 onChange={(e) => handleSupportingImageChange(idx, "url", e.target.value)}
                                 className="flex-1 px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
@@ -1128,7 +1137,7 @@ export default function AdminNewsPage() {
                             </div>
                             <input
                               type="text"
-                              placeholder="Photo caption (e.g. Ribbon-cutting ceremony at new branch)"
+                              placeholder="Photo caption (e.g. Ribbon-cutting ceremony at the new branch in Thrissur)..."
                               value={img.caption}
                               onChange={(e) => handleSupportingImageChange(idx, "caption", e.target.value)}
                               className="w-full px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
@@ -1169,7 +1178,7 @@ export default function AdminNewsPage() {
                     {formSubmitting && (
                       <div className="w-3.5 h-3.5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
                     )}
-                    {currentArticle ? "Save Changes" : "Publish Article"}
+                    {currentArticle ? "Save Changes" : "Publish Announcement"}
                   </button>
                 </div>
 

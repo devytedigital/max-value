@@ -20,7 +20,11 @@ import {
   Quote,
   Link2,
   Image as ImageIcon,
-  AlertCircle
+  AlertCircle,
+  Coins,
+  Building2,
+  Phone,
+  MapPin
 } from "lucide-react";
 
 export default function NewsDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
@@ -81,7 +85,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
   const handleWhatsAppShare = () => {
     if (typeof window !== "undefined") {
       const url = encodeURIComponent(window.location.href);
-      const text = encodeURIComponent(`Read this article on Max Value: ${article?.title || ""}\n`);
+      const text = encodeURIComponent(`Read this official press update on Max Value Credits: ${article?.title || ""}\n`);
       window.open(`https://api.whatsapp.com/send?text=${text}${url}`, "_blank");
     }
   };
@@ -108,7 +112,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
             </div>
           </div>
         ) : error || !article ? (
-          /* NOT FOUND / ERROR STATE (NO DEMO DATA) */
+          /* NOT FOUND / ERROR STATE */
           <div className="max-w-xl mx-auto px-6 py-20 text-center space-y-6 bg-white rounded-3xl border border-zinc-200 shadow-sm p-8">
             <Newspaper className="w-16 h-16 text-zinc-300 mx-auto" />
             <h2 className="text-2xl font-black text-zinc-900 uppercase">Article Not Found</h2>
@@ -137,7 +141,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
               </Link>
 
               <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-zinc-400">
-                <span>News</span>
+                <span>Max Value News</span>
                 <ChevronRight className="w-3.5 h-3.5" />
                 <span className="text-[#147FC3]">{article.category}</span>
               </div>
@@ -166,7 +170,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
 
               <span className="flex items-center gap-1.5 text-xs font-bold text-zinc-500">
                 <User className="w-3.5 h-3.5 text-zinc-400" />
-                {article.author || "Corporate Desk"}
+                {article.author || "Max Value Corporate Desk"}
               </span>
             </div>
 
@@ -187,7 +191,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
                     {article.author || "Corporate Communications Desk"}
                   </h4>
                   <p className="text-[11px] text-zinc-400 font-semibold">
-                    Max Value Credits & Investments Ltd.
+                    Max Value Credits & Investments Ltd. (RBI Regulated NBFC)
                   </p>
                 </div>
               </div>
@@ -218,7 +222,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
             {/* SUMMARY LEAD BOX */}
             <div className="p-6 md:p-8 bg-amber-50/70 border-l-4 border-[#FCA038] rounded-r-3xl mb-10 shadow-xs">
               <span className="text-[10px] font-black uppercase tracking-widest text-[#FCA038] mb-2 block">
-                EXECUTIVE SUMMARY
+                OFFICIAL PRESS RELEASE SUMMARY
               </span>
               <p className="text-zinc-800 text-base md:text-lg font-semibold leading-relaxed">
                 {article.summary}
@@ -232,7 +236,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
                 alt={article.title} 
                 className="w-full h-full object-cover"
                 onError={(e: any) => {
-                  e.target.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80";
+                  e.target.src = "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1200&q=80";
                 }}
               />
             </div>
@@ -270,7 +274,7 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
                   return (
                     <div key={index} className="my-6 p-6 bg-zinc-50 border border-zinc-200/90 rounded-2xl space-y-3">
                       <span className="text-xs font-black uppercase text-zinc-400 tracking-wider block">
-                        KEY HIGHLIGHTS
+                        KEY HIGHLIGHTS & SUMMARY
                       </span>
                       <ul className="space-y-3 font-semibold text-zinc-800 text-sm md:text-base">
                         {block.items.map((item, itemIdx) => (
@@ -336,8 +340,38 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
               </div>
             )}
 
+            {/* MAX VALUE LOAN PRODUCTS ACTION BANNER */}
+            <div className="mt-14 p-8 rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-[#147FC3]/90 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+              <div className="space-y-2 text-center sm:text-left">
+                <span className="px-3 py-1 rounded-full bg-white/10 text-[#FCA038] text-[10px] font-black uppercase tracking-wider">
+                  MAX VALUE FINANCIAL SERVICES
+                </span>
+                <h4 className="text-xl font-black uppercase tracking-tight">
+                  Need Quick Gold Loans or Business Credit?
+                </h4>
+                <p className="text-xs text-zinc-300 font-medium">
+                  Visit your nearest branch for doorstep appraisal with transparent interest rates.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <Link
+                  href="/branch-network"
+                  className="px-5 py-2.5 bg-[#FCA038] hover:bg-white hover:text-zinc-900 text-zinc-950 text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer"
+                >
+                  Locate Branch
+                </Link>
+                <Link
+                  href="/gold-loan"
+                  className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all border border-white/15 cursor-pointer"
+                >
+                  Gold Loans
+                </Link>
+              </div>
+            </div>
+
             {/* BOTTOM ARTICLE ACTIONS */}
-            <div className="mt-14 pt-8 border-t border-zinc-200 flex flex-wrap items-center justify-between gap-4">
+            <div className="mt-10 pt-8 border-t border-zinc-200 flex flex-wrap items-center justify-between gap-4">
               <button
                 onClick={handleShare}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-zinc-900 hover:bg-[#147FC3] text-white text-xs font-black uppercase tracking-wider transition-all cursor-pointer shadow-md shadow-zinc-950/10"
