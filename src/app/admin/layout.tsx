@@ -223,8 +223,7 @@ export default function AdminLayout({
 
   return (
     <div
-      data-lenis-prevent
-      className="min-h-screen w-full bg-[#F8FAFC] flex flex-col font-sans select-none antialiased relative overflow-hidden"
+      className="min-h-screen w-full bg-[#F8FAFC] flex flex-col font-sans antialiased relative"
     >
       
       {/* DESKTOP HOVER-EXPANDING SIDEBAR */}
@@ -233,11 +232,11 @@ export default function AdminLayout({
         onMouseLeave={handleMouseLeave}
         className={`hidden lg:flex fixed left-0 top-0 bottom-0 ${
           isHovered ? "w-72 shadow-[0_0_50px_rgba(0,0,0,0.6)]" : "w-20 shadow-xl"
-        } bg-gradient-to-b from-slate-950 via-zinc-950 to-slate-950 flex-col z-40 text-slate-300 border-r border-slate-850/80 transition-all duration-300 ease-out backdrop-blur-xl`}
+        } bg-gradient-to-b from-slate-950 via-zinc-950 to-slate-950 flex-col z-40 text-slate-300 border-r border-slate-855/80 transition-all duration-300 ease-out backdrop-blur-xl`}
       >
         
         {/* Brand Logo Header */}
-        <div className={`h-20 ${isHovered ? "px-6 justify-start" : "px-3 justify-center"} flex items-center border-b border-slate-850/80 transition-all shrink-0`}>
+        <div className={`h-20 ${isHovered ? "px-6 justify-start" : "px-3 justify-center"} flex items-center border-b border-slate-855/80 transition-all shrink-0`}>
           <Link href="/admin" className="flex items-center gap-2 overflow-hidden">
             <img 
               src="/maxvalue-logo.png" 
@@ -329,7 +328,7 @@ export default function AdminLayout({
         </nav>
 
         {/* Sidebar Footer User Details */}
-        <div className="p-3 border-t border-slate-850/80 bg-slate-950/60 shrink-0">
+        <div className="p-3 border-t border-slate-855/80 bg-slate-950/60 shrink-0">
           {!isHovered ? (
             <div className="flex flex-col items-center gap-2">
               <div 
@@ -529,11 +528,11 @@ export default function AdminLayout({
 
       {/* CONTENT INNER CONTAINER */}
       <div 
-        className="flex-1 min-w-0 lg:pl-20 flex flex-col relative z-10"
+        className="flex-1 min-w-0 lg:pl-20 flex flex-col min-h-screen"
       >
         
-        {/* TOP BAR / NAVIGATION HEADER */}
-        <header className="h-20 bg-white border-b border-zinc-150/70 px-4 sm:px-8 flex items-center justify-between shrink-0 relative z-25">
+        {/* TOP BAR / STICKY NAVIGATION HEADER */}
+        <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-zinc-150/70 px-4 sm:px-8 h-20 flex items-center justify-between shrink-0 z-20">
           
           <div className="flex items-center gap-4">
             {/* Mobile Hamburger Drawer Trigger */}
@@ -643,7 +642,7 @@ export default function AdminLayout({
         </header>
 
         {/* PAGE CONTENT CONTAINER */}
-        <main className="flex-1 p-4 sm:p-8 md:p-10 overflow-y-auto max-w-[1600px] w-full mx-auto font-sans">
+        <main className="flex-1 p-4 sm:p-8 md:p-10 max-w-[1600px] w-full mx-auto font-sans">
           {isRestrictedAdminRoute ? (
             /* ACCESS RESTRICTED SCREEN FOR NORMAL USERS */
             <div className="py-20 text-center max-w-lg mx-auto bg-white rounded-3xl border border-zinc-200 shadow-sm p-8 space-y-5">
