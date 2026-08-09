@@ -4,7 +4,7 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { newsArticles as fallbackNewsArticles, NewsArticle } from "@/data/newsData";
+import { NewsArticle } from "@/data/newsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowLeft, 
@@ -16,16 +16,11 @@ import {
   Newspaper,
   Tag,
   ArrowRight,
-  Bookmark,
-  MessageSquare,
-  Sparkles,
-  Link2,
-  ExternalLink,
   ChevronRight,
   Quote,
-  Eye,
-  Building2,
-  Phone
+  Link2,
+  Image as ImageIcon,
+  AlertCircle
 } from "lucide-react";
 
 export default function NewsDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
@@ -46,41 +41,25 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
         setLoading(true);
         setError("");
 
-        // 1. Fetch the target article
+        // 1. Fetch target article from Firestore API
         const res = await fetch(`/api/news/${articleId}`);
         if (res.ok) {
           const data = await res.json();
           setArticle(data);
         } else {
-          // Fallback to static seed
-          const fallback = fallbackNewsArticles.find((item) => item.id === articleId);
-          if (fallback) {
-            setArticle(fallback);
-          } else {
-            setError("News article not found");
-          }
+          setError("News article not found");
         }
 
-        // 2. Fetch related articles
+        // 2. Fetch related articles from Firestore API
         const listRes = await fetch("/api/news");
         if (listRes.ok) {
           const listData = await listRes.json();
-          if (Array.isArray(listData) && listData.length > 0) {
+          if (Array.isArray(listData)) {
             setRelatedArticles(listData.filter((item: any) => item.id !== articleId).slice(0, 3));
-          } else {
-            setRelatedArticles(fallbackNewsArticles.filter((item) => item.id !== articleId).slice(0, 3));
           }
-        } else {
-          setRelatedArticles(fallbackNewsArticles.filter((item) => item.id !== articleId).slice(0, 3));
         }
       } catch (err: any) {
-        const fallback = fallbackNewsArticles.find((item) => item.id === articleId);
-        if (fallback) {
-          setArticle(fallback);
-          setRelatedArticles(fallbackNewsArticles.filter((item) => item.id !== articleId).slice(0, 3));
-        } else {
-          setError(err.message || "Failed to load article");
-        }
+        setError(err.message || "Failed to load article from database");
       } finally {
         setLoading(false);
       }
@@ -129,16 +108,16 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
             </div>
           </div>
         ) : error || !article ? (
-          /* NOT FOUND / ERROR STATE */
+          /* NOT FOUND / ERROR STATE (NO DEMO DATA) */
           <div className="max-w-xl mx-auto px-6 py-20 text-center space-y-6 bg-white rounded-3xl border border-zinc-200 shadow-sm p-8">
             <Newspaper className="w-16 h-16 text-zinc-300 mx-auto" />
             <h2 className="text-2xl font-black text-zinc-900 uppercase">Article Not Found</h2>
             <p className="text-sm font-semibold text-zinc-500">
-              The news article you are looking for might have been moved, updated, or unpublished.
+              The news article you are looking for does not exist or may have been removed.
             </p>
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#147FC3] hover:bg-zinc-950 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#147FC3] hover:bg-zinc-950 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" /> Back to News Feed
             </Link>
@@ -301,6 +280,25 @@ export default function NewsDetailPage({ params }: { params: Promise<{ id: strin
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  );
+                }
+
+                if (block.type === "image" && block.url) {
+                  return (
+                    <div key={index} className="my-8 space-y-2">
+                      <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border border-zinc-200 shadow-md bg-zinc-100">
+                        <img 
+                          src={block.url} 
+                          alt={block.caption || "Article photo"} 
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                        />
+                      </div>
+                      {block.caption && (
+                        <p className="text-xs text-center text-zinc-500 font-medium italic">
+                          {block.caption}
+                        </p>
+                      )}
                     </div>
                   );
                 }

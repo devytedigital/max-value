@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { newsArticles as fallbackNewsArticles, NewsArticle } from "@/data/newsData";
+import { NewsArticle } from "@/data/newsData";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Newspaper, 
@@ -18,39 +18,38 @@ import {
   Flame,
   ChevronRight,
   TrendingUp,
-  Bookmark,
-  Share2,
-  Filter,
-  CheckCircle2,
   Mail,
-  FileText
+  FileText,
+  AlertCircle
 } from "lucide-react";
 
 export default function NewsPage() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  // Dynamic API Fetching
+  // Dynamic API Fetching from Firestore
   useEffect(() => {
     const fetchNews = async () => {
       try {
         setLoading(true);
+        setError("");
         const res = await fetch("/api/news");
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
+          if (Array.isArray(data)) {
             setArticles(data);
           } else {
-            // Fallback to static seed if database has not yet been seeded
-            setArticles(fallbackNewsArticles);
+            setArticles([]);
           }
         } else {
-          setArticles(fallbackNewsArticles);
+          throw new Error("Failed to load news articles from server");
         }
-      } catch (err) {
-        setArticles(fallbackNewsArticles);
+      } catch (err: any) {
+        setError(err.message || "Failed to load live news feed");
+        setArticles([]);
       } finally {
         setLoading(false);
       }
@@ -66,7 +65,9 @@ export default function NewsPage() {
     "Awards & Recognition",
     "Community & CSR",
     "Corporate Events",
-    "Product Launch"
+    "Product Launch",
+    "Press Release",
+    "Financial Update"
   ];
 
   const filteredArticles = articles.filter((article) => {
@@ -79,14 +80,11 @@ export default function NewsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const featuredArticle = filteredArticles.length > 0 ? filteredArticles[0] : (articles[0] || fallbackNewsArticles[0]);
-  const secondaryHeadlines = filteredArticles.length > 1 
-    ? filteredArticles.slice(1, 4) 
-    : (articles.slice(1, 4).length > 0 ? articles.slice(1, 4) : fallbackNewsArticles.slice(1, 4));
-
+  const featuredArticle = filteredArticles.length > 0 ? filteredArticles[0] : null;
+  const secondaryHeadlines = filteredArticles.length > 1 ? filteredArticles.slice(1, 4) : [];
   const remainingArticles = filteredArticles.length > 4 
     ? filteredArticles.slice(4) 
-    : (selectedCategory !== "All" || searchQuery !== "" ? filteredArticles.slice(1) : articles.slice(4));
+    : (selectedCategory !== "All" || searchQuery !== "" ? filteredArticles.slice(1) : filteredArticles.slice(4));
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -151,7 +149,7 @@ export default function NewsPage() {
           <div className="w-20 h-1.5 bg-[#FCA038] rounded-full mb-6" />
 
           <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-2xl mb-8">
-            Stay informed with verified press announcements, branch milestones, financial innovation updates, and corporate growth stories across South India.
+            Stay informed with official press announcements, branch milestones, financial innovation updates, and corporate growth stories across South India.
           </p>
 
           {/* Search bar */}
@@ -167,7 +165,7 @@ export default function NewsPage() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-3.5 text-xs font-bold text-zinc-400 hover:text-zinc-700 uppercase"
+                className="absolute right-4 top-3.5 text-xs font-bold text-zinc-400 hover:text-zinc-700 uppercase cursor-pointer"
               >
                 Clear
               </button>
@@ -202,7 +200,7 @@ export default function NewsPage() {
 
             <div className="hidden lg:flex items-center gap-2 text-xs font-bold text-zinc-400 shrink-0 pl-4 border-l border-zinc-200">
               <TrendingUp className="w-3.5 h-3.5 text-[#147FC3]" />
-              <span>{filteredArticles.length} Stories Available</span>
+              <span>{filteredArticles.length} Stories</span>
             </div>
           </div>
         </div>
@@ -221,24 +219,37 @@ export default function NewsPage() {
               <div className="h-64 bg-zinc-200 rounded-2xl" />
             </div>
           </div>
+        ) : error ? (
+          /* ERROR STATE */
+          <div className="py-20 text-center text-rose-600 bg-rose-50 border border-rose-200 rounded-3xl p-8">
+            <AlertCircle className="w-12 h-12 text-rose-400 mx-auto mb-3" />
+            <h3 className="text-lg font-black uppercase">{error}</h3>
+            <p className="text-xs font-semibold text-rose-500 mt-1">Please refresh the page or check back shortly.</p>
+          </div>
         ) : filteredArticles.length === 0 ? (
-          /* EMPTY STATE */
+          /* CLEAN EMPTY STATE (NO DEMO DATA) */
           <div className="py-24 text-center text-zinc-500 bg-white rounded-3xl border border-zinc-200/90 shadow-sm p-8">
             <Newspaper className="w-16 h-16 text-zinc-300 mx-auto mb-4" />
-            <h3 className="text-xl font-black text-zinc-800 uppercase tracking-tight">No Articles Found</h3>
-            <p className="text-sm font-semibold text-zinc-400 mt-2 max-w-md mx-auto">
-              We couldn't find any press releases matching "{searchQuery}". Try searching with different keywords.
+            <h3 className="text-xl font-black text-zinc-800 uppercase tracking-tight">
+              {searchQuery ? "No Articles Found" : "No News Articles Published Yet"}
+            </h3>
+            <p className="text-sm font-semibold text-zinc-400 mt-2 max-w-md mx-auto leading-relaxed">
+              {searchQuery 
+                ? `We couldn't find any press releases matching "${searchQuery}". Try searching with different keywords.`
+                : "Stay tuned! Official press releases, branch inaugurations, and company announcements will appear here once published."}
             </p>
-            <button 
-              onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
-              className="mt-6 px-6 py-2.5 bg-zinc-900 hover:bg-[#147FC3] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-colors cursor-pointer"
-            >
-              Reset Filters
-            </button>
+            {searchQuery && (
+              <button 
+                onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
+                className="mt-6 px-6 py-2.5 bg-zinc-900 hover:bg-[#147FC3] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Reset Filters
+              </button>
+            )}
           </div>
         ) : (
           <>
-            {/* 1. SPOTLIGHT & TRENDING DUAL EDITORIAL ROW (Visible when All selected or no active search) */}
+            {/* 1. SPOTLIGHT & TRENDING DUAL EDITORIAL ROW */}
             {selectedCategory === "All" && searchQuery === "" && featuredArticle && (
               <section className="space-y-8">
                 
@@ -247,7 +258,7 @@ export default function NewsPage() {
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 bg-[#FCA038] rounded-full" />
                     <h2 className="text-lg md:text-xl font-black uppercase text-zinc-950 tracking-tight">
-                      Editor's Spotlight & Featured Stories
+                      Editor's Spotlight & Featured Story
                     </h2>
                   </div>
                   <span className="text-xs font-extrabold uppercase tracking-widest text-zinc-400">
@@ -325,38 +336,44 @@ export default function NewsPage() {
                     </div>
 
                     <div className="flex flex-col gap-4 flex-1">
-                      {secondaryHeadlines.map((secArticle) => (
-                        <Link
-                          key={secArticle.id}
-                          href={`/news/${secArticle.id}`}
-                          className="group flex items-start gap-4 p-4 bg-white rounded-2xl border border-zinc-200 shadow-xs hover:shadow-md transition-all cursor-pointer flex-1"
-                        >
-                          <div className="w-24 h-24 rounded-xl overflow-hidden bg-zinc-100 shrink-0 relative">
-                            <img 
-                              src={secArticle.bannerImage} 
-                              alt={secArticle.title} 
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          </div>
-
-                          <div className="flex flex-col justify-between flex-1 h-full">
-                            <div>
-                              <span className="text-[10px] font-black uppercase tracking-wider text-[#147FC3]">
-                                {secArticle.category}
-                              </span>
-                              <h4 className="text-xs font-extrabold text-zinc-900 uppercase line-clamp-2 leading-snug group-hover:text-[#147FC3] transition-colors mt-1">
-                                {secArticle.title}
-                              </h4>
+                      {secondaryHeadlines.length > 0 ? (
+                        secondaryHeadlines.map((secArticle) => (
+                          <Link
+                            key={secArticle.id}
+                            href={`/news/${secArticle.id}`}
+                            className="group flex items-start gap-4 p-4 bg-white rounded-2xl border border-zinc-200 shadow-xs hover:shadow-md transition-all cursor-pointer flex-1"
+                          >
+                            <div className="w-24 h-24 rounded-xl overflow-hidden bg-zinc-100 shrink-0 relative">
+                              <img 
+                                src={secArticle.bannerImage} 
+                                alt={secArticle.title} 
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
                             </div>
 
-                            <div className="flex items-center gap-2 text-[10px] font-semibold text-zinc-400 mt-2">
-                              <span>{secArticle.date}</span>
-                              <span>•</span>
-                              <span>{secArticle.readTime}</span>
+                            <div className="flex flex-col justify-between flex-1 h-full">
+                              <div>
+                                <span className="text-[10px] font-black uppercase tracking-wider text-[#147FC3]">
+                                  {secArticle.category}
+                                </span>
+                                <h4 className="text-xs font-extrabold text-zinc-900 uppercase line-clamp-2 leading-snug group-hover:text-[#147FC3] transition-colors mt-1">
+                                  {secArticle.title}
+                                </h4>
+                              </div>
+
+                              <div className="flex items-center gap-2 text-[10px] font-semibold text-zinc-400 mt-2">
+                                <span>{secArticle.date}</span>
+                                <span>•</span>
+                                <span>{secArticle.readTime}</span>
+                              </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        ))
+                      ) : (
+                        <div className="p-6 bg-white rounded-2xl border border-zinc-200 text-center text-xs text-zinc-400 font-medium">
+                          Additional news releases will appear here as they are published.
+                        </div>
+                      )}
                     </div>
                   </div>
 

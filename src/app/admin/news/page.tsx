@@ -20,17 +20,23 @@ import {
   PlusCircle,
   Trash,
   Tag,
-  Eye,
   Sparkles,
   AlignLeft,
   Quote,
-  List
+  List,
+  Clipboard,
+  Layers,
+  Camera,
+  Check,
+  RefreshCw
 } from "lucide-react";
 
 interface ContentBlock {
-  type: "paragraph" | "heading" | "quote" | "list";
+  type: "paragraph" | "heading" | "quote" | "list" | "image";
   text?: string;
   items?: string[];
+  url?: string;
+  caption?: string;
 }
 
 interface SupportingImage {
@@ -61,6 +67,29 @@ const DEFAULT_CATEGORIES = [
   "Product Launch",
   "Press Release",
   "Financial Update"
+];
+
+const CURATED_IMAGE_PRESETS = [
+  {
+    name: "Corporate Building",
+    url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Fintech & Digital",
+    url: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Leadership / Desk",
+    url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Award & Growth",
+    url: "https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    name: "Financial Inclusion",
+    url: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80"
+  }
 ];
 
 export default function AdminNewsPage() {
@@ -98,6 +127,7 @@ export default function AdminNewsPage() {
 
   const [formError, setFormError] = useState("");
   const [formSubmitting, setFormSubmitting] = useState(false);
+  const [copiedBanner, setCopiedBanner] = useState(false);
 
   // Delete Confirmation Modal State
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -192,14 +222,34 @@ export default function AdminNewsPage() {
     setModalOpen(true);
   };
 
+  // Clipboard Paste Helper for Banner
+  const handlePasteBannerUrl = async () => {
+    try {
+      if (navigator.clipboard) {
+        const text = await navigator.clipboard.readText();
+        if (text && (text.startsWith("http://") || text.startsWith("https://") || text.startsWith("/"))) {
+          setFormData((prev) => ({ ...prev, bannerImage: text.trim() }));
+          setCopiedBanner(true);
+          setTimeout(() => setCopiedBanner(false), 2000);
+        } else {
+          showToast("Clipboard does not contain a valid image URL", "error");
+        }
+      }
+    } catch (e) {
+      showToast("Unable to read clipboard. Please paste manually.", "error");
+    }
+  };
+
   // Content Block Handlers
-  const handleAddContentBlock = (type: "paragraph" | "heading" | "quote" | "list") => {
+  const handleAddContentBlock = (type: "paragraph" | "heading" | "quote" | "list" | "image") => {
     setFormData((prev) => ({
       ...prev,
       content: [
         ...prev.content,
         type === "list" 
           ? { type: "list", items: [""] } 
+          : type === "image"
+          ? { type: "image", url: "", caption: "" }
           : { type, text: "" }
       ]
     }));
@@ -220,6 +270,14 @@ export default function AdminNewsPage() {
     setFormData((prev) => {
       const list = [...prev.content];
       list[index] = { ...list[index], text: val };
+      return { ...prev, content: list };
+    });
+  };
+
+  const handleContentImageChange = (index: number, field: "url" | "caption", val: string) => {
+    setFormData((prev) => {
+      const list = [...prev.content];
+      list[index] = { ...list[index], [field]: val };
       return { ...prev, content: list };
     });
   };
@@ -278,6 +336,22 @@ export default function AdminNewsPage() {
     });
   };
 
+  const handlePasteSupportingImageUrl = async (index: number) => {
+    try {
+      if (navigator.clipboard) {
+        const text = await navigator.clipboard.readText();
+        if (text && (text.startsWith("http://") || text.startsWith("https://") || text.startsWith("/"))) {
+          handleSupportingImageChange(index, "url", text.trim());
+          showToast("Image URL pasted!", "success");
+        } else {
+          showToast("Clipboard does not contain a valid image URL", "error");
+        }
+      }
+    } catch (e) {
+      showToast("Unable to read clipboard. Please paste manually.", "error");
+    }
+  };
+
   // Submit Handler
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -294,6 +368,9 @@ export default function AdminNewsPage() {
     const cleanedContent = content.filter((b) => {
       if (b.type === "list") {
         return (b.items && b.items.filter((i) => i.trim() !== "").length > 0);
+      }
+      if (b.type === "image") {
+        return b.url && b.url.trim() !== "";
       }
       return b.text && b.text.trim() !== "";
     });
@@ -439,8 +516,8 @@ export default function AdminNewsPage() {
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Live Status</p>
-            <h3 className="text-sm font-black text-emerald-600 uppercase">Synced with Firestore</h3>
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Database Mode</p>
+            <h3 className="text-sm font-black text-emerald-600 uppercase">Live Firestore CRUD</h3>
           </div>
         </div>
       </div>
@@ -641,7 +718,7 @@ export default function AdminNewsPage() {
                       {currentArticle ? "EDIT NEWS ARTICLE" : "PUBLISH NEW ARTICLE"}
                     </h3>
                     <p className="text-xs text-zinc-400 font-bold mt-0.5">
-                      {currentArticle ? `Editing ID: ${currentArticle.id}` : "Publish an official announcement to the public news feed."}
+                      {currentArticle ? `Editing ID: ${currentArticle.id}` : "Publish an official announcement to the live news database."}
                     </p>
                   </div>
                 </div>
@@ -655,7 +732,7 @@ export default function AdminNewsPage() {
               </div>
 
               {/* Form Body Scroll Area */}
-              <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto p-6 space-y-5">
+              <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
                 
                 {formError && (
                   <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-bold flex items-center gap-2">
@@ -664,7 +741,85 @@ export default function AdminNewsPage() {
                   </div>
                 )}
 
-                {/* Main Fields Grid */}
+                {/* 1. MAIN BANNER IMAGE URL SETUP WITH ENHANCED LIVE PREVIEW & PASTE SHORTCUT */}
+                <div className="p-5 bg-zinc-50/80 border border-zinc-200/90 rounded-2xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Camera className="w-4 h-4 text-[#147FC3]" />
+                      Main Banner Cover Image URL <span className="text-rose-500">*</span>
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={handlePasteBannerUrl}
+                      className="px-3 py-1 bg-white hover:bg-[#147FC3] hover:text-white border border-zinc-200 rounded-lg text-[11px] font-bold text-zinc-700 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
+                    >
+                      {copiedBanner ? <Check className="w-3 h-3 text-emerald-500" /> : <Clipboard className="w-3 h-3" />}
+                      <span>{copiedBanner ? "Pasted!" : "Paste from Clipboard"}</span>
+                    </button>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Paste image link here (e.g. https://images.unsplash.com/... or /assets/news-cover.jpg)"
+                      value={formData.bannerImage}
+                      onChange={(e) => setFormData(prev => ({ ...prev, bannerImage: e.target.value }))}
+                      className="flex-1 px-4 py-2.5 bg-white border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:border-[#147FC3] outline-none transition-all"
+                    />
+                    {formData.bannerImage && (
+                      <button
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, bannerImage: "" }))}
+                        className="px-3 py-2 bg-zinc-150 hover:bg-rose-50 hover:text-rose-600 text-zinc-500 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Sample Presets Helper */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mr-1">
+                      Quick Presets:
+                    </span>
+                    {CURATED_IMAGE_PRESETS.map((preset) => (
+                      <button
+                        key={preset.name}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, bannerImage: preset.url }))}
+                        className="px-2.5 py-1 bg-white hover:bg-zinc-200/80 border border-zinc-200 rounded-lg text-[10px] font-bold text-zinc-600 transition-colors cursor-pointer"
+                      >
+                        {preset.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Live Banner Preview Card */}
+                  {formData.bannerImage ? (
+                    <div className="relative w-full aspect-[16/8] rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-200 shadow-sm mt-2">
+                      <img
+                        src={formData.bannerImage}
+                        alt="Banner Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e: any) => {
+                          e.target.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80";
+                        }}
+                      />
+                      <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        Live Cover Preview
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full h-24 rounded-2xl border-2 border-dashed border-zinc-200 flex flex-col items-center justify-center text-zinc-400 text-xs font-semibold gap-1 bg-white">
+                      <ImageIcon className="w-6 h-6 text-zinc-300" />
+                      <span>Paste an image URL above to see a live banner preview</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 2. CORE DETAILS (Title, Category, Author, Date, Read Time) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   
                   {/* Title */}
@@ -674,7 +829,7 @@ export default function AdminNewsPage() {
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Max Value Inaugurates 15 New Branches Across South India"
+                      placeholder="e.g. Max Value Expands Branch Network to Over 150 Locations Across South India"
                       value={formData.title}
                       onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                       className="px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:bg-white focus:border-[#147FC3] outline-none transition-all"
@@ -741,41 +896,12 @@ export default function AdminNewsPage() {
                     />
                   </div>
 
-                  {/* Banner Image URL */}
-                  <div className="md:col-span-2 flex flex-col gap-1.5">
-                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                      Main Banner Image URL <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        placeholder="https://images.unsplash.com/photo-... or /assets/news-banner.jpg"
-                        value={formData.bannerImage}
-                        onChange={(e) => setFormData(prev => ({ ...prev, bannerImage: e.target.value }))}
-                        className="flex-1 px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 focus:bg-white focus:border-[#147FC3] outline-none transition-all"
-                      />
-                    </div>
-
-                    {formData.bannerImage && (
-                      <div className="mt-2 w-full h-32 rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 relative">
-                        <img
-                          src={formData.bannerImage}
-                          alt="Banner preview"
-                          className="w-full h-full object-cover"
-                          onError={(e: any) => {
-                            e.target.style.display = "none";
-                          }}
-                        />
-                      </div>
-                    )}
-                  </div>
-
                 </div>
 
-                {/* Summary Excerpt */}
+                {/* 3. SUMMARY EXCERPT */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                    Summary / Lead Excerpt <span className="text-rose-500">*</span>
+                    Executive Summary / Lead Excerpt <span className="text-rose-500">*</span>
                   </label>
                   <textarea
                     rows={2}
@@ -786,19 +912,19 @@ export default function AdminNewsPage() {
                   />
                 </div>
 
-                {/* Full Article Content Builder */}
-                <div className="border-t border-zinc-150 pt-4 space-y-4">
-                  <div className="flex items-center justify-between">
+                {/* 4. FULL ARTICLE CONTENT BUILDER (Including Inline Images) */}
+                <div className="border-t border-zinc-150 pt-5 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
                       <h4 className="text-xs font-extrabold uppercase text-zinc-800 tracking-wider">
                         Article Content Builder
                       </h4>
                       <p className="text-[11px] text-zinc-400 font-semibold">
-                        Add paragraphs, section headings, quote highlights, or bullet point lists.
+                        Add paragraphs, section headings, quotes, bullet lists, or inline photos.
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex flex-wrap items-center gap-1.5">
                       <button
                         type="button"
                         onClick={() => handleAddContentBlock("paragraph")}
@@ -827,6 +953,13 @@ export default function AdminNewsPage() {
                       >
                         <List className="w-3 h-3" /> + Bullet List
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAddContentBlock("image")}
+                        className="px-2.5 py-1 bg-zinc-100 hover:bg-[#147FC3] hover:text-white rounded-lg text-[11px] font-bold text-zinc-600 transition-colors flex items-center gap-1 cursor-pointer"
+                      >
+                        <ImageIcon className="w-3 h-3" /> + Inline Photo
+                      </button>
                     </div>
                   </div>
 
@@ -839,6 +972,7 @@ export default function AdminNewsPage() {
                             {block.type === "heading" && <span className="text-[#FCA038] font-black">H2</span>}
                             {block.type === "quote" && <Quote className="w-3 h-3 text-purple-500" />}
                             {block.type === "list" && <List className="w-3 h-3 text-emerald-500" />}
+                            {block.type === "image" && <ImageIcon className="w-3 h-3 text-[#147FC3]" />}
                             {block.type} Block #{bIdx + 1}
                           </span>
                           
@@ -881,6 +1015,30 @@ export default function AdminNewsPage() {
                               <PlusCircle className="w-3 h-3" /> Add item
                             </button>
                           </div>
+                        ) : block.type === "image" ? (
+                          <div className="space-y-2 bg-white p-3 rounded-xl border border-zinc-200">
+                            <div className="flex gap-2 items-center">
+                              <input
+                                type="text"
+                                placeholder="Paste inline image URL..."
+                                value={block.url || ""}
+                                onChange={(e) => handleContentImageChange(bIdx, "url", e.target.value)}
+                                className="flex-1 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
+                              />
+                            </div>
+                            <input
+                              type="text"
+                              placeholder="Photo caption (e.g. Dignitaries at the press conference)..."
+                              value={block.caption || ""}
+                              onChange={(e) => handleContentImageChange(bIdx, "caption", e.target.value)}
+                              className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
+                            />
+                            {block.url && (
+                              <div className="w-32 h-20 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 relative mt-1">
+                                <img src={block.url} alt="Inline preview" className="w-full h-full object-cover" />
+                              </div>
+                            )}
+                          </div>
                         ) : (
                           <textarea
                             rows={block.type === "heading" ? 1 : 3}
@@ -901,74 +1059,112 @@ export default function AdminNewsPage() {
                   </div>
                 </div>
 
-                {/* Supporting Images Gallery */}
-                <div className="border-t border-zinc-150 pt-4 space-y-3">
+                {/* 5. SUPPORTING EVENT MEDIA GALLERY SETUP */}
+                <div className="border-t border-zinc-150 pt-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="text-xs font-extrabold uppercase text-zinc-800 tracking-wider">
-                        Event Photos & Supporting Media (Optional)
+                      <h4 className="text-xs font-extrabold uppercase text-zinc-800 tracking-wider flex items-center gap-1.5">
+                        <Camera className="w-4 h-4 text-[#147FC3]" />
+                        Event Media & Supporting Photos Setup (Optional)
                       </h4>
                       <p className="text-[11px] text-zinc-400 font-semibold">
-                        Add event gallery images and photo captions to display below the article.
+                        Add event photos, press conferences, or branch launch gallery images.
                       </p>
                     </div>
 
                     <button
                       type="button"
                       onClick={handleAddSupportingImage}
-                      className="text-xs font-bold text-[#147FC3] hover:underline flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-[#147FC3]/10 hover:bg-[#147FC3] hover:text-white text-[#147FC3] rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
                     >
                       <PlusCircle className="w-3.5 h-3.5" />
                       Add Photo
                     </button>
                   </div>
 
-                  <div className="space-y-3">
-                    {formData.supportingImages.map((img, idx) => (
-                      <div key={idx} className="p-3 bg-zinc-50 border border-zinc-200 rounded-xl flex items-center gap-3">
-                        <div className="flex-1 space-y-2">
-                          <input
-                            type="text"
-                            placeholder="Image URL (e.g. https://images.unsplash.com/...)"
-                            value={img.url}
-                            onChange={(e) => handleSupportingImageChange(idx, "url", e.target.value)}
-                            className="w-full px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Caption text (e.g. Executive ribbon-cutting ceremony)"
-                            value={img.caption}
-                            onChange={(e) => handleSupportingImageChange(idx, "caption", e.target.value)}
-                            className="w-full px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
-                          />
+                  {formData.supportingImages.length === 0 ? (
+                    <div className="p-4 bg-zinc-50 border border-dashed border-zinc-200 rounded-2xl text-center text-xs text-zinc-400 font-medium">
+                      No supporting event photos added yet. Click "+ Add Photo" to attach gallery images.
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {formData.supportingImages.map((img, idx) => (
+                        <div key={idx} className="p-3.5 bg-zinc-50 border border-zinc-200/90 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                          
+                          {/* Live Thumbnail Preview */}
+                          <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 border border-zinc-300 relative flex items-center justify-center">
+                            {img.url ? (
+                              <img
+                                src={img.url}
+                                alt={`Event photo ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                                onError={(e: any) => {
+                                  e.target.style.display = "none";
+                                }}
+                              />
+                            ) : (
+                              <ImageIcon className="w-6 h-6 text-zinc-400" />
+                            )}
+                          </div>
+
+                          {/* Inputs */}
+                          <div className="flex-1 space-y-2 w-full">
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                placeholder="Image URL (e.g. https://images.unsplash.com/...)"
+                                value={img.url}
+                                onChange={(e) => handleSupportingImageChange(idx, "url", e.target.value)}
+                                className="flex-1 px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handlePasteSupportingImageUrl(idx)}
+                                className="px-2.5 py-1 bg-white hover:bg-zinc-100 border border-zinc-200 rounded-lg text-[10px] font-bold text-zinc-600 transition-colors cursor-pointer"
+                                title="Paste from clipboard"
+                              >
+                                Paste
+                              </button>
+                            </div>
+                            <input
+                              type="text"
+                              placeholder="Photo caption (e.g. Ribbon-cutting ceremony at new branch)"
+                              value={img.caption}
+                              onChange={(e) => handleSupportingImageChange(idx, "caption", e.target.value)}
+                              className="w-full px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
+                            />
+                          </div>
+
+                          {/* Remove button */}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveSupportingImage(idx)}
+                            className="w-8 h-8 rounded-lg border border-zinc-200 hover:bg-rose-50 text-zinc-400 hover:text-rose-600 flex items-center justify-center transition-colors cursor-pointer shrink-0 self-end sm:self-center"
+                            title="Remove Photo"
+                          >
+                            <Trash className="w-3.5 h-3.5" />
+                          </button>
+
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveSupportingImage(idx)}
-                          className="w-8 h-8 rounded-lg border border-zinc-200 hover:bg-rose-50 text-zinc-400 hover:text-rose-600 flex items-center justify-center transition-colors cursor-pointer shrink-0"
-                          title="Remove Photo"
-                        >
-                          <Trash className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Footer Buttons */}
-                <div className="pt-4 border-t border-zinc-150 flex items-center justify-end gap-3 shrink-0">
+                <div className="pt-5 border-t border-zinc-150 flex items-center justify-end gap-3 shrink-0">
                   <button
                     type="button"
                     disabled={formSubmitting}
                     onClick={() => setModalOpen(false)}
-                    className="px-4 py-2.5 border border-zinc-200 hover:bg-zinc-50 text-zinc-600 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    className="px-5 py-2.5 border border-zinc-200 hover:bg-zinc-50 text-zinc-600 rounded-xl text-xs font-bold transition-all cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={formSubmitting}
-                    className="px-5 py-2.5 bg-zinc-950 hover:bg-[#147FC3] text-white rounded-xl text-xs font-bold transition-all cursor-pointer disabled:opacity-60 flex items-center gap-2 shadow-md shadow-zinc-950/10"
+                    className="px-6 py-2.5 bg-zinc-950 hover:bg-[#147FC3] text-white rounded-xl text-xs font-bold transition-all cursor-pointer disabled:opacity-60 flex items-center gap-2 shadow-md shadow-zinc-950/10"
                   >
                     {formSubmitting && (
                       <div className="w-3.5 h-3.5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
