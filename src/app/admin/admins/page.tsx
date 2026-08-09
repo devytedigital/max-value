@@ -81,11 +81,21 @@ export default function AdminUsersPage() {
   // Toast notification state
   const [toasts, setToasts] = useState<{ id: number; text: string; type: "success" | "error" }[]>([]);
 
-  // Auth guard check
+  // Auth and Role guard check
   useEffect(() => {
     const token = localStorage.getItem("admin_token");
+    const userStr = localStorage.getItem("admin_user");
     if (!token) {
       router.push("/adminlogin");
+      return;
+    }
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        if (user.role === "Normal User") {
+          router.push("/admin");
+        }
+      } catch (e) {}
     }
   }, [router]);
 
