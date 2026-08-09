@@ -16,17 +16,13 @@ import {
   User,
   Clock,
   ChevronRight,
-  ChevronLeft,
   ShieldCheck,
   Briefcase,
   Image as ImageIcon,
   ChevronDown,
   Newspaper,
   ShieldAlert,
-  ArrowLeft,
-  Sparkles,
-  Pin,
-  PinOff
+  ArrowLeft
 } from "lucide-react";
 
 interface CurrentUser {
@@ -47,7 +43,6 @@ export default function AdminLayout({
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
   const [notifications, setNotifications] = useState([
@@ -58,13 +53,8 @@ export default function AdminLayout({
 
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Load pinned preference and authentication
+  // Authentication check and user profile extraction
   useEffect(() => {
-    const savedPinned = localStorage.getItem("admin_sidebar_pinned");
-    if (savedPinned === "true") {
-      setIsPinned(true);
-    }
-
     const token = localStorage.getItem("admin_token");
     if (!token) {
       router.push("/adminlogin");
@@ -83,12 +73,6 @@ export default function AdminLayout({
       }
     }
   }, [router]);
-
-  const togglePinned = () => {
-    const nextPinned = !isPinned;
-    setIsPinned(nextPinned);
-    localStorage.setItem("admin_sidebar_pinned", String(nextPinned));
-  };
 
   const handleMouseEnter = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -210,7 +194,7 @@ export default function AdminLayout({
             <span className="text-sm font-medium text-slate-400">Verifying session credentials...</span>
           </div>
 
-          {/* AI Progress bar */}
+          {/* Progress bar */}
           <div className="w-48 h-1 bg-slate-800 rounded-full overflow-hidden relative">
             <motion.div
               className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-[#147FC3] via-[#FCA038] to-[#147FC3] w-full"
@@ -237,70 +221,34 @@ export default function AdminLayout({
 
   const isRestrictedAdminRoute = pathname?.startsWith("/admin/admins") && currentUser?.role === "Normal User";
 
-  // Sidebar is open when mouse hovers over it or when pinned
-  const isExpanded = isHovered || isPinned;
-
   return (
     <div
       data-lenis-prevent
       className="min-h-screen w-full bg-[#F8FAFC] flex flex-col font-sans select-none antialiased relative overflow-hidden"
     >
       
-      {/* DESKTOP HOVER-EXPANDING AI SIDEBAR */}
+      {/* DESKTOP HOVER-EXPANDING SIDEBAR */}
       <aside 
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={`hidden lg:flex fixed left-0 top-0 bottom-0 ${
-          isExpanded ? "w-72 shadow-[0_0_50px_rgba(0,0,0,0.6)]" : "w-20 shadow-xl"
-        } bg-gradient-to-b from-slate-950 via-zinc-950 to-slate-950 flex-col z-40 text-slate-300 border-r border-slate-800/80 transition-all duration-300 ease-out backdrop-blur-xl`}
+          isHovered ? "w-72 shadow-[0_0_50px_rgba(0,0,0,0.6)]" : "w-20 shadow-xl"
+        } bg-gradient-to-b from-slate-950 via-zinc-950 to-slate-950 flex-col z-40 text-slate-300 border-r border-slate-850/80 transition-all duration-300 ease-out backdrop-blur-xl`}
       >
         
-        {/* Subtle AI Cyan Glow Accent */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#147FC3]/60 to-transparent pointer-events-none" />
-
         {/* Brand Logo Header */}
-        <div className={`h-20 ${isExpanded ? "px-6 justify-between" : "px-3 justify-center"} flex items-center border-b border-slate-850/80 transition-all shrink-0`}>
+        <div className={`h-20 ${isHovered ? "px-6 justify-start" : "px-3 justify-center"} flex items-center border-b border-slate-850/80 transition-all shrink-0`}>
           <Link href="/admin" className="flex items-center gap-2 overflow-hidden">
             <img 
               src="/maxvalue-logo.png" 
               alt="Max Value" 
-              className={`${isExpanded ? "h-9.5" : "h-8"} w-auto object-contain transition-all duration-300`}
+              className={`${isHovered ? "h-9.5" : "h-8"} w-auto object-contain transition-all duration-300`}
             />
           </Link>
-
-          {isExpanded && (
-            <button
-              onClick={togglePinned}
-              className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-colors cursor-pointer ${
-                isPinned 
-                  ? "bg-[#147FC3]/20 border-[#147FC3]/50 text-[#147FC3]" 
-                  : "border-slate-800 text-zinc-500 hover:text-white hover:bg-slate-850"
-              }`}
-              title={isPinned ? "Unpin Sidebar (Auto-collapse on mouse leave)" : "Pin Sidebar (Keep expanded)"}
-            >
-              {isPinned ? <PinOff className="w-3.5 h-3.5" /> : <Pin className="w-3.5 h-3.5" />}
-            </button>
-          )}
         </div>
 
-        {/* AI Built-in Status Indicator (Visible when expanded) */}
-        {isExpanded && (
-          <div className="px-5 pt-4 pb-1">
-            <div className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#147FC3]/15 to-[#FCA038]/10 border border-[#147FC3]/25 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-zinc-300 flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-[#FCA038]" />
-                Max Value Core
-              </span>
-              <span className="text-[9px] font-semibold text-emerald-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Live Sync
-              </span>
-            </div>
-          </div>
-        )}
-
         {/* Sidebar Nav links */}
-        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto scrollbar-none">
+        <nav className="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto scrollbar-none">
           {navItems.map((item) => {
             if (item.subItems) {
               const isSubActive = pathname?.startsWith("/admin/media");
@@ -309,24 +257,24 @@ export default function AdminLayout({
                   {/* Dropdown Toggle Header */}
                   <div
                     onClick={() => setMediaOpen(!mediaOpen)}
-                    title={!isExpanded ? item.name : undefined}
-                    className={`flex items-center ${!isExpanded ? "justify-center px-0 py-3" : "justify-between px-3.5 py-2.5"} rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                    title={!isHovered ? item.name : undefined}
+                    className={`flex items-center ${!isHovered ? "justify-center px-0 py-3" : "justify-between px-3.5 py-2.5"} rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                       isSubActive && !mediaOpen
-                        ? "bg-slate-900 text-white border border-slate-800"
-                        : "hover:bg-slate-900/80 hover:text-white"
+                        ? "bg-white text-zinc-950 shadow-md shadow-white/10 font-black"
+                        : "hover:bg-slate-900/80 hover:text-white text-zinc-400"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <item.icon className="w-5 h-5 text-zinc-400 shrink-0" />
-                      {isExpanded && <span className="truncate">{item.name}</span>}
+                      <item.icon className={`w-5 h-5 shrink-0 ${isSubActive && !mediaOpen ? "text-zinc-950" : "text-zinc-400"}`} />
+                      {isHovered && <span className="truncate">{item.name}</span>}
                     </div>
-                    {isExpanded && (
-                      <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${mediaOpen ? "rotate-180 text-white" : ""}`} />
+                    {isHovered && (
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mediaOpen ? "rotate-180 text-zinc-900" : "text-zinc-400"}`} />
                     )}
                   </div>
 
                   {/* Collapsible Subitems */}
-                  {mediaOpen && isExpanded && (
+                  {mediaOpen && isHovered && (
                     <div className="pl-5 space-y-1 mt-1 transition-all duration-200">
                       {item.subItems.map((sub) => {
                         const isSubLinkActive = pathname === sub.href;
@@ -335,7 +283,7 @@ export default function AdminLayout({
                             <div
                               className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
                                 isSubLinkActive
-                                  ? "bg-[#147FC3] text-white shadow-sm shadow-[#147FC3]/20 font-bold"
+                                  ? "bg-white text-zinc-950 shadow-sm font-bold"
                                   : "text-zinc-400 hover:text-white hover:bg-slate-900/50"
                               }`}
                             >
@@ -354,21 +302,21 @@ export default function AdminLayout({
             return (
               <Link key={item.name} href={item.href || "#"} className="block group">
                 <div
-                  title={!isExpanded ? item.name : undefined}
-                  className={`flex items-center ${!isExpanded ? "justify-center px-0 py-3" : "justify-between px-3.5 py-2.5"} rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  title={!isHovered ? item.name : undefined}
+                  className={`flex items-center ${!isHovered ? "justify-center px-0 py-3" : "justify-between px-3.5 py-2.5"} rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? "bg-gradient-to-r from-[#147FC3] to-[#147FC3]/90 text-white shadow-md shadow-[#147FC3]/25 border border-[#147FC3]/40"
-                      : "hover:bg-slate-900/80 hover:text-white"
+                      ? "bg-white text-zinc-950 shadow-md shadow-white/10 font-black"
+                      : "hover:bg-slate-900/80 hover:text-white text-zinc-400"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <item.icon className={`w-5 h-5 transition-colors shrink-0 ${isActive ? "text-white" : "text-zinc-400 group-hover:text-zinc-200"}`} />
-                    {isExpanded && <span className="truncate">{item.name}</span>}
+                    <item.icon className={`w-5 h-5 transition-colors shrink-0 ${isActive ? "text-zinc-950 font-black" : "text-zinc-400 group-hover:text-zinc-200"}`} />
+                    {isHovered && <span className="truncate">{item.name}</span>}
                   </div>
-                  {isExpanded && item.badge && (
+                  {isHovered && item.badge && (
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        isActive ? "bg-white/20 text-white" : "bg-slate-900 text-amber-400 border border-slate-800"
+                        isActive ? "bg-zinc-100 text-zinc-900" : "bg-slate-900 text-amber-400 border border-slate-800"
                       }`}
                     >
                       {item.badge}
@@ -382,10 +330,10 @@ export default function AdminLayout({
 
         {/* Sidebar Footer User Details */}
         <div className="p-3 border-t border-slate-850/80 bg-slate-950/60 shrink-0">
-          {!isExpanded ? (
+          {!isHovered ? (
             <div className="flex flex-col items-center gap-2">
               <div 
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-xs text-[#147FC3]"
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-xs text-white"
                 title={`${currentUser?.name || "Administrator"} (${currentUser?.role || "Admin"})`}
               >
                 {userInitials}
@@ -402,7 +350,7 @@ export default function AdminLayout({
             <>
               {/* User Widget */}
               <div className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-slate-850">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-xs text-[#147FC3] shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-xs text-white shrink-0">
                   {userInitials}
                 </div>
                 <div className="flex flex-col min-w-0 flex-1 text-left">
@@ -478,15 +426,15 @@ export default function AdminLayout({
                           onClick={() => setMediaOpen(!mediaOpen)}
                           className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                             isSubActive && !mediaOpen
-                              ? "bg-slate-900 text-white"
-                              : "hover:bg-slate-900 hover:text-white"
+                              ? "bg-white text-zinc-950 shadow-md font-black"
+                              : "hover:bg-slate-900 hover:text-white text-zinc-400"
                           }`}
                         >
                           <div className="flex items-center gap-3">
-                            <item.icon className="w-5 h-5 text-zinc-400" />
+                            <item.icon className={`w-5 h-5 ${isSubActive && !mediaOpen ? "text-zinc-950" : "text-zinc-400"}`} />
                             <span>{item.name}</span>
                           </div>
-                          <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${mediaOpen ? "rotate-180 text-white" : ""}`} />
+                          <ChevronDown className={`w-4 h-4 ${isSubActive && !mediaOpen ? "text-zinc-900" : "text-zinc-400"} transition-transform duration-200 ${mediaOpen ? "rotate-180" : ""}`} />
                         </div>
 
                         {/* Collapsible Subitems */}
@@ -499,7 +447,7 @@ export default function AdminLayout({
                                   <div
                                     className={`flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
                                       isSubLinkActive
-                                        ? "bg-[#147FC3] text-white shadow-sm shadow-[#147FC3]/10 font-bold"
+                                        ? "bg-white text-zinc-950 shadow-sm font-bold"
                                         : "text-zinc-400 hover:text-white hover:bg-slate-900/50"
                                     }`}
                                   >
@@ -520,18 +468,18 @@ export default function AdminLayout({
                       <div
                         className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                           isActive
-                            ? "bg-[#147FC3] text-white shadow-md"
-                            : "hover:bg-slate-900 hover:text-white"
+                            ? "bg-white text-zinc-950 shadow-md font-black"
+                            : "hover:bg-slate-900 hover:text-white text-zinc-400"
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <item.icon className="w-5 h-5" />
+                          <item.icon className={`w-5 h-5 ${isActive ? "text-zinc-950" : "text-zinc-400"}`} />
                           <span>{item.name}</span>
                         </div>
                         {item.badge && (
                           <span
                             className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                              isActive ? "bg-white/20 text-white" : "bg-slate-900 text-amber-400 border border-slate-800"
+                              isActive ? "bg-zinc-100 text-zinc-900" : "bg-slate-900 text-amber-400 border border-slate-800"
                             }`}
                           >
                             {item.badge}
@@ -545,7 +493,7 @@ export default function AdminLayout({
 
               <div className="p-4 border-t border-slate-900 bg-slate-950/50">
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-900">
-                  <div className="w-9 h-9 rounded-lg bg-zinc-850 flex items-center justify-center font-bold text-xs text-[#147FC3]">
+                  <div className="w-9 h-9 rounded-lg bg-zinc-850 flex items-center justify-center font-bold text-xs text-white">
                     {userInitials}
                   </div>
                   <div className="flex flex-col min-w-0 flex-1">
@@ -581,9 +529,7 @@ export default function AdminLayout({
 
       {/* CONTENT INNER CONTAINER */}
       <div 
-        className={`flex-1 min-w-0 ${
-          isPinned ? "lg:pl-72" : "lg:pl-20"
-        } flex flex-col relative z-10 transition-all duration-300 ease-out`}
+        className="flex-1 min-w-0 lg:pl-20 flex flex-col relative z-10"
       >
         
         {/* TOP BAR / NAVIGATION HEADER */}
