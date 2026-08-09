@@ -40,23 +40,13 @@ interface AdminUser {
 
 const ROLES = [
   {
-    name: "Super Admin",
-    description: "Full master administrative control across all website and system modules.",
-    color: "bg-purple-50 text-purple-700 border-purple-200"
-  },
-  {
-    name: "Branch Admin",
-    description: "Manages branch network, contact directories, and loan inquiry routing.",
+    name: "Admin",
+    description: "Full administrative access across all management modules.",
     color: "bg-blue-50 text-[#147FC3] border-blue-200"
   },
   {
-    name: "Content Manager",
-    description: "Publishes corporate news, press releases, media galleries, and career openings.",
-    color: "bg-amber-50 text-[#FCA038] border-amber-200"
-  },
-  {
-    name: "Editor",
-    description: "Can edit announcements and draft articles with limited privileges.",
+    name: "Normal User",
+    description: "Standard user access with basic viewing permissions.",
     color: "bg-zinc-100 text-zinc-700 border-zinc-200"
   }
 ];
@@ -77,7 +67,7 @@ export default function AdminUsersPage() {
     name: "",
     email: "",
     password: "",
-    role: "Branch Admin",
+    role: "Admin",
     status: "Active" as "Active" | "Inactive",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -136,7 +126,7 @@ export default function AdminUsersPage() {
       name: "",
       email: "",
       password: "",
-      role: "Branch Admin",
+      role: "Admin",
       status: "Active",
     });
     setShowPassword(false);
@@ -150,7 +140,7 @@ export default function AdminUsersPage() {
       name: admin.name,
       email: admin.email,
       password: "", // Left blank unless resetting
-      role: admin.role || "Branch Admin",
+      role: admin.role === "Normal User" ? "Normal User" : "Admin",
       status: admin.status || "Active",
     });
     setShowPassword(false);
@@ -186,7 +176,7 @@ export default function AdminUsersPage() {
       const payload: any = {
         name: name.trim(),
         email: email.trim().toLowerCase(),
-        role,
+        role: role || "Admin",
         status,
       };
 
@@ -216,7 +206,7 @@ export default function AdminUsersPage() {
       }
 
       showToast(
-        currentAdmin ? "Admin account updated successfully!" : "New administrator added successfully!",
+        currentAdmin ? "Account updated successfully!" : "New user created successfully!",
         "success"
       );
       setModalOpen(false);
@@ -242,7 +232,7 @@ export default function AdminUsersPage() {
         throw new Error("Failed to change account status");
       }
 
-      showToast(`Admin status changed to ${newStatus}`, "success");
+      showToast(`User status changed to ${newStatus}`, "success");
       fetchAdmins();
     } catch (err: any) {
       showToast(err.message || "Failed to update status", "error");
@@ -252,7 +242,7 @@ export default function AdminUsersPage() {
   // Delete Handler
   const handleOpenDeleteModal = (admin: AdminUser) => {
     if (admin.id === "super-admin" && admins.length === 1) {
-      showToast("Cannot delete the primary root Super Admin account.", "error");
+      showToast("Cannot delete the primary root Admin account.", "error");
       return;
     }
     setAdminToDelete(admin);
@@ -269,15 +259,15 @@ export default function AdminUsersPage() {
 
       const resData = await response.json();
       if (!response.ok) {
-        throw new Error(resData.error || "Failed to delete admin account");
+        throw new Error(resData.error || "Failed to delete account");
       }
 
-      showToast("Administrator removed successfully!", "success");
+      showToast("Account removed successfully!", "success");
       setDeleteConfirmOpen(false);
       setAdminToDelete(null);
       fetchAdmins();
     } catch (err: any) {
-      showToast(err.message || "Failed to delete administrator", "error");
+      showToast(err.message || "Failed to delete account", "error");
     }
   };
 
@@ -299,18 +289,21 @@ export default function AdminUsersPage() {
 
   // Filtered List
   const filteredAdmins = admins.filter((admin) => {
+    const normalizedRole = (admin.role === "Super Admin" || admin.role === "Admin") ? "Admin" : "Normal User";
+
     const matchesSearch =
       admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       admin.role.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesRole = selectedRoleFilter === "All" || admin.role === selectedRoleFilter;
+    const matchesRole = selectedRoleFilter === "All" || normalizedRole === selectedRoleFilter || admin.role === selectedRoleFilter;
     const matchesStatus = selectedStatusFilter === "All" || admin.status === selectedStatusFilter;
 
     return matchesSearch && matchesRole && matchesStatus;
   });
 
-  const superAdminCount = admins.filter((a) => a.role === "Super Admin").length;
+  const adminRoleCount = admins.filter((a) => a.role === "Admin" || a.role === "Super Admin").length;
+  const normalUserCount = admins.filter((a) => a.role === "Normal User").length;
   const activeCount = admins.filter((a) => a.status === "Active").length;
 
   return (
@@ -321,12 +314,12 @@ export default function AdminUsersPage() {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-md bg-[#147FC3]/15 text-[#147FC3] font-black text-[10px] uppercase tracking-wider">
-              Access Control & Security
+              Access Control & Users
             </span>
           </div>
           <h1 className="text-2xl font-black text-zinc-900 tracking-tight">ADMIN USERS MANAGEMENT</h1>
           <p className="text-sm text-zinc-500 font-semibold mt-0.5">
-            Add new administrators, assign security roles, and manage access permissions for the Max Value management console.
+            Create, manage, and configure administrator and normal user accounts for the Max Value management console.
           </p>
         </div>
         <button
@@ -334,7 +327,7 @@ export default function AdminUsersPage() {
           className="flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-950 hover:bg-[#147FC3] text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-zinc-950/15 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          Add New Administrator
+          Add New User
         </button>
       </div>
 
@@ -345,18 +338,18 @@ export default function AdminUsersPage() {
             <Users className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Total Administrators</p>
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Total Users</p>
             <h3 className="text-2xl font-black text-zinc-900">{admins.length}</h3>
           </div>
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#147FC3] flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Super Admins</p>
-            <h3 className="text-2xl font-black text-zinc-900">{superAdminCount}</h3>
+            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Admins / Normal Users</p>
+            <h3 className="text-2xl font-black text-zinc-900">{adminRoleCount} <span className="text-sm font-semibold text-zinc-400">Admin</span> / {normalUserCount} <span className="text-sm font-semibold text-zinc-400">Normal</span></h3>
           </div>
         </div>
 
@@ -379,7 +372,7 @@ export default function AdminUsersPage() {
           <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
           <input
             type="text"
-            placeholder="Search by administrator name, email, or role..."
+            placeholder="Search by user name, email, or role..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm focus:bg-white focus:border-[#147FC3] outline-none font-bold text-zinc-700 placeholder:text-zinc-400 transition-all"
@@ -397,10 +390,8 @@ export default function AdminUsersPage() {
             className="w-full md:w-44 px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm outline-none font-bold text-zinc-700 cursor-pointer focus:bg-white focus:border-[#147FC3] transition-all"
           >
             <option value="All">All Roles</option>
-            <option value="Super Admin">Super Admin</option>
-            <option value="Branch Admin">Branch Admin</option>
-            <option value="Content Manager">Content Manager</option>
-            <option value="Editor">Editor</option>
+            <option value="Admin">Admin</option>
+            <option value="Normal User">Normal User</option>
           </select>
         </div>
 
@@ -437,7 +428,7 @@ export default function AdminUsersPage() {
         ) : filteredAdmins.length === 0 ? (
           <div className="p-16 text-center text-zinc-400 font-bold text-sm flex flex-col items-center justify-center">
             <ShieldAlert className="w-12 h-12 mb-3 text-zinc-300" />
-            No Administrators Found
+            No Users Found
             {searchTerm && <span className="text-xs font-normal text-zinc-400 mt-1">Try adjusting your search query.</span>}
           </div>
         ) : (
@@ -445,7 +436,7 @@ export default function AdminUsersPage() {
             <table className="w-full border-collapse text-left text-sm">
               <thead className="bg-zinc-50 text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-200">
                 <tr>
-                  <th className="p-4 pl-6">Administrator Name & Email</th>
+                  <th className="p-4 pl-6">User Name & Email</th>
                   <th className="p-4">Access Role</th>
                   <th className="p-4">Status</th>
                   <th className="p-4">Created Date</th>
@@ -455,7 +446,11 @@ export default function AdminUsersPage() {
               </thead>
               <tbody className="divide-y divide-zinc-100">
                 {filteredAdmins.map((admin) => {
-                  const roleStyle = ROLES.find((r) => r.name === admin.role)?.color || "bg-zinc-100 text-zinc-700 border-zinc-200";
+                  const displayRole = (admin.role === "Normal User") ? "Normal User" : "Admin";
+                  const roleStyle = displayRole === "Admin"
+                    ? "bg-blue-50 text-[#147FC3] border-blue-200"
+                    : "bg-zinc-100 text-zinc-700 border-zinc-200";
+
                   const initials = admin.name
                     ? admin.name
                         .split(" ")
@@ -491,8 +486,8 @@ export default function AdminUsersPage() {
 
                       {/* Role */}
                       <td className="p-4">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-black border ${roleStyle}`}>
-                          {admin.role}
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-black border ${roleStyle}`}>
+                          {displayRole}
                         </span>
                       </td>
 
@@ -536,7 +531,7 @@ export default function AdminUsersPage() {
                           <button
                             onClick={() => handleOpenEditModal(admin)}
                             className="w-8 h-8 rounded-lg border border-zinc-200 hover:border-[#147FC3] text-zinc-500 hover:text-[#147FC3] flex items-center justify-center transition-all bg-white cursor-pointer"
-                            title="Edit Admin Account"
+                            title="Edit User Account"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
@@ -546,7 +541,7 @@ export default function AdminUsersPage() {
                             onClick={() => handleOpenDeleteModal(admin)}
                             disabled={admin.id === "super-admin" && admins.length === 1}
                             className="w-8 h-8 rounded-lg border border-zinc-200 hover:border-rose-500 text-zinc-500 hover:text-rose-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all bg-white cursor-pointer"
-                            title="Delete Admin Account"
+                            title="Delete User Account"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -592,10 +587,10 @@ export default function AdminUsersPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-zinc-900 tracking-tight">
-                      {currentAdmin ? "EDIT ADMINISTRATOR" : "CREATE NEW ADMINISTRATOR"}
+                      {currentAdmin ? "EDIT USER" : "CREATE NEW USER"}
                     </h3>
                     <p className="text-xs text-zinc-400 font-bold mt-0.5">
-                      {currentAdmin ? `Configuring ID: ${currentAdmin.id}` : "Register an official staff or manager administrator account."}
+                      {currentAdmin ? `Configuring ID: ${currentAdmin.id}` : "Register a new administrator or normal user account."}
                     </p>
                   </div>
                 </div>
@@ -680,20 +675,18 @@ export default function AdminUsersPage() {
                   </div>
                 </div>
 
-                {/* Role Selection */}
+                {/* Role Selection (Only Admin or Normal User) */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                    Access Role & Permissions <span className="text-rose-500">*</span>
+                    Access Role <span className="text-rose-500">*</span>
                   </label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData(prev => ({ ...prev, role: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 focus:bg-white focus:border-[#147FC3] outline-none transition-all cursor-pointer"
                   >
-                    <option value="Super Admin">Super Admin (Full Master Control)</option>
-                    <option value="Branch Admin">Branch Admin (Branch Network & Inquiries)</option>
-                    <option value="Content Manager">Content Manager (News, Media, Careers)</option>
-                    <option value="Editor">Editor (Editorial Updates)</option>
+                    <option value="Admin">Admin (Full Administrative Access)</option>
+                    <option value="Normal User">Normal User (Standard User Access)</option>
                   </select>
                 </div>
 
@@ -746,7 +739,7 @@ export default function AdminUsersPage() {
                     {formSubmitting && (
                       <div className="w-3.5 h-3.5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
                     )}
-                    {currentAdmin ? "Save Changes" : "Create Administrator"}
+                    {currentAdmin ? "Save Changes" : "Create User"}
                   </button>
                 </div>
 
@@ -778,7 +771,7 @@ export default function AdminUsersPage() {
               <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4">
                 <Trash2 className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-black text-zinc-900 uppercase">Delete Administrator Account?</h3>
+              <h3 className="text-base font-black text-zinc-900 uppercase">Delete User Account?</h3>
               <p className="text-xs text-zinc-500 font-semibold mt-2 leading-relaxed">
                 Are you sure you want to revoke access for <strong className="text-zinc-800">"{adminToDelete.name}"</strong> ({adminToDelete.email})?<br />
                 This will immediately disable their login access to the administration dashboard.

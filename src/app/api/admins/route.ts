@@ -64,7 +64,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, password, role = "Branch Admin", status = "Active" } = body;
+    const { name, email, password, role = "Admin", status = "Active" } = body;
 
     // Validation
     if (!name || !email || !password) {
@@ -115,12 +115,14 @@ export async function POST(request: Request) {
       counter++;
     }
 
+    const assignedRole = (role === "Normal User") ? "Normal User" : "Admin";
+
     const newAdmin = {
       id,
       name: name.trim(),
       email: normalizedEmail,
       password: password.trim(),
-      role: role || "Branch Admin",
+      role: assignedRole,
       status: status || "Active",
       createdAt: new Date().toISOString(),
       lastLogin: null,
