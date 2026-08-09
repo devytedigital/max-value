@@ -480,12 +480,12 @@ export default function AdminNewsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-md bg-[#FCA038]/20 text-[#FCA038] font-black text-[10px] uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#FCA038]/20 text-[#FCA038] font-bold text-[10px] tracking-wide">
               Max Value Credits & Investments Ltd.
             </span>
           </div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">NEWSROOM & PRESS RELEASES</h1>
-          <p className="text-sm text-zinc-500 font-semibold mt-0.5">
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">News & Press Releases</h1>
+          <p className="text-sm text-zinc-500 font-medium mt-0.5">
             Publish official announcements, Gold Loan rate updates, branch inaugurations, and microfinance achievements.
           </p>
         </div>
@@ -505,8 +505,8 @@ export default function AdminNewsPage() {
             <Newspaper className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Total Articles</p>
-            <h3 className="text-2xl font-black text-zinc-900">{articles.length}</h3>
+            <p className="text-xs font-bold text-zinc-400">Total Articles</p>
+            <h3 className="text-2xl font-bold text-zinc-900">{articles.length}</h3>
           </div>
         </div>
 
@@ -515,8 +515,8 @@ export default function AdminNewsPage() {
             <Coins className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Active Categories</p>
-            <h3 className="text-2xl font-black text-zinc-900">{categoriesList.length}</h3>
+            <p className="text-xs font-bold text-zinc-400">Active Categories</p>
+            <h3 className="text-2xl font-bold text-zinc-900">{categoriesList.length}</h3>
           </div>
         </div>
 
@@ -525,8 +525,8 @@ export default function AdminNewsPage() {
             <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Corporate Hub</p>
-            <h3 className="text-sm font-black text-emerald-600 uppercase">Max Value News Desk</h3>
+            <p className="text-xs font-bold text-zinc-400">Corporate Hub</p>
+            <h3 className="text-sm font-bold text-emerald-600">Max Value News Desk</h3>
           </div>
         </div>
       </div>

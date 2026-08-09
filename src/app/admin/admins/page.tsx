@@ -323,12 +323,12 @@ export default function AdminUsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-md bg-[#147FC3]/15 text-[#147FC3] font-black text-[10px] uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#147FC3]/15 text-[#147FC3] font-bold text-[10px] tracking-wide">
               Access Control & Users
             </span>
           </div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">ADMIN USERS MANAGEMENT</h1>
-          <p className="text-sm text-zinc-500 font-semibold mt-0.5">
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Admin Users Management</h1>
+          <p className="text-sm text-zinc-500 font-medium mt-0.5">
             Create, manage, and configure administrator and normal user accounts for the Max Value management console.
           </p>
         </div>
@@ -596,8 +596,8 @@ export default function AdminUsersPage() {
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-zinc-900 tracking-tight">
-                      {currentAdmin ? "EDIT USER" : "CREATE NEW USER"}
+                    <h3 className="text-lg font-bold text-zinc-900 tracking-tight">
+                      {currentAdmin ? "Edit User" : "Create New User"}
                     </h3>
                     <p className="text-xs text-zinc-400 font-bold mt-0.5">
                       {currentAdmin ? `Configuring ID: ${currentAdmin.id}` : "Register a new administrator or normal user account."}
@@ -781,7 +781,7 @@ export default function AdminUsersPage() {
               <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4">
                 <Trash2 className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-black text-zinc-900 uppercase">Delete User Account?</h3>
+              <h3 className="text-base font-bold text-zinc-900">Delete User Account?</h3>
               <p className="text-xs text-zinc-500 font-semibold mt-2 leading-relaxed">
                 Are you sure you want to revoke access for <strong className="text-zinc-800">"{adminToDelete.name}"</strong> ({adminToDelete.email})?<br />
                 This will immediately disable their login access to the administration dashboard.
