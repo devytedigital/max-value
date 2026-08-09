@@ -4,6 +4,12 @@ import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 
 export async function GET(request: Request) {
   try {
+    if (!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || !process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+      return NextResponse.json(
+        { error: "Firebase environment variables are missing on Vercel. Please configure them in your Vercel Dashboard Settings." },
+        { status: 500 }
+      );
+    }
     const querySnapshot = await getDocs(collection(db, "admins"));
     let adminList: any[] = [];
     querySnapshot.forEach((docSnap) => {

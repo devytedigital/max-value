@@ -14,6 +14,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || !process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+      return NextResponse.json(
+        { error: "Firebase configuration is missing on server. Please ensure environment variables are added in your Vercel Dashboard (Settings -> Environment Variables)." },
+        { status: 500 }
+      );
+    }
+
     const normalizedEmail = email.trim().toLowerCase();
     const trimmedPassword = password.trim();
 
