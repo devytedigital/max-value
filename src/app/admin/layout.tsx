@@ -67,10 +67,10 @@ export default function AdminLayout({
           const parsed = JSON.parse(userStr);
           setCurrentUser(parsed);
         } catch (e) {
-          setCurrentUser({ name: "Administrator", email: "admin@gmail.com", role: "Admin" });
+          setCurrentUser({ name: "Administrator", email: "", role: "Admin" });
         }
       } else {
-        setCurrentUser({ name: "Administrator", email: "admin@gmail.com", role: "Admin" });
+        setCurrentUser({ name: "Administrator", email: "", role: "Admin" });
       }
     }
   }, [router]);

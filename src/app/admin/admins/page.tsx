@@ -251,8 +251,8 @@ export default function AdminUsersPage() {
 
   // Delete Handler
   const handleOpenDeleteModal = (admin: AdminUser) => {
-    if (admin.id === "super-admin" && admins.length === 1) {
-      showToast("Cannot delete the primary root Admin account.", "error");
+    if (admins.length <= 1) {
+      showToast("Cannot delete the only remaining administrator account.", "error");
       return;
     }
     setAdminToDelete(admin);
@@ -549,7 +549,7 @@ export default function AdminUsersPage() {
                           {/* Delete */}
                           <button
                             onClick={() => handleOpenDeleteModal(admin)}
-                            disabled={admin.id === "super-admin" && admins.length === 1}
+                            disabled={admins.length <= 1}
                             className="w-8 h-8 rounded-lg border border-zinc-200 hover:border-rose-500 text-zinc-500 hover:text-rose-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all bg-white cursor-pointer"
                             title="Delete User Account"
                           >

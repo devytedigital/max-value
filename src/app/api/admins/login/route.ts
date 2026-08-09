@@ -62,20 +62,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // Fallback: Default Super Admin root credentials
-    if (normalizedEmail === "admin@gmail.com" && trimmedPassword === "12345678") {
-      return NextResponse.json({
-        success: true,
-        token: "mv_authenticated_token",
-        user: {
-          id: "super-admin",
-          name: "Super Administrator",
-          email: "admin@gmail.com",
-          role: "Super Admin",
-        },
-      });
-    }
-
     return NextResponse.json(
       { error: "Invalid email or password. Please check your credentials." },
       { status: 401 }

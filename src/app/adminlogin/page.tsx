@@ -61,17 +61,6 @@ export default function AdminLoginPage() {
             </p>
           </div>
 
-          {/* Demo Credentials Alert Info */}
-          <div className="mb-6 p-4.5 bg-amber-50/60 border border-amber-100/80 rounded-xl text-xs">
-            <span className="font-bold text-amber-800 uppercase tracking-wider block mb-1">
-              Demo Credentials
-            </span>
-            <div className="flex justify-between items-center mt-1">
-              <span className="font-mono text-zinc-700">admin@gmail.com</span>
-              <span className="font-mono text-zinc-700 font-bold">12345678</span>
-            </div>
-          </div>
-
           {/* Error Notification */}
           {error && (
             <motion.div
@@ -87,7 +76,7 @@ export default function AdminLoginPage() {
           {/* Auth Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             
-            {/* Combined/Unified Box Input Container (exactly like the screenshot model) */}
+            {/* Combined/Unified Box Input Container */}
             <div className="border border-zinc-200/90 rounded-xl bg-white overflow-hidden shadow-xs divide-y divide-zinc-200/90">
               
               {/* Email Block */}
@@ -100,7 +89,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@gmail.com"
+                  placeholder="name@maxvaluecredits.in"
                   className="w-full text-sm font-semibold text-zinc-800 bg-transparent border-none outline-none mt-1.5 p-0 placeholder-zinc-300 focus:ring-0"
                 />
               </div>

@@ -19,34 +19,10 @@ export async function GET(request: Request) {
       });
     });
 
-    // If no admins exist yet in database, seed default primary admin account
-    if (adminList.length === 0) {
-      const defaultAdmin = {
-        id: "super-admin",
-        name: "Super Administrator",
-        email: "admin@gmail.com",
-        password: "12345678",
-        role: "Super Admin",
-        status: "Active",
-        createdAt: new Date().toISOString(),
-        lastLogin: new Date().toISOString(),
-      };
-      await setDoc(doc(db, "admins", "super-admin"), defaultAdmin);
-      adminList.push({
-        id: defaultAdmin.id,
-        name: defaultAdmin.name,
-        email: defaultAdmin.email,
-        role: defaultAdmin.role,
-        status: defaultAdmin.status,
-        createdAt: defaultAdmin.createdAt,
-        lastLogin: defaultAdmin.lastLogin,
-      });
-    }
-
-    // Sort by role (Super Admin first), then by createdAt descending
+    // Sort by role (Admin first), then by createdAt descending
     adminList.sort((a, b) => {
-      if (a.role === "Super Admin" && b.role !== "Super Admin") return -1;
-      if (b.role === "Super Admin" && a.role !== "Super Admin") return 1;
+      if (a.role === "Admin" && b.role !== "Admin") return -1;
+      if (b.role === "Admin" && a.role !== "Admin") return 1;
       const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
       const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
       return dateB - dateA;
