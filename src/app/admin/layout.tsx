@@ -66,6 +66,8 @@ export default function AdminLayout({
         return "Careers Management";
       case "/admin/news":
         return "News Management";
+      case "/admin/admins":
+        return "Admin Users Management";
       case "/admin/media":
         return "Media Gallery Management";
       case "/admin/logs":
@@ -99,6 +101,7 @@ export default function AdminLayout({
         { name: "Documents", href: "/admin/media/documents" }
       ]
     },
+    { name: "Admin Team", href: "/admin/admins", icon: ShieldCheck },
   ];
 
   const handleLogout = () => {

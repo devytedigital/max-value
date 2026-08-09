@@ -14,22 +14,34 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    // Mock validation trigger
-    setTimeout(() => {
-      if (email.trim() === "admin@gmail.com" && password === "12345678") {
-        localStorage.setItem("admin_token", "mv_authenticated_token");
-        router.push("/admin");
-        setLoading(false);
-      } else {
-        setError("Invalid email or password. Please use admin@gmail.com / 12345678");
-        setLoading(false);
+    try {
+      const response = await fetch("/api/admins/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password: password.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Invalid email or password");
       }
-    }, 800);
+
+      localStorage.setItem("admin_token", data.token || "mv_authenticated_token");
+      if (data.user) {
+        localStorage.setItem("admin_user", JSON.stringify(data.user));
+      }
+      router.push("/admin");
+    } catch (err: any) {
+      setError(err.message || "Failed to log in. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
