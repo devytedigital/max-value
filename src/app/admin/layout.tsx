@@ -22,7 +22,8 @@ import {
   ShieldCheck,
   Briefcase,
   Image as ImageIcon,
-  ChevronDown
+  ChevronDown,
+  Newspaper
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -63,6 +64,8 @@ export default function AdminLayout({
         return "Branch Management";
       case "/admin/careers":
         return "Careers Management";
+      case "/admin/news":
+        return "News Management";
       case "/admin/media":
         return "Media Gallery Management";
       case "/admin/logs":
@@ -86,6 +89,7 @@ export default function AdminLayout({
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Branch Network", href: "/admin/branches", icon: GitBranch },
     { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
+    { name: "News Management", href: "/admin/news", icon: Newspaper },
     {
       name: "Media Management",
       icon: ImageIcon,
