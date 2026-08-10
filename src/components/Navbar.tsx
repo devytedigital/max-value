@@ -32,6 +32,8 @@ export default function Navbar() {
     pathname === "/about-us" ||
     pathname === "/board-of-directors" ||
     pathname === "/media" ||
+    pathname === "/blog" ||
+    pathname?.startsWith("/blog/") ||
     pathname?.startsWith("/media/gallery/") ||
     (pathname?.startsWith("/news/") && pathname !== "/news") ||
     pathname?.startsWith("/admin");
@@ -54,6 +56,8 @@ export default function Navbar() {
       setActiveMenu("CAREER");
     } else if (pathname === "/news") {
       setActiveMenu("NEWS");
+    } else if (pathname === "/blog" || pathname.startsWith("/blog/")) {
+      setActiveMenu("BLOG");
     } else if (pathname === "/branch-network") {
       setActiveMenu("BRANCH NETWORK");
     } else if (pathname === "/contact-us" || pathname === "/grievance") {
@@ -105,6 +109,7 @@ export default function Navbar() {
     if (item === "MEDIA") return "/media";
     if (item === "CAREER") return "/career";
     if (item === "NEWS") return "/news";
+    if (item === "BLOG") return "/blog";
     if (item === "BRANCH NETWORK") return "/branch-network";
     if (item === "CONTACT US") return "/contact-us";
     return "";
@@ -117,6 +122,7 @@ export default function Navbar() {
     "MEDIA",
     "CAREER",
     "NEWS",
+    "BLOG",
     "BRANCH NETWORK",
     "CONTACT US"
   ];
@@ -146,7 +152,7 @@ export default function Navbar() {
                     <img
                       src="/maxvalue-logo.png"
                       alt="MAXVALUE Credits and Investments LTD"
-                      className="h-9 md:h-10 w-auto object-contain"
+                      className="h-11 md:h-14 w-auto object-contain"
                     />
                   </div>
                 </Link>

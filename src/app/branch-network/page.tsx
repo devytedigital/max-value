@@ -17,7 +17,9 @@ import {
   CheckCircle2,
   Navigation,
   AlertCircle,
-  Map
+  Map,
+  ChevronRight,
+  ChevronDown
 } from "lucide-react";
 
 export default function BranchNetworkPage() {
@@ -91,33 +93,66 @@ export default function BranchNetworkPage() {
       {/* Navbar */}
       <Navbar />
 
-      {/* TOP HERO BANNER SECTION */}
-      <section 
-        className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 bg-zinc-900 text-white overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/branch-locater.png')" }}
-      >
-        {/* Dark Overlay to make text pop with high contrast */}
-        <div className="absolute inset-0 bg-zinc-950/75 z-0 pointer-events-none" />
-
-        {/* Background glow & grid effects */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-[#FCA038]/10 blur-[120px]" />
-          <div className="absolute -top-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-[80px]" />
+      {/* FULL-SCREEN HERO BANNER — matches About Us / Board of Directors banner style */}
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+        {/* Background Image — no color overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/branch-locater.png"
+            alt="Branch Network Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Subtle bottom darkening only, for text legibility — no color tint */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center flex flex-col items-center">
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 text-center flex flex-col items-center">
 
+          {/* Breadcrumb Pill */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
+          >
+            <span className="text-slate-200">Home</span>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+            <span className="text-[#FCA038] font-bold">Branch Network</span>
+          </motion.div>
 
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-tight max-w-4xl mb-4">
-            Find A Branch <span className="text-[#FCA038]">Near You</span>
-          </h1>
+          {/* Clean text directly over the image — no box, no background */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <h1
+              className="text-4xl sm:text-6xl md:text-7xl font-black tracking-wider uppercase text-white leading-none"
+              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)" }}
+            >
+              BRANCH NETWORK
+            </h1>
+          </motion.div>
 
-          <div className="w-20 h-1.5 bg-[#FCA038] rounded-full mb-6" />
-
-          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-2xl">
-            Locate your nearest Max Value branch office across South India. Select your State and District below and click Search to view full branch details and contact information.
-          </p>
         </div>
+
+        {/* Scroll Down Arrow Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/80 cursor-pointer"
+          onClick={() => {
+            window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+          }}
+        >
+          <span className="text-[11px] font-bold tracking-widest uppercase text-white/70">Scroll Down</span>
+          <ChevronDown className="w-5 h-5 text-[#FCA038]" />
+        </motion.div>
+
+        {/* Curved Bottom Wave Separator — matches About Us banner */}
+        <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />
       </section>
 
       {/* SEARCH CONTROLS SECTION */}

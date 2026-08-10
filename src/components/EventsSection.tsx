@@ -72,7 +72,7 @@ export default function EventsSection() {
             >
               {/* Background Director Image */}
               <img
-                src="/director-portrait.png"
+                src="/7th.jpg"
                 alt="7th Anniversary - Director Message"
                 className="absolute inset-0 w-full h-full object-cover select-none"
               />

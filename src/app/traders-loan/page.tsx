@@ -106,7 +106,7 @@
 // ----------------------------------------
 // Sent via MaxValue Credits Website`;
 
-//     const targetWhatsAppNumber = "918714771854";
+//     const targetWhatsAppNumber = "918891133443";
 //     const encodedText = encodeURIComponent(messageText);
 //     const url = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodedText}`;
 
@@ -554,7 +554,7 @@
 //                     Enquire About Traders Loan
 //                   </h3>
 //                   <p className="text-zinc-500 text-xs md:text-sm mt-1">
-//                     Fill in the details below. Submitting will open your official WhatsApp support chat (<strong className="text-zinc-800">8714771854</strong>).
+//                     Fill in the details below. Submitting will open your official WhatsApp support chat (<strong className="text-zinc-800">8891133443</strong>).
 //                   </p>
 //                 </div>
 
@@ -579,7 +579,7 @@
 //                       className="mt-2 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer"
 //                     >
 //                       <MessageSquare className="w-4 h-4 fill-white" />
-//                       <span>Open WhatsApp Chat (8714771854)</span>
+//                       <span>Open WhatsApp Chat (8891133443)</span>
 //                       <ExternalLink className="w-3.5 h-3.5" />
 //                     </a>
 
@@ -904,7 +904,7 @@ ${formData.comment.trim()}
 ----------------------------------------
 Sent via MaxValue Credits Website`;
 
-    const targetWhatsAppNumber = "918714771854";
+    const targetWhatsAppNumber = "918891133443";
     const encodedText = encodeURIComponent(messageText);
     const url = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodedText}`;
 
@@ -1061,10 +1061,7 @@ Sent via MaxValue Credits Website`;
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 text-left"
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#147FC3]/10 border border-[#147FC3]/20 text-[#147FC3] text-xs font-bold uppercase tracking-wider mb-6 shadow-2xs">
-                <Briefcase className="w-4 h-4 text-[#FCA038]" />
-                <span>Business Finance for Traders</span>
-              </div>
+              
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black uppercase leading-tight mb-4">
                 Business finance that helps <br />
@@ -1390,7 +1387,7 @@ Sent via MaxValue Credits Website`;
                     Enquire About Traders Loan
                   </h3>
                   <p className="text-zinc-500 text-xs md:text-sm mt-1">
-                    Fill in the details below. Submitting will open your official WhatsApp support chat (<strong className="text-zinc-800">8714771854</strong>).
+                    Fill in the details below. Submitting will open your official WhatsApp support chat (<strong className="text-zinc-800">8891133443</strong>).
                   </p>
                 </div>
 
@@ -1415,7 +1412,7 @@ Sent via MaxValue Credits Website`;
                       className="mt-2 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer"
                     >
                       <MessageSquare className="w-4 h-4 fill-white" />
-                      <span>Open WhatsApp Chat (8714771854)</span>
+                      <span>Open WhatsApp Chat (8891133443)</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
 

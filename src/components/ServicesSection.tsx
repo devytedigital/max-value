@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 // Types for the services
 interface ServiceItem {
@@ -11,6 +12,7 @@ interface ServiceItem {
   subtitle: string;
   description: string;
   icon: React.ReactNode;
+  href: string;
 }
 
 export default function ServicesSection() {
@@ -25,6 +27,7 @@ export default function ServicesSection() {
       title: "Vehicle Loan",
       subtitle: "Fast Track Your Dream Drive",
       description: "Get on the road quickly with our hassle-free vehicle financing. Offering high loan-to-value options and swift processing times.",
+      href: "/vehicle-loan#enquiry-section",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -45,6 +48,7 @@ export default function ServicesSection() {
       title: "Business Loan",
       subtitle: "Capital to Scale Your Vision",
       description: "Empower your business with tailored funding. Perfect for expansion, buying stock, working capital, or infrastructure development.",
+      href: "/business-loan#enquiry-section",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -72,6 +76,7 @@ export default function ServicesSection() {
       title: "Micro Finance",
       subtitle: "Empowering Local Communities",
       description: "Supporting micro-entrepreneurs, self-help groups, and low-income individuals with vital capital and credit opportunities.",
+      href: "/microfinance#enquiry-section",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 85H90" strokeWidth="3.5" strokeLinecap="round" />
@@ -93,6 +98,7 @@ export default function ServicesSection() {
       title: "Gold Loan",
       subtitle: "Instant Value For Your Gold",
       description: "Convert your gold ornaments into instant funds with absolute safety. Get high valuation per gram, quick appraisal, and secure storage.",
+      href: "/gold-loan#enquiry-section",
       icon: (
         <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-[#147FC3]" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 70L24 55H56L44 70H12Z" strokeWidth="3.5" strokeLinejoin="round" />
@@ -215,15 +221,20 @@ export default function ServicesSection() {
               className="group flex flex-col items-center text-center w-[28%] max-w-[340px]"
             >
               {/* Circle Icon Container */}
-              <div className="w-20 h-20 bg-[#147FC3]/5 group-hover:bg-[#147FC3]/10 rounded-full flex items-center justify-center transition-all duration-350 ease-out mb-5 relative">
+              <Link
+                href={service.href}
+                className="w-20 h-20 bg-[#147FC3]/5 group-hover:bg-[#147FC3]/10 rounded-full flex items-center justify-center transition-all duration-350 ease-out mb-5 relative"
+              >
                 <span className="absolute inset-0 rounded-full border border-[#147FC3]/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 {service.icon}
-              </div>
+              </Link>
 
               {/* Title */}
-              <h3 className="text-xl font-extrabold text-zinc-900 tracking-tight transition-colors duration-300 group-hover:text-[#147FC3]">
-                {service.title}
-              </h3>
+              <Link href={service.href}>
+                <h3 className="text-xl font-extrabold text-zinc-900 tracking-tight transition-colors duration-300 group-hover:text-[#147FC3]">
+                  {service.title}
+                </h3>
+              </Link>
 
               {/* Subtitle */}
               <p className="text-xs font-bold text-[#FCA038] mt-1.5 uppercase tracking-wider">
@@ -237,10 +248,13 @@ export default function ServicesSection() {
 
               {/* Enquiry Now Link */}
               <div className="mt-4">
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300 cursor-pointer">
+                <Link
+                  href={service.href}
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300 cursor-pointer"
+                >
                   Enquiry Now
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
+                </Link>
               </div>
             </motion.div>
           ))}
@@ -266,8 +280,9 @@ export default function ServicesSection() {
                   className="w-full grid grid-cols-2 gap-x-6 gap-y-8"
                 >
                   {mobilePages[currentPage].map((service, idx) => (
-                    <div
+                    <Link
                       key={service.id + "-mobile-" + idx}
+                      href={service.href}
                       className="group flex flex-col items-center text-center px-2 py-2"
                     >
                       {/* Circle Icon Container */}
@@ -280,7 +295,20 @@ export default function ServicesSection() {
                       <h3 className="text-base md:text-lg font-extrabold text-zinc-900 tracking-tight transition-colors duration-300 group-hover:text-[#147FC3]">
                         {service.title}
                       </h3>
-                    </div>
+
+                      {/* Subtitle */}
+                      <p className="text-[10px] font-bold text-[#FCA038] mt-1 uppercase tracking-wider">
+                        {service.subtitle}
+                      </p>
+
+                      {/* Enquiry Now Link */}
+                      <div className="mt-3">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300">
+                          Enquiry Now
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </span>
+                      </div>
+                    </Link>
                   ))}
                 </motion.div>
               </AnimatePresence>
@@ -300,8 +328,8 @@ export default function ServicesSection() {
                   startAutoplay();
                 }}
                 className={`h-2.5 rounded-full transition-all duration-300 ${index === currentPage
-                    ? "w-8 bg-[#147FC3]"
-                    : "w-2.5 bg-zinc-200 hover:bg-zinc-300"
+                  ? "w-8 bg-[#147FC3]"
+                  : "w-2.5 bg-zinc-200 hover:bg-zinc-300"
                   }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -314,3 +342,4 @@ export default function ServicesSection() {
     </section>
   );
 }
+

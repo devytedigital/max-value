@@ -240,8 +240,7 @@ import { ChevronLeft, ChevronRight, ArrowRight, Sparkles, ShieldCheck, Pause, Pl
 const SLIDES = [
   {
     id: 0,
-    tag: "MAXVALUE CREDITS & INVESTMENTS",
-    badgeIcon: Sparkles,
+   
     heading: (
       <>
         Compound your <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]">growth</span>, multiply your <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-[#FCA038] bg-clip-text text-transparent">possibilities</span>
@@ -252,8 +251,7 @@ const SLIDES = [
   },
   {
     id: 1,
-    tag: "SMART FINANCIAL FREEDOM",
-    badgeIcon: ShieldCheck,
+  
     heading: (
       <>
         <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]">Prosperity</span> is the product of <span className="bg-gradient-to-r from-amber-200 via-[#FCA038] to-orange-300 bg-clip-text text-transparent">wise decisions</span>
@@ -319,7 +317,6 @@ export default function HeroSection() {
   };
 
   const activeSlideData = SLIDES[currentSlide];
-  const BadgeIcon = activeSlideData.badgeIcon;
 
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950 text-white z-20">
@@ -362,12 +359,7 @@ export default function HeroSection() {
             >
               {/* Category / Brand Badge */}
               <motion.div variants={itemVariants}>
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 shadow-inner">
-                  <BadgeIcon className="w-4 h-4 text-[#FCA038] animate-pulse" />
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-zinc-200">
-                    {activeSlideData.tag}
-                  </span>
-                </div>
+               
               </motion.div>
 
               {/* Main Heading */}

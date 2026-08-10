@@ -84,7 +84,7 @@ export const branchDatabase: Branch[] = [
     landmark: "Near Swaraj Round West",
     pinCode: "680001",
     phone: "0487 2428800",
-    mobile: "8714771854",
+    mobile: "8891133443",
     email: "thrissur@maxvaluecredits.com",
     location: "MG Road, Swaraj Round",
     workingHours: "9:30 AM to 5:30 PM",

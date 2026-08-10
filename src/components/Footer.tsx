@@ -194,10 +194,18 @@ export default function Footer() {
             Useful Links
           </h4>
           <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
-            {["About Company", "Gold Loan", "Vehicle Loan", "Business Loan", "Microfinance"].map((link) => (
-              <li key={link}>
-                <a href="#" className="hover:text-[#147FC3] transition-colors">
-                  {link}
+            {[
+              { label: "About Company", href: "/about-us" },
+              { label: "Gold Loan", href: "/gold-loan" },
+              { label: "Vehicle Loan", href: "/vehicle-loan" },
+              { label: "Business Loan", href: "/business-loan" },
+              { label: "Microfinance", href: "/microfinance" },
+              { label: "Financial Blog", href: "/blog" },
+              { label: "Latest News", href: "/news" },
+            ].map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className="hover:text-[#147FC3] transition-colors">
+                  {link.label}
                 </a>
               </li>
             ))}

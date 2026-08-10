@@ -19,7 +19,9 @@ import {
   DollarSign,
   X,
   ArrowUpRight,
-  Briefcase
+  Briefcase,
+  ChevronRight,
+  ChevronDown
 } from "lucide-react";
 
 interface JobListing {
@@ -283,7 +285,7 @@ export default function CareerPage() {
 ----------------------------------------
 Sent via MaxValue Careers Portal`;
 
-    const targetWhatsAppNumber = "918714771854";
+    const targetWhatsAppNumber = "918891133443";
     const encodedText = encodeURIComponent(messageText);
     const url = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodedText}`;
 
@@ -307,11 +309,73 @@ Sent via MaxValue Careers Portal`;
       {/* Navbar */}
       <Navbar />
 
-      {/* Ambient soft glow at top right matching corporate brand colours (Orange & Blue) */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-radial from-[#FCA038]/8 via-[#147FC3]/4 to-transparent blur-[120px] pointer-events-none z-0" />
+      {/* FULL-SCREEN HERO BANNER — matches About Us banner style */}
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+        {/* Background Image — no color overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/careerbanner.png"
+            alt="Career Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Subtle bottom darkening only, for text legibility — no color tint */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+        </div>
 
-      {/* Main Content Area - Aligned margins/padding (max-w-7xl px-6 md:px-8) matching other pages */}
-      <main className="max-w-7xl mx-auto px-6 md:px-8 pt-36 pb-28 relative z-10">
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 text-center flex flex-col items-center">
+
+          {/* Breadcrumb Pill */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
+          >
+            <span className="text-slate-200">Home</span>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+            <span className="text-[#FCA038] font-bold">Career</span>
+          </motion.div>
+
+          {/* Clean text directly over the image — no box, no background */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <h1
+              className="text-4xl sm:text-6xl md:text-7xl font-black tracking-wider uppercase text-white leading-none"
+              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)" }}
+            >
+              CAREERS
+            </h1>
+          </motion.div>
+
+        </div>
+
+        {/* Scroll Down Arrow Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/80 cursor-pointer"
+          onClick={() => {
+            window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+          }}
+        >
+          <span className="text-[11px] font-bold tracking-widest uppercase text-white/70">Scroll Down</span>
+          <ChevronDown className="w-5 h-5 text-[#FCA038]" />
+        </motion.div>
+
+        {/* Curved Bottom Wave Separator — matches About Us banner */}
+        <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />
+      </section>
+
+      {/* Ambient soft glow matching corporate brand colours */}
+      <div className="absolute top-[100vh] right-0 w-[600px] h-[600px] rounded-full bg-radial from-[#FCA038]/8 via-[#147FC3]/4 to-transparent blur-[120px] pointer-events-none z-0" />
+
+      {/* Main Content Area - Aligned margins/padding matching other pages */}
+      <main className="max-w-7xl mx-auto px-6 md:px-8 pt-20 pb-28 md:pt-28 md:pb-32 relative z-10">
         {/* We're Hiring badge using corporate gold accent */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}

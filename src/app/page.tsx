@@ -8,6 +8,7 @@ import ServicesSection from "@/components/ServicesSection";
 import AboutStatsSection from "@/components/AboutStatsSection";
 import AdvantagesSection from "@/components/AdvantagesSection";
 import EventsSection from "@/components/EventsSection";
+import AdVideoSection from "@/components/AdVideoSection";
 
 // Dynamically import client-only SplashModal with SSR disabled to prevent hydration mismatches
 const SplashModal = dynamic(() => import("@/components/SplashModal"), { ssr: false });
@@ -41,6 +42,9 @@ export default function Home() {
 
       {/* Events Section */}
       <EventsSection />
+
+      {/* Commercial Video & QR Code Section */}
+      <AdVideoSection />
 
       {/* Corporate Footer */}
       <Footer />
