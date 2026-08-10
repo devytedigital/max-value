@@ -709,10 +709,12 @@
 
 "use client";
 
-import { useState, cloneElement, ReactElement } from "react";
+import { useState, useEffect, cloneElement, ReactElement } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import { db } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import {
   Phone,
   Mail,
@@ -735,6 +737,23 @@ import {
 } from "lucide-react";
 
 export default function GoldLoanPage() {
+  const [goldRate, setGoldRate] = useState<number | null>(null);
+
+  useEffect(() => {
+    const docRef = doc(db, "blogs", "gold-rate-settings");
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.rate) {
+          setGoldRate(data.rate);
+        }
+      }
+    }, (err) => {
+      // Fail silently
+    });
+    return () => unsubscribe();
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -938,7 +957,7 @@ Sent via MaxValue Credits Website`;
               <div className="inline-block bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8 shadow-xs">
                 <p className="text-[11px] uppercase tracking-wider text-zinc-500 font-bold">Today's Gold Rate</p>
                 <p className="text-xl font-black text-[#147FC3] mt-0.5">
-                  ₹13,279 <span className="text-xs text-zinc-500 font-medium">/gram</span>
+                  ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"} <span className="text-xs text-zinc-500 font-medium">/gram</span>
                 </p>
               </div>
 

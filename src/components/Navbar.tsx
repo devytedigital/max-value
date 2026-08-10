@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { db } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import {
   Clock,
   Phone,
@@ -17,6 +19,23 @@ import {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [goldRate, setGoldRate] = useState<number | null>(null);
+
+  useEffect(() => {
+    const docRef = doc(db, "blogs", "gold-rate-settings");
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.rate) {
+          setGoldRate(data.rate);
+        }
+      }
+    }, (err) => {
+      // Fail silently
+    });
+    return () => unsubscribe();
+  }, []);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("HOME");
   const [isVisible, setIsVisible] = useState(true);
@@ -313,7 +332,7 @@ export default function Navbar() {
                       : "text-zinc-400"
                     }`}>Gold Live Price</span>
                   <span className="text-xs font-bold text-[#FCA038] mt-0.5 leading-none">
-                    ₹13,279<span className={`text-[9.5px] font-medium font-sans ${isHeaderLight ? "text-zinc-500" : "text-zinc-550"}`}>/g</span>
+                    ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"}<span className={`text-[9.5px] font-medium font-sans ${isHeaderLight ? "text-zinc-500" : "text-zinc-550"}`}>/g</span>
                   </span>
                 </div>
 
@@ -377,6 +396,14 @@ export default function Navbar() {
               >
                 <CloseIcon className="h-5 w-5" />
               </button>
+            </div>
+
+            {/* Gold Live Price Indicator (Mobile) */}
+            <div className="px-5 py-3 bg-zinc-100 border-b border-zinc-200 flex items-center justify-between shrink-0">
+              <span className="text-[10px] uppercase tracking-widest font-black text-zinc-550">Gold Live Price</span>
+              <span className="text-xs font-black text-[#FCA038]">
+                ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"}<span className="text-[10px] font-bold text-zinc-500 font-sans">/g</span>
+              </span>
             </div>
 
             {/* Middle List (Scrollable body) */}

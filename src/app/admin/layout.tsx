@@ -22,7 +22,8 @@ import {
   ChevronDown,
   Newspaper,
   ShieldAlert,
-  ArrowLeft
+  ArrowLeft,
+  BookOpen
 } from "lucide-react";
 
 interface CurrentUser {
@@ -98,6 +99,8 @@ export default function AdminLayout({
         return "Careers Management";
       case "/admin/news":
         return "News & Press Releases";
+      case "/admin/blog":
+        return "Blog Management Console";
       case "/admin/admins":
         return "Admin Users Management";
       case "/admin/media":
@@ -131,6 +134,7 @@ export default function AdminLayout({
     { name: "Branch Network", href: "/admin/branches", icon: GitBranch },
     { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
     { name: "News Management", href: "/admin/news", icon: Newspaper },
+    { name: "Blog Management", href: "/admin/blog", icon: BookOpen },
     {
       name: "Media Management",
       icon: ImageIcon,

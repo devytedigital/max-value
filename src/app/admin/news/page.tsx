@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import ImageUpload from "@/components/ImageUpload";
 import {
   Newspaper,
   Search,
@@ -698,22 +699,16 @@ export default function AdminNewsPage() {
       {/* ADD / EDIT ARTICLE DIALOG MODAL */}
       <AnimatePresence>
         {modalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => !formSubmitting && setModalOpen(false)}
-              className="absolute inset-0 bg-zinc-950/45 backdrop-blur-xs"
-            />
-
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/45 backdrop-blur-xs"
+            onClick={() => !formSubmitting && setModalOpen(false)}
+          >
             {/* Dialog Content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-3xl max-h-[90vh] bg-white rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden flex flex-col"
             >
               {/* Header */}
@@ -741,7 +736,7 @@ export default function AdminNewsPage() {
               </div>
 
               {/* Form Body Scroll Area */}
-              <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+              <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto p-6 space-y-6" style={{ maxHeight: "calc(90vh - 120px)" }}>
                 
                 {formError && (
                   <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-bold flex items-center gap-2">
@@ -750,42 +745,15 @@ export default function AdminNewsPage() {
                   </div>
                 )}
 
-                {/* 1. MAIN BANNER IMAGE URL SETUP */}
-                <div className="p-5 bg-zinc-50/80 border border-zinc-200/90 rounded-2xl space-y-3">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
-                      <Camera className="w-4 h-4 text-[#147FC3]" />
-                      Main Banner Cover Image URL <span className="text-rose-500">*</span>
-                    </label>
-
-                    <button
-                      type="button"
-                      onClick={handlePasteBannerUrl}
-                      className="px-3 py-1 bg-white hover:bg-[#147FC3] hover:text-white border border-zinc-200 rounded-lg text-[11px] font-bold text-zinc-700 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-                    >
-                      {copiedBanner ? <Check className="w-3 h-3 text-emerald-500" /> : <Clipboard className="w-3 h-3" />}
-                      <span>{copiedBanner ? "Pasted!" : "Paste from Clipboard"}</span>
-                    </button>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="e.g. https://images.unsplash.com/photo-... or /assets/gold-loan-inauguration.jpg"
-                      value={formData.bannerImage}
-                      onChange={(e) => setFormData(prev => ({ ...prev, bannerImage: e.target.value }))}
-                      className="flex-1 px-4 py-2.5 bg-white border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:border-[#147FC3] outline-none transition-all"
-                    />
-                    {formData.bannerImage && (
-                      <button
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, bannerImage: "" }))}
-                        className="px-3 py-2 bg-zinc-150 hover:bg-rose-50 hover:text-rose-600 text-zinc-500 rounded-xl text-xs font-bold transition-colors cursor-pointer"
-                      >
-                        Clear
-                      </button>
-                    )}
-                  </div>
+                {/* 1. MAIN BANNER IMAGE CLOUDINARY UPLOADER */}
+                <div className="p-5 bg-zinc-50/80 border border-zinc-200/90 rounded-2xl">
+                  <ImageUpload
+                    value={formData.bannerImage}
+                    onChange={(url) => setFormData(prev => ({ ...prev, bannerImage: url }))}
+                    label="Main Banner Cover Image"
+                    required
+                  />
+                </div>
 
                   {/* Sample Presets Helper */}
                   <div className="flex flex-wrap items-center gap-1.5 pt-1">
@@ -826,7 +794,6 @@ export default function AdminNewsPage() {
                       <span>Paste an image URL above to see a live banner preview</span>
                     </div>
                   )}
-                </div>
 
                 {/* 2. CORE DETAILS */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1026,15 +993,12 @@ export default function AdminNewsPage() {
                           </div>
                         ) : block.type === "image" ? (
                           <div className="space-y-2 bg-white p-3 rounded-xl border border-zinc-200">
-                            <div className="flex gap-2 items-center">
-                              <input
-                                type="text"
-                                placeholder="Paste inline image URL (e.g. branch counter, ceremony)..."
-                                value={block.url || ""}
-                                onChange={(e) => handleContentImageChange(bIdx, "url", e.target.value)}
-                                className="flex-1 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
-                              />
-                            </div>
+                            <ImageUpload
+                              value={block.url || ""}
+                              onChange={(url) => handleContentImageChange(bIdx, "url", url)}
+                              label="Inline Image"
+                              required
+                            />
                             <input
                               type="text"
                               placeholder="Photo caption (e.g. Dignitaries and management at the branch opening ceremony)..."
@@ -1042,11 +1006,6 @@ export default function AdminNewsPage() {
                               onChange={(e) => handleContentImageChange(bIdx, "caption", e.target.value)}
                               className="w-full px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
                             />
-                            {block.url && (
-                              <div className="w-32 h-20 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 relative mt-1">
-                                <img src={block.url} alt="Inline preview" className="w-full h-full object-cover" />
-                              </div>
-                            )}
                           </div>
                         ) : (
                           <textarea
@@ -1101,40 +1060,12 @@ export default function AdminNewsPage() {
                         <div key={idx} className="p-3.5 bg-zinc-50 border border-zinc-200/90 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-3">
                           
                           {/* Live Thumbnail Preview */}
-                          <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-200 shrink-0 border border-zinc-300 relative flex items-center justify-center">
-                            {img.url ? (
-                              <img
-                                src={img.url}
-                                alt={`Event photo ${idx + 1}`}
-                                className="w-full h-full object-cover"
-                                onError={(e: any) => {
-                                  e.target.style.display = "none";
-                                }}
-                              />
-                            ) : (
-                              <ImageIcon className="w-6 h-6 text-zinc-400" />
-                            )}
-                          </div>
-
-                          {/* Inputs */}
-                          <div className="flex-1 space-y-2 w-full">
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                placeholder="Paste Image URL (e.g. https://images.unsplash.com/...)"
-                                value={img.url}
-                                onChange={(e) => handleSupportingImageChange(idx, "url", e.target.value)}
-                                className="flex-1 px-3 py-1.5 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-700 outline-none focus:border-[#147FC3]"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => handlePasteSupportingImageUrl(idx)}
-                                className="px-2.5 py-1 bg-white hover:bg-zinc-100 border border-zinc-200 rounded-lg text-[10px] font-bold text-zinc-600 transition-colors cursor-pointer"
-                                title="Paste from clipboard"
-                              >
-                                Paste
-                              </button>
-                            </div>
+                          <div className="flex-1 w-full space-y-2">
+                            <ImageUpload
+                              value={img.url}
+                              onChange={(url) => handleSupportingImageChange(idx, "url", url)}
+                              label={`Supporting Photo ${idx + 1}`}
+                            />
                             <input
                               type="text"
                               placeholder="Photo caption (e.g. Ribbon-cutting ceremony at the new branch in Thrissur)..."

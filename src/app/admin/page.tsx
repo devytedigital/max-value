@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { db } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import {
   TrendingUp,
   Users,
@@ -23,7 +25,8 @@ import {
   Building,
   UserCheck,
   TrendingDown,
-  Activity
+  Activity,
+  Coins
 } from "lucide-react";
 
 // Mock Applications Data
@@ -49,6 +52,63 @@ const chartData = [
 ];
 
 export default function AdminDashboard() {
+  // Gold Rate States
+  const [goldRate, setGoldRate] = useState<string>("");
+  const [rateLoading, setRateLoading] = useState(false);
+  const [rateSaving, setRateSaving] = useState(false);
+  const [rateError, setRateError] = useState("");
+  const [rateSuccess, setRateSuccess] = useState(false);
+  const [rateLastUpdated, setRateLastUpdated] = useState("");
+
+  // Load Gold Rate in real-time
+  useEffect(() => {
+    setRateLoading(true);
+    const docRef = doc(db, "blogs", "gold-rate-settings");
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.rate) {
+          setGoldRate(data.rate.toString());
+          setRateLastUpdated(data.lastUpdated || "");
+        }
+      }
+      setRateLoading(false);
+    }, (err) => {
+      setRateLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleSaveGoldRate = async () => {
+    if (!goldRate || isNaN(Number(goldRate))) {
+      setRateError("Please enter a valid numeric gold rate.");
+      return;
+    }
+    try {
+      setRateSaving(true);
+      setRateError("");
+      setRateSuccess(false);
+      const res = await fetch("/api/gold-rate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rate: Number(goldRate), updatedBy: "Admin Portal" })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setRateSuccess(true);
+        setRateLastUpdated(data.lastUpdated || new Date().toISOString());
+        setTimeout(() => setRateSuccess(false), 3005);
+      } else {
+        const data = await res.json();
+        setRateError(data.error || "Failed to update gold rate");
+      }
+    } catch (err: any) {
+      setRateError(err.message || "Failed to contact database");
+    } finally {
+      setRateSaving(false);
+    }
+  };
+
   const [applications, setApplications] = useState(initialApplications);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("All");
@@ -521,6 +581,60 @@ export default function AdminDashboard() {
                   </span>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Live Gold Rate Editor Widget */}
+          <div className="bg-white p-6 rounded-2xl border border-zinc-200/80 shadow-xs flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
+              <h3 className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
+                <Coins className="w-4 h-4 text-[#FCA038]" />
+                Live Gold Rate Editor
+              </h3>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50 uppercase">
+                Per Gram
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-black uppercase text-zinc-400">Current Rate (₹ / Gram)</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-2.5 text-xs font-bold text-zinc-500">₹</span>
+                  <input
+                    type="number"
+                    value={goldRate}
+                    onChange={(e) => setGoldRate(e.target.value)}
+                    disabled={rateLoading || rateSaving}
+                    placeholder="7250"
+                    className="w-full pl-7 pr-3 py-2 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:ring-2 focus:ring-[#147FC3]/40 outline-none"
+                  />
+                </div>
+              </div>
+
+              {rateError && (
+                <p className="text-[10px] font-bold text-rose-600 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5" /> {rateError}
+                </p>
+              )}
+
+              {rateSuccess && (
+                <p className="text-[10px] font-bold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Gold rate updated successfully!
+                </p>
+              )}
+
+              <div className="flex items-center justify-between text-[10px] font-semibold text-zinc-450 border-t border-zinc-50 pt-3">
+                <span>Last updated: {rateLastUpdated ? new Date(rateLastUpdated).toLocaleTimeString() : "N/A"}</span>
+                <button
+                  type="button"
+                  onClick={handleSaveGoldRate}
+                  disabled={rateLoading || rateSaving || !goldRate}
+                  className="px-3.5 py-1.5 bg-[#147FC3] hover:bg-[#FCA038] text-white rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors disabled:bg-zinc-350 cursor-pointer"
+                >
+                  {rateSaving ? "Saving..." : "Save Rate"}
+                </button>
+              </div>
             </div>
           </div>
 

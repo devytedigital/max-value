@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, use } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getBlogPostById, getRelatedBlogPosts, BlogPost } from "@/data/blogData";
+import { BlogPost } from "@/data/blogData";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -36,10 +36,47 @@ export default function BlogDetailPage({
       : (params as { id: string });
 
   const articleId = resolvedParams?.id;
-  const post: BlogPost | undefined = getBlogPostById(articleId);
-  const relatedPosts: BlogPost[] = getRelatedBlogPosts(articleId);
 
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const fetchArticleData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        // 1. Fetch target blog from Firestore API
+        const res = await fetch(`/api/blog/${articleId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setPost(data);
+        } else {
+          setError("Blog post not found");
+        }
+
+        // 2. Fetch related blogs from Firestore API
+        const listRes = await fetch("/api/blog");
+        if (listRes.ok) {
+          const listData = await listRes.json();
+          if (Array.isArray(listData)) {
+            setRelatedPosts(listData.filter((item: any) => item.id !== articleId).slice(0, 3));
+          }
+        }
+      } catch (err: any) {
+        setError(err.message || "Failed to load article from database");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (articleId) {
+      fetchArticleData();
+    }
+  }, [articleId]);
 
   const handleCopyLink = () => {
     if (typeof window !== "undefined" && navigator.clipboard) {
@@ -59,7 +96,26 @@ export default function BlogDetailPage({
     }
   };
 
-  if (!post) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#FDFCFB] text-zinc-900 font-sans">
+        <Navbar />
+        <main className="pt-32 pb-20 px-6 max-w-4xl mx-auto space-y-6 animate-pulse">
+          <div className="h-6 w-36 bg-zinc-200 rounded-full" />
+          <div className="h-12 w-full bg-zinc-200 rounded-2xl" />
+          <div className="h-4 w-1/2 bg-zinc-200 rounded-md" />
+          <div className="aspect-[16/9] w-full bg-zinc-200 rounded-3xl" />
+          <div className="space-y-3 pt-6">
+            <div className="h-4 bg-zinc-200 rounded-md w-full" />
+            <div className="h-4 bg-zinc-200 rounded-md w-5/6" />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !post) {
     return (
       <div className="min-h-screen bg-[#FDFCFB] text-zinc-900 font-sans">
         <Navbar />
@@ -141,15 +197,19 @@ export default function BlogDetailPage({
             {/* AUTHOR META & SHARE BAR */}
             <div className="py-4 border-y border-zinc-200 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  className="w-11 h-11 rounded-full object-cover border-2 border-[#147FC3]"
-                />
-                <div>
-                  <h4 className="text-sm font-black text-zinc-900">{post.author.name}</h4>
-                  <p className="text-xs font-semibold text-zinc-500">{post.author.role}</p>
-                </div>
+                {post.author && (
+                  <>
+                    <img
+                      src={post.author.avatar || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200"}
+                      alt={post.author.name}
+                      className="w-11 h-11 rounded-full object-cover border-2 border-[#147FC3]"
+                    />
+                    <div>
+                      <h4 className="text-sm font-black text-zinc-900">{post.author.name}</h4>
+                      <p className="text-xs font-semibold text-zinc-500">{post.author.role}</p>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Share Buttons */}
@@ -190,7 +250,7 @@ export default function BlogDetailPage({
 
           {/* ARTICLE CONTENT BODY */}
           <article className="space-y-8 text-zinc-800 font-sans leading-relaxed text-base">
-            {post.content.map((block, index) => {
+            {post.content && post.content.map((block, index) => {
               if (block.type === "paragraph") {
                 return (
                   <p key={index} className="text-zinc-700 text-base md:text-lg font-normal leading-relaxed">
@@ -294,25 +354,27 @@ export default function BlogDetailPage({
           )}
 
           {/* AUTHOR BIO BOX */}
-          <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 text-white rounded-3xl p-6 md:p-8 border border-zinc-800 flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-xl">
-            <img
-              src={post.author.avatar}
-              alt={post.author.name}
-              className="w-20 h-20 rounded-full object-cover border-4 border-[#147FC3] shrink-0"
-            />
-            <div className="space-y-2 text-center sm:text-left">
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#FCA038]">
-                WRITTEN BY AUTHOR
-              </span>
-              <h4 className="text-lg font-black">{post.author.name}</h4>
-              <p className="text-xs font-semibold text-[#147FC3]">{post.author.role}</p>
-              {post.author.bio && (
-                <p className="text-xs font-medium text-zinc-300 leading-relaxed pt-1">
-                  {post.author.bio}
-                </p>
-              )}
+          {post.author && (
+            <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 text-white rounded-3xl p-6 md:p-8 border border-zinc-800 flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-xl">
+              <img
+                src={post.author.avatar || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200"}
+                alt={post.author.name}
+                className="w-20 h-20 rounded-full object-cover border-4 border-[#147FC3] shrink-0"
+              />
+              <div className="space-y-2 text-center sm:text-left">
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#FCA038]">
+                  WRITTEN BY AUTHOR
+                </span>
+                <h4 className="text-lg font-black">{post.author.name}</h4>
+                <p className="text-xs font-semibold text-[#147FC3]">{post.author.role}</p>
+                {post.author.bio && (
+                  <p className="text-xs font-medium text-zinc-300 leading-relaxed pt-1">
+                    {post.author.bio}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* RELATED ARTICLES SECTION */}
           {relatedPosts.length > 0 && (

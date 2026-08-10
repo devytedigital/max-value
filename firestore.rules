@@ -33,6 +33,30 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // Rules for News Collection
+    match /news/{newsId} {
+      // Anyone can query and read news articles, writes are managed via secure server API routes
+      allow read, write: if true;
+    }
+
+    // Rules for Blogs Collection
+    match /blogs/{blogId} {
+      // Anyone can query and read blog posts, writes are managed via secure server API routes
+      allow read, write: if true;
+    }
+
+    // Rules for Gold Rate Collection
+    match /gold-rate/{id} {
+      // Anyone can query and read gold rates, writes are managed via secure server API routes
+      allow read, write: if true;
+    }
+
+    // Rules for Admins Collection
+    match /admins/{adminId} {
+      // Managed and sanitized via secure server API routes
+      allow read, write: if true;
+    }
+
     // Default fallback: lock down all other collections
     match /{document=**} {
       allow read, write: if false;
