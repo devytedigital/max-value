@@ -7,6 +7,7 @@ interface ImageUploadProps {
   label?: string;
   required?: boolean;
   placeholder?: string;
+  allowUrl?: boolean;
 }
 
 export default function ImageUpload({
@@ -14,7 +15,8 @@ export default function ImageUpload({
   onChange,
   label,
   required = false,
-  placeholder = "Upload or paste image URL..."
+  placeholder = "Upload or paste image URL...",
+  allowUrl = true
 }: ImageUploadProps) {
   const [mode, setMode] = useState<"upload" | "url">("upload");
   const [uploading, setUploading] = useState(false);
@@ -84,21 +86,23 @@ export default function ImageUpload({
           <label className="text-xs font-black uppercase text-zinc-700">
             {label} {required && <span className="text-rose-500">*</span>}
           </label>
-          <button
-            type="button"
-            onClick={() => setMode(mode === "upload" ? "url" : "upload")}
-            className="text-[10px] font-bold text-[#147FC3] hover:text-[#FCA038] hover:underline cursor-pointer flex items-center gap-1 transition-colors"
-          >
-            {mode === "upload" ? (
-              <>
-                <LinkIcon className="w-2.5 h-2.5" /> Paste URL Instead
-              </>
-            ) : (
-              <>
-                <Upload className="w-2.5 h-2.5" /> Upload File Instead
-              </>
-            )}
-          </button>
+          {allowUrl && (
+            <button
+              type="button"
+              onClick={() => setMode(mode === "upload" ? "url" : "upload")}
+              className="text-[10px] font-bold text-[#147FC3] hover:text-[#FCA038] hover:underline cursor-pointer flex items-center gap-1 transition-colors"
+            >
+              {mode === "upload" ? (
+                <>
+                  <LinkIcon className="w-2.5 h-2.5" /> Paste URL Instead
+                </>
+              ) : (
+                <>
+                  <Upload className="w-2.5 h-2.5" /> Upload File Instead
+                </>
+              )}
+            </button>
+          )}
         </div>
       )}
 

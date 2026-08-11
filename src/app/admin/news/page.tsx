@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import ImageUpload from "@/components/ImageUpload";
+import { getCookie } from "@/lib/cookies";
 import {
   Newspaper,
   Search,
@@ -143,7 +144,7 @@ export default function AdminNewsPage() {
 
   // Auth check guard
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
+    const token = getCookie("admin_token");
     if (!token) {
       router.push("/adminlogin");
     }

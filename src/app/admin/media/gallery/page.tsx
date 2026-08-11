@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import ImageUpload from "@/components/ImageUpload";
+import { getCookie } from "@/lib/cookies";
 import {
   Image as ImageIcon,
   Search,
@@ -85,7 +87,7 @@ export default function AdminMediaGalleryPage() {
 
   // Auth check guard
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
+    const token = getCookie("admin_token");
     if (!token) {
       router.push("/adminlogin");
     }
@@ -534,18 +536,15 @@ export default function AdminMediaGalleryPage() {
                     />
                   </div>
 
-                  {/* Cover Image URL */}
+                  {/* Cover Image Upload */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-extrabold uppercase tracking-wider text-zinc-650">
-                      Cover Image URL <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="url"
-                      required
+                    <ImageUpload
                       value={formData.image}
-                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                      placeholder="e.g. https://images.unsplash.com/photo-... or Cloudinary URL"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-250 text-xs font-semibold outline-none focus:border-[#147FC3] focus:ring-2 focus:ring-[#147FC3]/10 transition-all"
+                      onChange={(url) => setFormData({ ...formData, image: url })}
+                      label="Cover Image"
+                      required
+                      placeholder="Upload cover image from device..."
+                      allowUrl={false}
                     />
                   </div>
 
@@ -582,25 +581,23 @@ export default function AdminMediaGalleryPage() {
                     {formData.images.map((img, index) => (
                       <div
                         key={index}
-                        className="flex flex-col sm:flex-row gap-3 items-start sm:items-center bg-zinc-50/50 p-3 rounded-xl border border-zinc-150"
+                        className="flex flex-col gap-2 bg-zinc-50/50 p-4 rounded-xl border border-zinc-150"
                       >
-                        <span className="text-[10px] font-extrabold text-zinc-400 select-none px-1.5 py-0.5 rounded-md bg-zinc-100 shrink-0">
-                          #{index + 1}
-                        </span>
-
-                        {/* Image URL input */}
-                        <div className="relative flex-1 w-full">
-                          <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
-                          <input
-                            type="url"
-                            value={img.url}
-                            onChange={(e) => handleImageChange(index, "url", e.target.value)}
-                            placeholder="Photo Image URL (e.g. Cloudinary / Unsplash)"
-                            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-zinc-250 text-xs font-medium outline-none bg-white focus:border-[#147FC3]"
-                          />
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-extrabold text-zinc-405 select-none px-1.5 py-0.5 rounded-md bg-zinc-100 shrink-0">
+                            Photo #{index + 1}
+                          </span>
                         </div>
 
-                        {/* Delete row button removed to lock the exact 5 or 10 item schema */}
+                        {/* Image Upload Input */}
+                        <div className="w-full">
+                          <ImageUpload
+                            value={img.url}
+                            onChange={(url) => handleImageChange(index, "url", url)}
+                            placeholder="Choose image file from device..."
+                            allowUrl={false}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>

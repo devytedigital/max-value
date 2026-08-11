@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import { setCookie } from "@/lib/cookies";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -32,9 +33,9 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Invalid email or password");
       }
 
-      localStorage.setItem("admin_token", data.token || "mv_authenticated_token");
+      setCookie("admin_token", data.token || "mv_authenticated_token", 7);
       if (data.user) {
-        localStorage.setItem("admin_user", JSON.stringify(data.user));
+        setCookie("admin_user", encodeURIComponent(JSON.stringify(data.user)), 7);
       }
       router.push("/admin");
     } catch (err: any) {

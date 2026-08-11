@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { getCookie, setCookie, eraseCookie } from "@/lib/cookies";
 import {
   LayoutDashboard,
   GitBranch,
@@ -55,26 +56,81 @@ export default function AdminLayout({
 
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Authentication check and user profile extraction
+  // Authentication check, live role validation, and user profile extraction
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
-    if (!token) {
-      router.push("/adminlogin");
-    } else {
-      setIsAuthenticated(true);
-      const userStr = localStorage.getItem("admin_user");
-      if (userStr) {
-        try {
-          const parsed = JSON.parse(userStr);
-          setCurrentUser(parsed);
-        } catch (e) {
-          setCurrentUser({ name: "Administrator", email: "", role: "Admin" });
+    async function checkAuthLive() {
+      const token = getCookie("admin_token");
+      const userStr = getCookie("admin_user");
+      
+      if (!token || !userStr) {
+        eraseCookie("admin_token");
+        eraseCookie("admin_user");
+        setIsAuthenticated(false);
+        router.push("/adminlogin");
+        return;
+      }
+
+      try {
+        const user = JSON.parse(decodeURIComponent(userStr));
+        
+        // Live verify admin existence, status, and role in Firestore
+        const res = await fetch(`/api/admins/${user.id}`);
+        if (!res.ok) {
+          if (res.status === 404) {
+            eraseCookie("admin_token");
+            eraseCookie("admin_user");
+            setIsAuthenticated(false);
+            router.push("/adminlogin");
+            return;
+          }
+          throw new Error("Live check failed");
         }
-      } else {
-        setCurrentUser({ name: "Administrator", email: "", role: "Admin" });
+
+        const liveData = await res.json();
+        
+        // Direct redirect if account is deactivated
+        if (liveData.status === "Inactive") {
+          eraseCookie("admin_token");
+          eraseCookie("admin_user");
+          setIsAuthenticated(false);
+          router.push("/adminlogin");
+          return;
+        }
+
+        const updatedUser = {
+          id: liveData.id,
+          name: liveData.name || "Administrator",
+          email: liveData.email,
+          role: liveData.role || "Admin",
+        };
+
+        // If local user cookie role/metadata differs from live Firestore state, update it
+        if (JSON.stringify(user) !== JSON.stringify(updatedUser)) {
+          setCookie("admin_user", encodeURIComponent(JSON.stringify(updatedUser)), 7);
+          setCurrentUser(updatedUser);
+        } else {
+          setCurrentUser(user);
+        }
+        
+        setIsAuthenticated(true);
+      } catch (err) {
+        console.error("Live role check error, using cookie fallback session:", err);
+        // Resilient fallback to local cookies if database/network is temporarily unreachable
+        try {
+          const user = JSON.parse(decodeURIComponent(userStr));
+          setCurrentUser(user);
+          setIsAuthenticated(true);
+        } catch (e) {
+          eraseCookie("admin_token");
+          eraseCookie("admin_user");
+          setIsAuthenticated(false);
+          router.push("/adminlogin");
+        }
       }
     }
-  }, [router]);
+
+    checkAuthLive();
+  }, [pathname, router]);
 
   const handleMouseEnter = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -160,8 +216,8 @@ export default function AdminLayout({
   });
 
   const handleLogout = () => {
-    localStorage.removeItem("admin_token");
-    localStorage.removeItem("admin_user");
+    eraseCookie("admin_token");
+    eraseCookie("admin_user");
     router.push("/adminlogin");
   };
 
