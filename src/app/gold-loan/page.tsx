@@ -514,7 +514,7 @@
 
 //                       {/* Name */}
 //                       <div className="flex flex-col gap-2">
-//                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                         <label className="text-xs font-semibold text-zinc-600">
 //                           Name <span className="text-rose-500">*</span>
 //                         </label>
 //                         <div className="relative">
@@ -540,7 +540,7 @@
 
 //                       {/* Phone */}
 //                       <div className="flex flex-col gap-2">
-//                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                         <label className="text-xs font-semibold text-zinc-600">
 //                           Phone Number <span className="text-rose-500">*</span>
 //                         </label>
 //                         <div className="relative">
@@ -571,7 +571,7 @@
 
 //                       {/* Email */}
 //                       <div className="flex flex-col gap-2">
-//                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                         <label className="text-xs font-semibold text-zinc-600">
 //                           Email Address <span className="text-rose-500">*</span>
 //                         </label>
 //                         <div className="relative">
@@ -597,7 +597,7 @@
 
 //                       {/* Place */}
 //                       <div className="flex flex-col gap-2">
-//                         <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                         <label className="text-xs font-semibold text-zinc-600">
 //                           Place / City <span className="text-rose-500">*</span>
 //                         </label>
 //                         <div className="relative">
@@ -625,7 +625,7 @@
 
 //                     {/* Enquiry For Dropdown */}
 //                     <div className="flex flex-col gap-2">
-//                       <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                       <label className="text-xs font-semibold text-zinc-600">
 //                         Enquiry For
 //                       </label>
 //                       <div className="relative">
@@ -649,7 +649,7 @@
 
 //                     {/* Query / Comments */}
 //                     <div className="flex flex-col gap-2">
-//                       <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+//                       <label className="text-xs font-semibold text-zinc-600">
 //                         Query / Comment <span className="text-rose-500">*</span>
 //                       </label>
 //                       <textarea
@@ -674,7 +674,7 @@
 //                     <button
 //                       type="submit"
 //                       disabled={isSubmitting}
-//                       className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-extrabold text-sm py-4 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99]"
+//                       className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-semibold text-sm py-4 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 tracking-wide group active:scale-[0.99]"
 //                     >
 //                       {isSubmitting ? (
 //                         <>
@@ -817,18 +817,16 @@ export default function GoldLoanPage() {
     setIsSubmitting(true);
 
     const messageText =
-      `*NEW GOLD LOAN ENQUIRY - MAXVALUE*
-----------------------------------------
-👤 *Name:* ${formData.name.trim()}
-📧 *Email:* ${formData.email.trim()}
-📞 *Phone:* ${formData.phone.trim()}
-📍 *Place:* ${formData.place.trim()}
-💼 *Enquiry For:* ${formData.enquiryFor}
-----------------------------------------
-📝 *Query Details:*
-${formData.comment.trim()}
-----------------------------------------
-Sent via MaxValue Credits Website`;
+      `*Gold loan Enquiry*
+
+Name : ${formData.name.trim()}
+phone : ${formData.phone.trim()}
+email : ${formData.email.trim()}
+place : ${formData.place.trim()}
+
+*Quiry Message*
+
+${formData.comment.trim()}`;
 
     const targetWhatsAppNumber = "918891133443";
     const encodedText = encodeURIComponent(messageText);
@@ -838,8 +836,15 @@ Sent via MaxValue Credits Website`;
 
     setTimeout(() => {
       setIsSubmitting(false);
-      setShowSuccess(true);
       window.open(url, "_blank");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        place: "",
+        enquiryFor: "Gold Loan",
+        comment: "",
+      });
     }, 600);
   };
 
@@ -1214,42 +1219,6 @@ Sent via MaxValue Credits Website`;
                   </p>
                 </div>
 
-                {showSuccess ? (
-                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center flex flex-col items-center gap-4 my-6">
-                    <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                      <CheckCircle2 className="w-8 h-8" />
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-bold text-emerald-900">
-                        Redirecting to WhatsApp!
-                      </h4>
-                      <p className="text-xs text-emerald-700 mt-1 max-w-md">
-                        Your enquiry details have been compiled. If WhatsApp didn't open automatically, please click the button below to complete sending your message.
-                      </p>
-                    </div>
-
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg cursor-pointer"
-                    >
-                      <MessageSquare className="w-4 h-4 fill-white" />
-                      <span>Open WhatsApp Chat (8891133443)</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-
-                    <button
-                      onClick={() => {
-                        setShowSuccess(false);
-                        setFormData({ name: "", email: "", phone: "", place: "", enquiryFor: "Gold Loan", comment: "" });
-                      }}
-                      className="text-xs font-bold text-zinc-500 hover:text-zinc-800 underline mt-2 cursor-pointer"
-                    >
-                      Send Another Enquiry
-                    </button>
-                  </div>
-                ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-left" noValidate>
 
                     {/* Row 1: Name & Phone */}
@@ -1257,7 +1226,7 @@ Sent via MaxValue Credits Website`;
 
                       {/* Name */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                        <label className="text-xs font-semibold text-zinc-600">
                           Name <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
@@ -1283,7 +1252,7 @@ Sent via MaxValue Credits Website`;
 
                       {/* Phone */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                        <label className="text-xs font-semibold text-zinc-600">
                           Phone Number <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
@@ -1314,7 +1283,7 @@ Sent via MaxValue Credits Website`;
 
                       {/* Email */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                        <label className="text-xs font-semibold text-zinc-600">
                           Email Address <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
@@ -1340,7 +1309,7 @@ Sent via MaxValue Credits Website`;
 
                       {/* Place */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                        <label className="text-xs font-semibold text-zinc-600">
                           Place / City <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
@@ -1368,7 +1337,7 @@ Sent via MaxValue Credits Website`;
 
                     {/* Enquiry For Dropdown */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                      <label className="text-xs font-semibold text-zinc-600">
                         Enquiry For
                       </label>
                       <div className="relative">
@@ -1392,7 +1361,7 @@ Sent via MaxValue Credits Website`;
 
                     {/* Query / Comments */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-700">
+                      <label className="text-xs font-semibold text-zinc-600">
                         Query / Comment <span className="text-rose-500">*</span>
                       </label>
                       <textarea
@@ -1417,7 +1386,7 @@ Sent via MaxValue Credits Website`;
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-extrabold text-sm py-4 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99]"
+                      className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-semibold text-sm py-4 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 tracking-wide group active:scale-[0.99]"
                     >
                       {isSubmitting ? (
                         <>
@@ -1433,7 +1402,6 @@ Sent via MaxValue Credits Website`;
                     </button>
 
                   </form>
-                )}
 
               </div>
             </motion.div>

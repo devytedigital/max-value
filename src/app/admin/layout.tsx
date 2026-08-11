@@ -23,7 +23,8 @@ import {
   Newspaper,
   ShieldAlert,
   ArrowLeft,
-  BookOpen
+  BookOpen,
+  Users
 } from "lucide-react";
 
 interface CurrentUser {
@@ -101,6 +102,8 @@ export default function AdminLayout({
         return "News & Press Releases";
       case "/admin/blog":
         return "Blog Management Console";
+      case "/admin/directors":
+        return "Board of Directors Management";
       case "/admin/admins":
         return "Admin Users Management";
       case "/admin/media":
@@ -135,6 +138,7 @@ export default function AdminLayout({
     { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
     { name: "News Management", href: "/admin/news", icon: Newspaper },
     { name: "Blog Management", href: "/admin/blog", icon: BookOpen },
+    { name: "Board of Directors", href: "/admin/directors", icon: Users },
     {
       name: "Media Management",
       icon: ImageIcon,

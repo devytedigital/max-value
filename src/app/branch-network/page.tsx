@@ -137,19 +137,7 @@ export default function BranchNetworkPage() {
 
         </div>
 
-        {/* Scroll Down Arrow Indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/80 cursor-pointer"
-          onClick={() => {
-            window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-          }}
-        >
-          <span className="text-[11px] font-bold tracking-widest uppercase text-white/70">Scroll Down</span>
-          <ChevronDown className="w-5 h-5 text-[#FCA038]" />
-        </motion.div>
+
 
         {/* Curved Bottom Wave Separator — matches About Us banner */}
         <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />

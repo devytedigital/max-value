@@ -46,16 +46,7 @@ export default function Navbar() {
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const isLightPage =
-    pathname === "/career" ||
-    pathname === "/about-us" ||
-    pathname === "/board-of-directors" ||
-    pathname === "/media" ||
-    pathname === "/blog" ||
-    pathname?.startsWith("/blog/") ||
-    pathname?.startsWith("/media/gallery/") ||
-    (pathname?.startsWith("/news/") && pathname !== "/news") ||
-    pathname?.startsWith("/admin");
+  const isLightPage = pathname !== "/" && pathname !== "";
 
   const isHeaderLight = isScrolled || isLightPage;
 
@@ -344,33 +335,45 @@ export default function Navbar() {
             </div>
 
             {/* MOBILE/TABLET NAVBAR VIEW */}
-            <div className="flex lg:hidden items-center justify-between w-full relative">
-              {/* Left: Hamburger menu toggle icon */}
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className={`p-2 -ml-2 rounded-lg transition-colors cursor-pointer ${isHeaderLight
-                    ? "text-zinc-800 hover:bg-zinc-950/5"
-                    : "text-white hover:bg-white/10"
-                  }`}
-              >
-                <Menu className="h-6 w-6" />
-              </button>
-
-              {/* Center: Centered brand logo */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Link href="/" className="flex items-center justify-center">
+            <div className="flex lg:hidden items-center justify-between w-full">
+              {/* Left: Hamburger menu toggle icon & brand logo */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setMobileMenuOpen(true)}
+                  className={`p-2 -ml-2 rounded-lg transition-colors cursor-pointer ${isHeaderLight
+                      ? "text-zinc-800 hover:bg-zinc-950/5"
+                      : "text-white hover:bg-white/10"
+                    }`}
+                >
+                  <Menu className="h-6 w-6" />
+                </button>
+                <Link href="/" className="flex items-center">
                   <img
                     src="/maxvalue-logo.png"
                     alt="MAXVALUE Credits and Investments LTD"
-                    className="h-8 w-auto object-contain"
+                    className="h-7 w-auto object-contain"
                   />
                 </Link>
               </div>
 
-              {/* Right: Action Button (Pay Now) */}
-              <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-bold text-[11px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
-                Pay Now
-              </button>
+              {/* Right: Gold Live Price & Pay Now Button */}
+              <div className="flex items-center gap-3">
+                {/* Gold Live Price Indicator */}
+                <div className="flex flex-col text-right">
+                  <span className={`text-[7.5px] uppercase tracking-widest font-bold leading-none ${isHeaderLight
+                      ? "text-zinc-500"
+                      : "text-zinc-400"
+                    }`}>Gold Live Price</span>
+                  <span className="text-[11px] font-black text-[#FCA038] mt-0.5 leading-none">
+                    ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"}<span className={`text-[8.5px] font-medium font-sans ${isHeaderLight ? "text-zinc-500" : "text-zinc-550"}`}>/g</span>
+                  </span>
+                </div>
+
+                {/* Pay Now Button */}
+                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10px] px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+                  Pay Now
+                </button>
+              </div>
             </div>
 
           </div>
@@ -389,7 +392,7 @@ export default function Navbar() {
 
             {/* Header (Sticky at top) */}
             <div className="flex justify-between items-center py-5 px-5 border-b border-zinc-200 bg-[#FAF9F6]">
-              <span className="font-black text-sm text-[#FCA038] tracking-wider">NAVIGATE</span>
+              <span className="font-bold text-sm text-[#FCA038] tracking-wider">Navigate</span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-1 rounded-full text-zinc-500 hover:text-zinc-900 cursor-pointer"
@@ -400,7 +403,7 @@ export default function Navbar() {
 
             {/* Gold Live Price Indicator (Mobile) */}
             <div className="px-5 py-3 bg-zinc-100 border-b border-zinc-200 flex items-center justify-between shrink-0">
-              <span className="text-[10px] uppercase tracking-widest font-black text-zinc-550">Gold Live Price</span>
+              <span className="text-[10px] tracking-widest font-bold text-zinc-550">Gold Live Price</span>
               <span className="text-xs font-black text-[#FCA038]">
                 ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"}<span className="text-[10px] font-bold text-zinc-500 font-sans">/g</span>
               </span>
@@ -415,7 +418,7 @@ export default function Navbar() {
                   onClick={() => { setActiveMenu("HOME"); setMobileMenuOpen(false); }}
                   className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "HOME" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  HOME
+                  Home
                 </Link>
 
                 {/* CORPORATE Accordion */}
@@ -428,7 +431,7 @@ export default function Navbar() {
                     }}
                     className="w-full text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#FCA038] flex items-center justify-between py-2 bg-transparent border-none cursor-pointer animate-none"
                   >
-                    <span>CORPORATE</span>
+                    <span>Corporate</span>
                     <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${mobileCorporateOpen ? "rotate-180 text-[#FCA038]" : ""}`} />
                   </button>
                   {mobileCorporateOpen && (
@@ -438,14 +441,14 @@ export default function Navbar() {
                         onClick={() => { setActiveMenu("CORPORATE"); setMobileMenuOpen(false); }}
                         className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        ABOUT US
+                        About Us
                       </Link>
                       <Link
                         href="/board-of-directors"
                         onClick={() => { setActiveMenu("CORPORATE"); setMobileMenuOpen(false); }}
                         className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        BOARD OF DIRECTORS
+                        Board of Directors
                       </Link>
                     </div>
                   )}
@@ -461,7 +464,7 @@ export default function Navbar() {
                     }}
                     className="w-full text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#FCA038] flex items-center justify-between py-2 bg-transparent border-none cursor-pointer"
                   >
-                    <span>OUR SERVICES</span>
+                    <span>Our Services</span>
                     <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180 text-[#FCA038]" : ""}`} />
                   </button>
                   {mobileServicesOpen && (
@@ -471,28 +474,28 @@ export default function Navbar() {
                         onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        GOLD LOAN
+                        Gold Loan
                       </Link>
                       <Link
                         href="/vehicle-loan"
                         onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        VEHICLE LOAN
+                        Vehicle Loan
                       </Link>
                       <Link
                         href="/business-loan"
                         onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        BUSINESS LOAN
+                        Business Loan
                       </Link>
                       <Link
                         href="/microfinance"
                         onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        MICROFINANCE
+                        Microfinance
                       </Link>
                     </div>
                   )}
@@ -504,7 +507,7 @@ export default function Navbar() {
                   onClick={() => { setActiveMenu("MEDIA"); setMobileMenuOpen(false); }}
                   className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "MEDIA" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  MEDIA
+                  Media
                 </Link>
 
                 {/* CAREER */}
@@ -513,7 +516,7 @@ export default function Navbar() {
                   onClick={() => { setActiveMenu("CAREER"); setMobileMenuOpen(false); }}
                   className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "CAREER" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  CAREER
+                  Career
                 </Link>
 
                 {/* NEWS */}
@@ -522,7 +525,7 @@ export default function Navbar() {
                   onClick={() => { setActiveMenu("NEWS"); setMobileMenuOpen(false); }}
                   className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "NEWS" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  NEWS
+                  News
                 </Link>
 
                 {/* BRANCH NETWORK */}
@@ -531,7 +534,7 @@ export default function Navbar() {
                   onClick={() => { setActiveMenu("BRANCH NETWORK"); setMobileMenuOpen(false); }}
                   className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "BRANCH NETWORK" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  BRANCH NETWORK
+                  Branch Network
                 </Link>
 
                 {/* CONTACT US Accordion */}
@@ -544,7 +547,7 @@ export default function Navbar() {
                     }}
                     className="w-full text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#FCA038] flex items-center justify-between py-2 bg-transparent border-none cursor-pointer"
                   >
-                    <span>CONTACT US</span>
+                    <span>Contact Us</span>
                     <ChevronDown className={`h-4 w-4 text-zinc-450 transition-transform duration-200 ${mobileContactOpen ? "rotate-180 text-[#FCA038]" : ""}`} />
                   </button>
                   {mobileContactOpen && (
@@ -554,14 +557,14 @@ export default function Navbar() {
                         onClick={() => { setActiveMenu("CONTACT US"); setMobileMenuOpen(false); }}
                         className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        CONTACT US
+                        Contact Us
                       </Link>
                       <Link
                         href="/grievance"
                         onClick={() => { setActiveMenu("CONTACT US"); setMobileMenuOpen(false); }}
                         className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
-                        GRIEVANCE REDRESSAL
+                        Grievance Redressal
                       </Link>
                     </div>
                   )}
@@ -575,7 +578,8 @@ export default function Navbar() {
               <div className="flex items-center justify-between bg-zinc-950/5 border border-zinc-200/85 rounded-xl p-3">
                 <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Gold Live Price</span>
                 <span className="text-sm font-black text-[#FCA038]">
-                  ₹13,279 <span className="text-[10px] text-zinc-500 font-medium font-sans">/g</span>
+                  ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"}{" "}
+                  <span className="text-[10px] text-zinc-500 font-medium font-sans">/g</span>
                 </span>
               </div>
 

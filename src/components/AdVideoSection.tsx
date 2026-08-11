@@ -91,7 +91,7 @@ export default function AdVideoSection() {
                   <div className="w-20 h-20 rounded-full bg-[#147FC3] text-white flex items-center justify-center shadow-2xl shadow-[#147FC3]/50 transition-all duration-300 transform group-hover:scale-110 border-2 border-white/40">
                     <Play className="w-8 h-8 fill-white translate-x-0.5" />
                   </div>
-                  <span className="text-white text-xs font-extrabold uppercase tracking-widest mt-4 bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20">
+                  <span className="text-white text-xs font-extrabold tracking-widest mt-4 bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20">
                     Watch Commercial
                   </span>
                 </div>
@@ -99,7 +99,7 @@ export default function AdVideoSection() {
 
               {/* Corner Badge */}
               <div className="absolute top-4 left-4 pointer-events-none">
-                <span className="bg-[#147FC3]/90 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 shadow-md">
+                <span className="bg-[#147FC3]/90 backdrop-blur-md text-white text-[10px] font-black tracking-widest px-3 py-1 rounded-full border border-white/20 shadow-md">
                   Official Ad
                 </span>
               </div>
@@ -121,7 +121,7 @@ export default function AdVideoSection() {
 
               {/* Card Header */}
               <div className="w-full mb-6">
-                <div className="inline-flex items-center gap-1.5 text-[#FCA038] text-xs font-bold uppercase tracking-wider mb-1">
+                <div className="inline-flex items-center gap-1.5 text-[#FCA038] text-xs font-bold tracking-wider mb-1">
                   <QrCode className="w-4 h-4" />
                   Quick Scan & Connect
                 </div>

@@ -321,7 +321,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -414,13 +414,31 @@ const directors: Director[] = [
 
 export default function BoardOfDirectorsPage() {
   const [activeTab, setActiveTab] = useState<"All" | "Executive" | "Independent">("All");
+  const [directorsList, setDirectorsList] = useState<Director[]>(directors);
 
-  const filteredDirectors = directors.filter((director) => {
+  useEffect(() => {
+    async function loadDirectors() {
+      try {
+        const response = await fetch("/api/directors");
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setDirectorsList(data);
+          }
+        }
+      } catch (err) {
+        console.error("Could not fetch directors via API, using fallback data:", err);
+      }
+    }
+    loadDirectors();
+  }, []);
+
+  const filteredDirectors = directorsList.filter((director) => {
     if (activeTab === "All") return true;
     return director.category === activeTab;
   });
 
-  const cmd = directors[0];
+  const cmd = directorsList[0];
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#147FC3] selection:text-white">

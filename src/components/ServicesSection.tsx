@@ -237,7 +237,7 @@ export default function ServicesSection() {
               </Link>
 
               {/* Subtitle */}
-              <p className="text-xs font-bold text-[#FCA038] mt-1.5 uppercase tracking-wider">
+              <p className="text-xs font-bold text-[#FCA038] mt-1.5 tracking-wider">
                 {service.subtitle}
               </p>
 
@@ -250,7 +250,7 @@ export default function ServicesSection() {
               <div className="mt-4">
                 <Link
                   href={service.href}
-                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300 cursor-pointer"
+                  className="inline-flex items-center gap-1 text-xs font-bold tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300 cursor-pointer"
                 >
                   Enquiry Now
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -297,13 +297,13 @@ export default function ServicesSection() {
                       </h3>
 
                       {/* Subtitle */}
-                      <p className="text-[10px] font-bold text-[#FCA038] mt-1 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-[#FCA038] mt-1 tracking-wider">
                         {service.subtitle}
                       </p>
 
                       {/* Enquiry Now Link */}
                       <div className="mt-3">
-                        <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold tracking-wider text-[#147FC3] group-hover:text-[#FCA038] transition-colors duration-300">
                           Enquiry Now
                           <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                         </span>

@@ -204,7 +204,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
             {/* SLIDE 2: Explore Our Services */}
             <div className="w-full h-full flex flex-col items-center justify-center text-center px-6 bg-zinc-50/50">
               <div className="max-w-4xl flex flex-col items-center">
-                <span className="text-xs font-semibold text-[#FCA038] tracking-widest uppercase mb-3">Our Offerings</span>
+                <span className="text-xs font-semibold text-[#FCA038] tracking-widest mb-3">Our Offerings</span>
                 <h2 className="text-xl md:text-2xl font-semibold text-zinc-950 mb-10">
                   Explore Our Services
                 </h2>
@@ -247,7 +247,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
             {/* SLIDE 3: Social & Get Started */}
             <div className="w-full h-full flex flex-col items-center justify-center text-center px-6">
               <div className="max-w-xl flex flex-col items-center">
-                <span className="text-xs font-semibold text-[#147FC3] tracking-widest uppercase mb-3">Connect With Us</span>
+                <span className="text-xs font-semibold text-[#147FC3] tracking-widest mb-3">Connect With Us</span>
                 <h2 className="text-xl md:text-2xl font-semibold text-zinc-950 mb-6">
                   Let's Stay in Touch
                 </h2>

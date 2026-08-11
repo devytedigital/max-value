@@ -119,8 +119,8 @@ export default function AboutStatsSection() {
             <div className="text-4xl md:text-5xl font-black text-zinc-950 tracking-tight leading-none">
               <Counter value={150} suffix=" +" />
             </div>
-            <span className="text-sm font-black text-[#147FC3] uppercase tracking-widest mt-3 mb-2 block">
-              BRANCHES
+            <span className="text-sm font-black text-[#147FC3] tracking-widest mt-3 mb-2 block">
+              Branches
             </span>
             <p className="text-zinc-500 text-xs md:text-sm leading-relaxed max-w-sm font-medium">
               Branches nationwide delivering professional credit accessibility to local communities.
@@ -138,8 +138,8 @@ export default function AboutStatsSection() {
             <div className="text-4xl md:text-5xl font-black text-zinc-950 tracking-tight leading-none">
               <Counter value={1000000} suffix=" +" />
             </div>
-            <span className="text-sm font-black text-[#FCA038] uppercase tracking-widest mt-3 mb-2 block">
-              HAPPY CUSTOMERS
+            <span className="text-sm font-black text-[#FCA038] tracking-widest mt-3 mb-2 block">
+              Happy Customers
             </span>
             <p className="text-zinc-500 text-xs md:text-sm leading-relaxed max-w-sm font-medium">
               Valued customers building their financial trust, dreams, and wealth portfolios daily.

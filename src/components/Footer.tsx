@@ -88,7 +88,7 @@ export default function Footer() {
 
         {/* Column 1: Corporate Office */}
         <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5 uppercase">
+          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
             Corporate Office
           </h4>
           <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
@@ -103,7 +103,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Customer Care
                 </span>
                 <div className="flex flex-wrap gap-1">
@@ -120,7 +120,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Working Hours
                 </span>
                 <span>Mon - Sat: 9.30 am - 5.30 pm</span>
@@ -129,7 +129,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Email
                 </span>
                 <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
@@ -142,7 +142,7 @@ export default function Footer() {
 
         {/* Column 2: Bangalore Regional Office */}
         <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5 uppercase">
+          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
             Bangalore Regional Office
           </h4>
           <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
@@ -157,7 +157,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Phone
                 </span>
                 <a href="tel:08029650516" className="hover:text-[#147FC3] transition-colors">
@@ -168,7 +168,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Working Hours
                 </span>
                 <span>Mon - Sat: 9.30 am - 5.30 pm</span>
@@ -177,7 +177,7 @@ export default function Footer() {
             <li className="flex gap-2.5 items-start">
               <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider mb-0.5">
+                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
                   Email
                 </span>
                 <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
@@ -190,7 +190,7 @@ export default function Footer() {
 
         {/* Column 3: Useful Links */}
         <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5 uppercase">
+          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
             Useful Links
           </h4>
           <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
@@ -230,7 +230,7 @@ export default function Footer() {
 
       {/* Bottom Copyright Bar */}
       <div className="w-full bg-zinc-950/5 py-4 px-6 md:px-8 border-t border-zinc-200/50">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-bold tracking-wide uppercase text-zinc-500">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-bold tracking-wide text-zinc-500">
           <span>
             Maxvalue Credits and Investments Ltd. &copy; 2026 All rights reserved
           </span>

@@ -13,7 +13,7 @@ import {
   Upload,
   User,
   Mail,
-  Calendar,
+  MessageSquare,
   Building,
   Building2,
   DollarSign,
@@ -108,6 +108,20 @@ const fallbackListings: JobListing[] = [
   }
 ];
 
+const formatJobTitle = (title: string) => {
+  if (!title) return "";
+  return title
+    .toLowerCase()
+    .split(" ")
+    .map((word) => {
+      if (word === "it") return "IT";
+      if (word === "cft") return "CFT";
+      if (word === "nbfc") return "NBFC";
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+};
+
 export default function CareerPage() {
   const [jobListings, setJobListings] = useState<JobListing[]>([]);
   const [loadingJobs, setLoadingJobs] = useState<boolean>(true);
@@ -118,10 +132,10 @@ export default function CareerPage() {
     jobAppliedFor: "CUSTOMER CARE EXECUTIVE",
     name: "",
     email: "",
-    dob: "",
+    coverLetter: "",
     state: "",
     city: "",
-    experienceMonths: "",
+    experienceYears: "",
     industry: "",
     employer: "",
     ctc: "",
@@ -132,7 +146,6 @@ export default function CareerPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -170,6 +183,29 @@ export default function CareerPage() {
     };
   }, [isDrawerOpen]);
 
+  // Automatically reset form states on drawer close
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      const timer = setTimeout(() => {
+        setShowSuccess(false);
+        setResumeFile(null);
+        setFormData({
+          jobAppliedFor: selectedJobTitle,
+          name: "",
+          email: "",
+          coverLetter: "",
+          state: "",
+          city: "",
+          experienceYears: "",
+          industry: "",
+          employer: "",
+          ctc: "",
+        });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isDrawerOpen, selectedJobTitle]);
+
   const openApplyDrawer = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
     setFormData((prev) => ({ ...prev, jobAppliedFor: jobTitle }));
@@ -177,7 +213,7 @@ export default function CareerPage() {
     setShowSuccess(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -221,8 +257,8 @@ export default function CareerPage() {
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.dob.trim()) {
-      newErrors.dob = "Date of Birth (dd-mm-yyyy) is required";
+    if (!formData.coverLetter.trim()) {
+      newErrors.coverLetter = "Message or Cover Letter is required";
     }
 
     if (!formData.state.trim()) {
@@ -233,8 +269,8 @@ export default function CareerPage() {
       newErrors.city = "Current City is required";
     }
 
-    if (!formData.experienceMonths.trim()) {
-      newErrors.experienceMonths = "Total Work Experience is required";
+    if (!formData.experienceYears.trim()) {
+      newErrors.experienceYears = "Total Work Experience is required";
     }
 
     if (!formData.industry.trim()) {
@@ -260,42 +296,50 @@ export default function CareerPage() {
     return Object.keys(newErrors).length === 0 && !resumeError;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    const fileName = resumeFile ? resumeFile.name : "Not Provided";
-    const fileSize = resumeFile ? `${(resumeFile.size / (1024 * 1024)).toFixed(2)} MB` : "";
+    const submissionData = new FormData();
+    submissionData.append("jobAppliedFor", formData.jobAppliedFor);
+    submissionData.append("name", formData.name);
+    submissionData.append("email", formData.email);
+    submissionData.append("coverLetter", formData.coverLetter);
+    submissionData.append("state", formData.state);
+    submissionData.append("city", formData.city);
+    submissionData.append("experienceYears", formData.experienceYears);
+    submissionData.append("industry", formData.industry);
+    submissionData.append("employer", formData.employer);
+    submissionData.append("ctc", formData.ctc);
+    if (resumeFile) {
+      submissionData.append("resume", resumeFile);
+    }
 
-    const messageText = `*NEW JOB APPLICATION - MAXVALUE CAREERS*
-----------------------------------------
-💼 *Job Applied For:* ${formData.jobAppliedFor}
-👤 *Name (as per Aadhaar):* ${formData.name.trim()}
-📧 *Email:* ${formData.email.trim()}
-📅 *Date of Birth:* ${formData.dob.trim()}
-📍 *Current Location (State):* ${formData.state.trim()}
-🏙️ *Current City:* ${formData.city.trim()}
-⌛ *Total Work Experience (Months):* ${formData.experienceMonths.trim()}
-🏢 *Current Industry:* ${formData.industry.trim()}
-👔 *Current Employer:* ${formData.employer.trim()}
-💰 *Current Annual CTC:* ${formData.ctc.trim()}
-📄 *Uploaded Resume:* ${fileName} (${fileSize})
-----------------------------------------
-Sent via MaxValue Careers Portal`;
+    try {
+      const response = await fetch("/api/careers/apply", {
+        method: "POST",
+        body: submissionData,
+      });
 
-    const targetWhatsAppNumber = "918891133443";
-    const encodedText = encodeURIComponent(messageText);
-    const url = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodedText}`;
-
-    setWhatsappUrl(url);
-
-    setTimeout(() => {
+      if (response.ok) {
+        setIsSubmitting(false);
+        setShowSuccess(true);
+        // Auto-close drawer after 4 seconds
+        setTimeout(() => {
+          setIsDrawerOpen(false);
+        }, 4000);
+      } else {
+        const errData = await response.json();
+        alert(errData.error || "Failed to submit application. Please try again.");
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please check your connection and try again.");
       setIsSubmitting(false);
-      setShowSuccess(true);
-      window.open(url, "_blank");
-    }, 600);
+    }
   };
 
   // Filter job listings (all jobs shown since filter bar is removed)
@@ -353,19 +397,7 @@ Sent via MaxValue Careers Portal`;
 
         </div>
 
-        {/* Scroll Down Arrow Indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/80 cursor-pointer"
-          onClick={() => {
-            window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-          }}
-        >
-          <span className="text-[11px] font-bold tracking-widest uppercase text-white/70">Scroll Down</span>
-          <ChevronDown className="w-5 h-5 text-[#FCA038]" />
-        </motion.div>
+
 
         {/* Curved Bottom Wave Separator — matches About Us banner */}
         <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />
@@ -507,7 +539,7 @@ Sent via MaxValue Careers Portal`;
                   <p className="text-zinc-550 text-xs mt-1 font-medium">
                     Applying for:{" "}
                     <span className="font-bold text-zinc-900">
-                      {formData.jobAppliedFor}
+                      {formatJobTitle(formData.jobAppliedFor)}
                     </span>
                   </p>
                 </div>
@@ -524,7 +556,7 @@ Sent via MaxValue Careers Portal`;
                 {/* Role specifications card */}
                 {activeJob && (
                   <div className="p-5 bg-white border border-zinc-200 rounded-2xl shadow-3xs">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5 select-none">
+                    <h3 className="text-xs font-bold tracking-wider text-zinc-500 mb-1.5 select-none">
                       Role Overview
                     </h3>
                     <p className="text-xs text-zinc-600 leading-relaxed mb-4 font-medium">
@@ -533,7 +565,7 @@ Sent via MaxValue Careers Portal`;
 
                     {activeJob.requirements && activeJob.requirements.length > 0 && (
                       <div>
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 select-none">
+                        <h4 className="text-xs font-bold tracking-wider text-zinc-500 mb-2 select-none">
                           Key Requirements
                         </h4>
                         <ul className="space-y-1.5">
@@ -553,50 +585,30 @@ Sent via MaxValue Careers Portal`;
                 )}
 
                 {showSuccess ? (
-                  <div className="bg-white border border-zinc-200 rounded-2xl p-8 text-center flex flex-col items-center gap-5 shadow-sm">
+                  <div className="bg-white border border-zinc-200 rounded-2xl p-8 text-center flex flex-col items-center justify-center min-h-[280px] gap-5 shadow-sm">
                     <div className="w-16 h-16 rounded-full bg-[#147FC3] text-white flex items-center justify-center shadow-md">
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-zinc-900 uppercase tracking-tight">
-                        Application Compiled!
+                      <h3 className="text-xl font-bold text-zinc-900 tracking-tight">
+                        Application Submitted Successfully!
                       </h3>
-                      <p className="text-xs md:text-sm text-zinc-500 mt-2 max-w-md font-medium leading-relaxed">
-                        All details for <strong>{formData.jobAppliedFor}</strong> have been
-                        formatted. Click the button below to send your application details
-                        and attach your resume directly via WhatsApp.
+                      <p className="text-xs md:text-sm text-zinc-550 mt-3 max-w-sm font-semibold leading-relaxed">
+                        Thank you for applying. We have successfully received your application for <strong className="text-zinc-800">{formatJobTitle(formData.jobAppliedFor)}</strong>.
+                      </p>
+                      <p className="text-[11px] text-zinc-400 mt-6 select-none font-medium">
+                        This window will close automatically in a moment...
                       </p>
                     </div>
-
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs py-4 px-6 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer uppercase tracking-wider"
-                    >
-                      <Send className="w-4 h-4 fill-white text-white" />
-                      <span>Send via WhatsApp</span>
-                    </a>
-
-                    <button
-                      onClick={() => {
-                        setShowSuccess(false);
-                        setResumeFile(null);
-                      }}
-                      className="text-xs font-bold text-zinc-500 hover:text-zinc-900 underline mt-2 cursor-pointer"
-                    >
-                      Apply For Another Position
-                    </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                     {/* Job Position Dropdown */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                      <label className="text-xs font-semibold text-zinc-500 select-none">
                         Job Applied For <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
-                        <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5 pointer-events-none" />
                         <select
                           name="jobAppliedFor"
                           value={formData.jobAppliedFor}
@@ -604,11 +616,11 @@ Sent via MaxValue Careers Portal`;
                             handleChange(e);
                             setSelectedJobTitle(e.target.value);
                           }}
-                          className="w-full pl-10 pr-8 py-3 rounded-xl border border-zinc-200 text-sm transition-all outline-none bg-white focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] appearance-none font-bold text-zinc-800 cursor-pointer shadow-3xs"
+                          className="w-full pl-4 pr-8 py-3 rounded-xl border border-zinc-200 text-sm transition-all outline-none bg-white focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] appearance-none font-semibold text-zinc-800 cursor-pointer shadow-3xs"
                         >
                           {jobListings.map((job) => (
                             <option key={job.id} value={job.title}>
-                              {job.title}
+                              {formatJobTitle(job.title)}
                             </option>
                           ))}
                         </select>
@@ -620,18 +632,17 @@ Sent via MaxValue Careers Portal`;
 
                     {/* Name */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                      <label className="text-xs font-semibold text-zinc-500 select-none">
                         Name (as per Aadhaar) <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
-                        <User className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                         <input
                           type="text"
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="Enter your full name"
-                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                          className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                             errors.name
                               ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                               : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -647,18 +658,17 @@ Sent via MaxValue Careers Portal`;
 
                     {/* Email */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                      <label className="text-xs font-semibold text-zinc-500 select-none">
                         Email <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
-                        <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                         <input
                           type="email"
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="name@example.com"
-                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                          className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                             errors.email
                               ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                               : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -672,29 +682,28 @@ Sent via MaxValue Careers Portal`;
                       )}
                     </div>
 
-                    {/* Date of Birth */}
+                    {/* Message / Cover Letter */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
-                        Date of Birth (dd-mm-yyyy) <span className="text-rose-500">*</span>
+                      <label className="text-xs font-semibold text-zinc-500 select-none">
+                        Message / Cover Letter <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
-                        <Calendar className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
-                        <input
-                          type="text"
-                          name="dob"
-                          value={formData.dob}
+                        <textarea
+                          name="coverLetter"
+                          rows={4}
+                          value={formData.coverLetter}
                           onChange={handleChange}
-                          placeholder="DD-MM-YYYY (e.g. 15-08-1995)"
-                          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
-                            errors.dob
+                          placeholder="Tell us about yourself or share your cover letter here..."
+                          className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs resize-none ${
+                            errors.coverLetter
                               ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                               : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
                           }`}
                         />
                       </div>
-                      {errors.dob && (
+                      {errors.coverLetter && (
                         <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                          <AlertCircle className="w-3.5 h-3.5" /> {errors.dob}
+                          <AlertCircle className="w-3.5 h-3.5" /> {errors.coverLetter}
                         </span>
                       )}
                     </div>
@@ -703,18 +712,17 @@ Sent via MaxValue Careers Portal`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* State */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
                           State <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <MapPin className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="text"
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
                             placeholder="e.g. Kerala"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                               errors.state
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -730,18 +738,17 @@ Sent via MaxValue Careers Portal`;
 
                       {/* City */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
                           City <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <Building2 className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="text"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
                             placeholder="e.g. Kochi"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                               errors.city
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -758,47 +765,45 @@ Sent via MaxValue Careers Portal`;
 
                     {/* Experience in months & Industry */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Experience (months) */}
+                      {/* Experience (years) */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
-                          Experience (months) <span className="text-rose-500">*</span>
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
+                          Experience (years) <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <Clock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="number"
-                            name="experienceMonths"
-                            value={formData.experienceMonths}
+                            name="experienceYears"
+                            value={formData.experienceYears}
                             onChange={handleChange}
-                            placeholder="e.g. 24"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
-                              errors.experienceMonths
+                            placeholder="e.g. 2"
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                              errors.experienceYears
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
                             }`}
                           />
                         </div>
-                        {errors.experienceMonths && (
+                        {errors.experienceYears && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.experienceMonths}
+                            <AlertCircle className="w-3.5 h-3.5" /> {errors.experienceYears}
                           </span>
                         )}
                       </div>
 
                       {/* Industry */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
                           Current Industry <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <Building className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="text"
                             name="industry"
                             value={formData.industry}
                             onChange={handleChange}
                             placeholder="e.g. Banking / NBFC"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                               errors.industry
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -817,18 +822,17 @@ Sent via MaxValue Careers Portal`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Employer */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
                           Current Employer <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <Briefcase className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="text"
                             name="employer"
                             value={formData.employer}
                             onChange={handleChange}
                             placeholder="e.g. Company Name"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                               errors.employer
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -844,18 +848,17 @@ Sent via MaxValue Careers Portal`;
 
                       {/* CTC */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
+                        <label className="text-xs font-semibold text-zinc-500 select-none">
                           Current Annual CTC <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
-                          <DollarSign className="w-4 h-4 text-zinc-400 absolute left-3.5 top-3.5" />
                           <input
                             type="text"
                             name="ctc"
                             value={formData.ctc}
                             onChange={handleChange}
                             placeholder="e.g. 3.5 Lakhs"
-                            className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
+                            className={`w-full px-4 py-3 rounded-xl border text-sm transition-all outline-none bg-white shadow-3xs ${
                               errors.ctc
                                 ? "border-rose-300 ring-1 ring-rose-100 focus:border-rose-500 focus:ring-rose-500"
                                 : "border-zinc-200 focus:border-[#147FC3] focus:ring-1 focus:ring-[#147FC3] text-zinc-800 font-semibold"
@@ -872,8 +875,8 @@ Sent via MaxValue Careers Portal`;
 
                     {/* Resume Upload */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 select-none">
-                        Upload Resume (PDF, DOC, DOCX) <span className="text-rose-500">*</span>
+                      <label className="text-xs font-semibold text-zinc-500 select-none">
+                        Upload Resume (PDF, DOC, DOCX - Max 10MB) <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative border-2 border-dashed border-zinc-200 hover:border-[#147FC3] rounded-2xl p-6 bg-white transition-all text-center flex flex-col items-center justify-center cursor-pointer group shadow-3xs">
                         <input
@@ -918,7 +921,7 @@ Sent via MaxValue Careers Portal`;
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-bold text-xs py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider group active:scale-[0.99] mt-2 select-none"
+                      className="w-full bg-[#147FC3] hover:bg-[#0f68a3] active:bg-[#FCA038] text-white font-semibold text-sm py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 tracking-wide group active:scale-[0.99] mt-2 select-none"
                     >
                       {isSubmitting ? (
                         <>
