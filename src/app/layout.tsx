@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MaxValue Website",
+  title: "maxvalue credits and investments ltd",
   description: "A premium, smooth animated website built with Next.js, Tailwind CSS, GSAP, and Framer Motion.",
 };
 

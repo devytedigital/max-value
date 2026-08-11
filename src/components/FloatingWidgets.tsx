@@ -427,9 +427,7 @@ export default function FloatingWidgets() {
 
   return (
     <>
-      {/* ------------------------------------------------------------- */}
-      {/* BOTTOM-LEFT: WHATSAPP FLOATING BUTTON (Number: 9207798759) */}
-      {/* ------------------------------------------------------------- */}
+
       <div className="fixed bottom-6 left-6 z-50 flex items-center group">
         <a
           href="https://wa.me/8891133443?text=Hello%20MaxValue%20Team%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
