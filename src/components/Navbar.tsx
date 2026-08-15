@@ -56,11 +56,11 @@ export default function Navbar() {
     if (!pathname) return;
     if (pathname === "/" || pathname === "") {
       setActiveMenu("HOME");
-    } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname.startsWith("/corporate")) {
+    } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname === "/leaders" || pathname.startsWith("/corporate")) {
       setActiveMenu("CORPORATE");
     } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/traders-loan" || pathname === "/microfinance") {
       setActiveMenu("OUR SERVICES");
-    } else if (pathname === "/media") {
+    } else if (pathname === "/media" || pathname === "/activities") {
       setActiveMenu("MEDIA");
     } else if (pathname === "/career") {
       setActiveMenu("CAREER");
@@ -160,7 +160,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center">
                   <div className="flex items-center justify-center">
                     <img
-                      src="/maxvalue-logo.png"
+                      src="/Logo.png"
                       alt="MAXVALUE Credits and Investments LTD"
                       className="h-11 md:h-14 w-auto object-contain"
                     />
@@ -178,9 +178,10 @@ export default function Navbar() {
                     const isCorporate = item === "CORPORATE";
                     const isServices = item === "OUR SERVICES";
                     const isContactUs = item === "CONTACT US";
+                    const isMedia = item === "MEDIA";
                     const isActive = activeMenu === item;
                     const href = getHref(item);
-                    const hasDropdown = isCorporate || isServices || isContactUs;
+                    const hasDropdown = isCorporate || isServices || isContactUs || isMedia;
 
                     const linkClass = `px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider transition-all duration-300 flex items-center gap-0.5 cursor-pointer select-none ${isActive
                         ? isHeaderLight
@@ -233,6 +234,15 @@ export default function Navbar() {
                             >
                               BOARD OF DIRECTORS
                             </Link>
+                            <Link
+                              href="/leaders"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
+                            >
+                              LEADERS
+                            </Link>
                           </div>
                         )}
 
@@ -276,6 +286,32 @@ export default function Navbar() {
                                 }`}
                             >
                               MICROFINANCE
+                            </Link>
+                          </div>
+                        )}
+
+                        {isMedia && (
+                          <div className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 border shadow-2xl rounded-2xl py-3 px-4 min-w-[200px] flex flex-col gap-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-left backdrop-blur-xl ${isHeaderLight
+                              ? "bg-[#FAF9F6]/95 border-zinc-200/80"
+                              : "bg-[#0c141c]/40 border-white/10"
+                            }`}>
+                            <Link
+                              href="/media"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
+                            >
+                              MEDIA GALLERY
+                            </Link>
+                            <Link
+                              href="/activities"
+                              className={`text-[11px] font-bold tracking-wider cursor-pointer transition-colors ${isHeaderLight
+                                  ? "text-zinc-700 hover:text-[#147FC3]"
+                                  : "text-zinc-300 hover:text-[#FCA038]"
+                                }`}
+                            >
+                              ACTIVITIES
                             </Link>
                           </div>
                         )}
@@ -349,7 +385,7 @@ export default function Navbar() {
                 </button>
                 <Link href="/" className="flex items-center">
                   <img
-                    src="/maxvalue-logo.png"
+                    src="/Logo.png"
                     alt="MAXVALUE Credits and Investments LTD"
                     className="h-7 w-auto object-contain"
                   />
@@ -450,6 +486,13 @@ export default function Navbar() {
                       >
                         Board of Directors
                       </Link>
+                      <Link
+                        href="/leaders"
+                        onClick={() => { setActiveMenu("CORPORATE"); setMobileMenuOpen(false); }}
+                        className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
+                      >
+                        Leaders
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -502,13 +545,33 @@ export default function Navbar() {
                 </div>
 
                 {/* MEDIA */}
-                <Link
-                  href="/media"
-                  onClick={() => { setActiveMenu("MEDIA"); setMobileMenuOpen(false); }}
-                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "MEDIA" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
-                >
-                  Media
-                </Link>
+                <div className="py-2">
+                  <div className="flex flex-col gap-1">
+                    <Link
+                      href="/media"
+                      onClick={() => { setActiveMenu("MEDIA"); setMobileMenuOpen(false); }}
+                      className={`py-2 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "MEDIA" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
+                    >
+                      Media
+                    </Link>
+                    <div className="pl-4 flex flex-col gap-2 border-l-2 border-zinc-200 py-1">
+                      <Link
+                        href="/media"
+                        onClick={() => { setActiveMenu("MEDIA"); setMobileMenuOpen(false); }}
+                        className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
+                      >
+                        Media Gallery
+                      </Link>
+                      <Link
+                        href="/activities"
+                        onClick={() => { setActiveMenu("MEDIA"); setMobileMenuOpen(false); }}
+                        className="py-1 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
+                      >
+                        Activities &amp; Events
+                      </Link>
+                    </div>
+                  </div>
+                </div>
 
                 {/* CAREER */}
                 <Link

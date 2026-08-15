@@ -236,6 +236,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles, ShieldCheck, Pause, Play } from "lucide-react";
+import Image from "next/image";
 
 const SLIDES = [
   {
@@ -321,28 +322,17 @@ export default function HeroSection() {
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950 text-white z-20">
       {/* Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0 scale-105 transform duration-1000"
-      >
-        <source src="/maxvalue.mp4" type="video/mp4" />
+    <video
+  ref={videoRef}
+  autoPlay
+  loop
+  muted
+  playsInline
+  className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0"
+>
+  <source src="/maxvalue.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
-      {/* Layered Gradient & Ambient Glow Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/65 to-zinc-950/40 z-10" />
-      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/85 via-zinc-950/50 to-transparent z-10" />
-
-      {/* Brand Color Glow Accents */}
-      <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#147FC3]/25 rounded-full blur-[140px] pointer-events-none z-10" />
-      <div className="absolute bottom-1/4 right-1/6 w-[30rem] h-[30rem] bg-[#FCA038]/15 rounded-full blur-[160px] pointer-events-none z-10" />
-
-      {/* Modern Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-10" />
 
       {/* Main Content Container */}
       <div className="relative z-20 max-w-[1440px] mx-auto px-6 md:px-12 w-full pt-28 pb-20 md:pt-36 md:pb-24 flex flex-col justify-between min-h-screen">
@@ -361,6 +351,7 @@ export default function HeroSection() {
               <motion.div variants={itemVariants}>
                
               </motion.div>
+  
 
               {/* Main Heading */}
               <motion.h1
@@ -407,7 +398,35 @@ export default function HeroSection() {
                   <span>{activeSlideData.secondaryCta.text}</span>
                 </Link>
               </motion.div>
+                        {/* Logos */}
+<motion.div
+  variants={itemVariants}
+  className="flex items-center gap-3 sm:gap-5 md:gap-6 mb-3"
+>
+  <div className="relative w-20 h-10 sm:w-28 sm:h-14 md:w-36 md:h-16">
+    <Image
+      src="/Aprlogo.png"
+      alt="Logo 1"
+      fill
+      priority
+      sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 144px"
+      className="object-contain object-left"
+    />
+  </div>
+
+  <div className="relative w-20 h-10 sm:w-28 sm:h-14 md:w-36 md:h-16">
+    <Image
+      src="/ISOlogo.png"
+      alt="Logo 2"
+      fill
+      priority
+      sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 144px"
+      className="object-contain object-left"
+    />
+  </div>
+</motion.div>  
             </motion.div>
+            
           </AnimatePresence>
         </div>
       </div>

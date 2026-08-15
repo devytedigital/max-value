@@ -196,6 +196,9 @@ export default function Footer() {
           <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
             {[
               { label: "About Company", href: "/about-us" },
+              { label: "Board of Directors", href: "/board-of-directors" },
+              { label: "Our Leaders", href: "/leaders" },
+              { label: "Corporate Activities", href: "/activities" },
               { label: "Gold Loan", href: "/gold-loan" },
               { label: "Vehicle Loan", href: "/vehicle-loan" },
               { label: "Business Loan", href: "/business-loan" },
