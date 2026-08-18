@@ -335,6 +335,7 @@ interface Director {
   image: string;
   bio: string;
   highlights?: string[];
+  quote?: string;
 }
 
 const directors: Director[] = [
@@ -346,6 +347,7 @@ const directors: Director[] = [
     image: "/directors/manoj.png",
     bio: "Mr. Manoj V B is an MBA business man deeply involved in Maxvalue Credits & Investments Ltd. and has been instrumental in the success of the group. He is a real entrepreneur, Visionary and pioneer, and the Chairman and Managing Director of Maxvalue Credits and Investments Ltd. His other engagements include: 1. Managing Director of Universal Trading LLC, UAE; 2. Chairman and Managing Director of Dream City Properties LLC, UAE; 3. Managing Director of Dubai Properties; 4. Paramount Diamond & Research Institute of Advanced Studies and Research Inc, USA while has a Medical College in Nepal; 5. Managing Partner of Allied Agencies of Chemicals and United Pharmaceuticals, India. He started his career with the Orient Industrial Gas Corporation (OIGC) Air Products, Gujarat, output process Aqua processing plant. Later worked for Siemens International, a leading equipment solutions provider from the US, Air Products and Allied Forces, as well as TTI Corporation, an aluminum composite Manufacturing Company operating in Transportation, Defense and Industrial Business. Along with overall business leadership and recognition for his outstanding contributions to business field and writing in December 2012, he was conferred the Best Director award by the Sharjah Book Festival for his book \"Mannuthinirangugaly\" (Whisper of Earth). He has also received numerous other appreciations and recommendations, including the VIVA Excellence Award 17 from US Navy, on multiple occasions.",
     highlights: ["Sharjah Book Festival Awardee", "US Navy VIVA Excellence Award", "Global Serial Entrepreneur"],
+    quote: "Our mission is to bridge the credit gap for under-served segments, driving financial progress and trust at every branch."
   },
   {
     id: "christo",
@@ -355,6 +357,7 @@ const directors: Director[] = [
     image: "/directors/christo.png",
     bio: "Christo George, Chairman & Managing Director of Hykon India Ltd. is an engineer in Electronics and Electrical. Immediately after his graduation, he started a Small Scale Industry – Hykon Electronic Systems. Christo George is also the Managing Director of Hykon India District Pvt. Ltd. (a company that specializes in organic farming and eco-friendly tea plantation). He is also a Founder and Director of Max Value Credits and Investment Ltd.",
     highlights: ["CMD - Hykon India Ltd", "Electrical & Electronics Engineer", "Pioneer in Renewable & SSI"],
+    quote: "Engineering strong systems and supporting local entrepreneurship is the key to creating sustainable enterprise value."
   },
   {
     id: "nandhakumar",
@@ -364,6 +367,7 @@ const directors: Director[] = [
     image: "/directors/nandhakumar.png",
     bio: "K Nandhakumar, Director, is a journalist by profession and is popular for his write-ups/columns in various print media. He also has a diploma in journalism. He has a flair for writing and currently the executive editor of Real India Magazine. He is also associated with many social organizations. He started his career as a journalist in Hindu, working for Kerala for many years. He worked in the editorial team of Deepika weekly. Afterward, he became the editor of Indian Express (Indian Express Newspaper) (Malayalam Edition). He has published books and written standard journalism articles, including film and literature commentary.",
     highlights: ["Executive Editor - Real India", "Veteran Journalist (The Hindu, Indian Express)", "Published Author & Media Specialist"],
+    quote: "Responsible media and transparent corporate communication build the bedrock of societal trust."
   },
   {
     id: "roy",
@@ -373,6 +377,7 @@ const directors: Director[] = [
     image: "/directors/roy.png",
     bio: "Mr. Roy Johnson, Director of Maxvalue Credits and Investments, is engaged in the business of manufacturing, import and exports. His business spans across the country and abroad. For the last 20 years, he has held the position as the CMD / Chairman and Managing Director of Total Cards and Transforms Electronics. He focuses on both manufacturing and trading of cards and electronics. He is a powerful entrepreneur who expanded his business empire when standard options failed. He has rich experience in manufacturing and exports and is a prominent persona in business & commerce.",
     highlights: ["CMD - Total Cards Electronics", "20+ Yrs International Trade", "Manufacturing & Import/Export Veteran"],
+    quote: "Expanding trading networks and scaling up manufacturing operations requires absolute integrity and consistency."
   },
   {
     id: "gopinathan",
@@ -382,6 +387,7 @@ const directors: Director[] = [
     image: "/directors/gopinathan.png",
     bio: "Dr. V.K. Gopinathan is the Director of Max Value Credits and Investments, and is the Founder Chairman and General Superintendent of Metropolitan Hospital, Thrissur, Kerala. He served as the Former Chairman of Indian Red Cross Association, Kerala State Branch. Dr. Gopinathan holds the position of Founder Director of Metro Laboratories Thrissur, the first human ovary bank/tissue bank in Trichur district. Furthermore, he is the proprietor of Metrix Cable TV Network, one of the leading digital TV and broadband internet providers in Thrissur. Master from University, he is a Chair Person of Carborand Service Technocrats.",
     highlights: ["Founder - Metropolitan Hospital", "Former Chairman - Red Cross Kerala", "Proprietor - Metrix Cable TV"],
+    quote: "Healthcare and finance are both dedicated to serving human needs; transparency and care are non-negotiable."
   },
   {
     id: "parameswaran",
@@ -391,6 +397,7 @@ const directors: Director[] = [
     image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&h=600&q=80",
     bio: "Mr. P.N. Parameswaran retired from Canara Bank as Senior General Manager. He has extensive experience in Banking, Retail Banking, Rural Banking, General Credit, Agriculture Credit, Industrial Credit, Infrastructure Banking, Exports, Imports, and other foreign exchange businesses, etc.",
     highlights: ["Retired Sr. General Manager - Canara Bank", "Banking & Forex Expert", "35+ Yrs Financial Leadership"],
+    quote: "Rigorous credit underwriting and structural audit policies protect public capital and reinforce banking stability."
   },
   {
     id: "sarala",
@@ -400,6 +407,7 @@ const directors: Director[] = [
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80",
     bio: "Mrs. Sarala Devi Muraleedharan is a retired Deputy General Manager of Canara Bank and has over 35 years of experience in Banking and Finance. Her core experience covers General Banking, Retail Services, Micro-funding of Products, Loans and Advances to MSME Sector, Priority Banking products, etc.",
     highlights: ["Retired DGM - Canara Bank", "35+ Yrs Banking & Finance", "MSME & Micro-funding Specialist"],
+    quote: "Empowering priority sectors and micro-enterprises fosters grassroots economic resilience and lasting growth."
   },
   {
     id: "prasanna",
@@ -409,7 +417,8 @@ const directors: Director[] = [
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80",
     bio: "Mr. Prasannakumar S has overall 35 years of diversified professional experience in various industries and managed top echelon, as well as Member of Board level, just below the Board Level in the Middle East. Key areas are Strategic Business planning and Control, Strategic Executive and Capital Control, Working capital management, Budgeting and Budgetary control, Business Evaluation, Merger and Acquisition operations and Marketing management. Also covers Risk Valuation and Bank Risk management, Capital Structuring, Financial Restructuring, Financial analysis, Internal Audit, Performance evaluation, Business process re-engineering. He has gained experience in industries such as Retail Trading (wholesale/ retail), General Distribution, Food and Hospitality, Real Estate development, Software/ IT Development, Manufacturing and Hotel project, Management Consultancy and Short terms. Visiting Faculty for GRE/GMAT, SAT/ACT, NMAT, SNAP, CAT/XAT training programs for PGDM level and Senior executive level.",
     highlights: ["35+ Yrs Middle East & Global C-Suite", "Strategic M&A & Corporate Restructuring", "Visiting Executive Faculty"],
-  },
+    quote: "Strategic corporate restructuring and capital budgeting are the main pillars of long-term global scaling."
+  }
 ];
 
 export default function BoardOfDirectorsPage() {
@@ -499,7 +508,7 @@ export default function BoardOfDirectorsPage() {
       <main className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
 
         {/* Section 2: Interactive Filter Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 pb-6 border-b border-slate-200/80">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#147FC3] tracking-tight">
               Meet The Leadership Team
@@ -509,6 +518,29 @@ export default function BoardOfDirectorsPage() {
             </p>
           </div>
 
+          {/* Interactive filter tabs */}
+          <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200/60 shadow-xs self-start md:self-auto">
+            {(["All", "Executive", "Independent"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`relative px-4 py-2.5 rounded-lg text-xs font-bold uppercase transition-all duration-300 cursor-pointer ${
+                  activeTab === tab
+                    ? "text-[#147FC3] font-black z-10"
+                    : "text-slate-500 hover:text-slate-800"
+                }`}
+              >
+                {activeTab === tab && (
+                  <motion.div
+                    layoutId="activeTabIndicator"
+                    className="absolute inset-0 bg-white rounded-lg shadow-sm border border-slate-200/30 -z-10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-20">{tab} Board</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Section 3: Directors Grid Stack */}
@@ -587,6 +619,17 @@ export default function BoardOfDirectorsPage() {
                             <span className="text-xs font-semibold text-slate-600">MaxValue Credits</span>
                           </div>
                         </div>
+
+                        {/* Quote Box (Brand Palette matching visual style) */}
+                        {director.quote && (
+                          <div className="mb-5 p-4 rounded-xl border relative overflow-hidden bg-gradient-to-r from-amber-500/5 to-transparent border-amber-500/10 hover:border-amber-500/20 transition-all duration-300">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FCA038]/5 to-transparent pointer-events-none rounded-full" />
+                            <Quote className="w-8 h-8 text-[#FCA038]/15 absolute top-2.5 left-3.5 transform -rotate-12 pointer-events-none shrink-0" />
+                            <p className="text-[#0a274c] italic text-xs sm:text-sm font-semibold tracking-wide leading-relaxed pl-8 relative z-10">
+                              "{director.quote}"
+                            </p>
+                          </div>
+                        )}
 
                         {/* Full Detailed Paragraph Bio */}
                         <p className="text-slate-700 text-xs sm:text-sm md:text-[15px] leading-relaxed text-justify font-normal">

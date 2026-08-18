@@ -25,7 +25,9 @@ import {
   ShieldAlert,
   ArrowLeft,
   BookOpen,
-  Users
+  Users,
+  Award,
+  Calendar
 } from "lucide-react";
 
 interface CurrentUser {
@@ -152,6 +154,8 @@ export default function AdminLayout({
         return "Dashboard Overview";
       case "/admin/branches":
         return "Branch Network Management";
+      case "/admin/activities":
+        return "Activities Management";
       case "/admin/careers":
         return "Careers Management";
       case "/admin/news":
@@ -160,6 +164,8 @@ export default function AdminLayout({
         return "Blog Management Console";
       case "/admin/directors":
         return "Board of Directors Management";
+      case "/admin/leaders":
+        return "Leaders Management";
       case "/admin/admins":
         return "Admin Users Management";
       case "/admin/media":
@@ -191,10 +197,12 @@ export default function AdminLayout({
   const allNavItems: NavItem[] = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Branch Network", href: "/admin/branches", icon: GitBranch },
+    { name: "Board of Directors", href: "/admin/directors", icon: Users },
+    { name: "Leaders Management", href: "/admin/leaders", icon: Award },
     { name: "Careers Management", href: "/admin/careers", icon: Briefcase },
     { name: "News Management", href: "/admin/news", icon: Newspaper },
     { name: "Blog Management", href: "/admin/blog", icon: BookOpen },
-    { name: "Board of Directors", href: "/admin/directors", icon: Users },
+    { name: "Activities Management", href: "/admin/activities", icon: Calendar },
     {
       name: "Media Management",
       icon: ImageIcon,

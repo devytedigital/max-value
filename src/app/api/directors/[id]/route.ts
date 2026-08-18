@@ -38,17 +38,26 @@ export async function PUT(
       return NextResponse.json({ error: "Director not found" }, { status: 404 });
     }
 
-    const updates = {
-      ...body,
+    const updates: any = {
       updatedAt: new Date().toISOString()
     };
 
-    // Remove undefined properties to prevent Firestore payload errors
-    Object.keys(updates).forEach((key) => {
-      if (updates[key] === undefined) {
-        delete updates[key];
+    const fieldsToProcess = ["name", "role", "category", "image", "bio", "quote"];
+    fieldsToProcess.forEach((field) => {
+      if (body[field] !== undefined) {
+        updates[field] = typeof body[field] === "string" ? body[field].trim() : body[field];
       }
     });
+
+    if (body.highlights !== undefined) {
+      updates.highlights = Array.isArray(body.highlights)
+        ? body.highlights.map((h: any) => typeof h === "string" ? h.trim() : h).filter(Boolean)
+        : [];
+    }
+
+    if (body.order !== undefined) {
+      updates.order = typeof body.order === "number" ? body.order : Number(body.order) || 999;
+    }
 
     await updateDoc(docRef, updates);
 

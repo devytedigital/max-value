@@ -51,7 +51,8 @@ export async function POST(request: Request) {
       image,
       bio,
       highlights = [],
-      order = 999
+      order = 999,
+      quote = ""
     } = body;
 
     // Validation
@@ -83,13 +84,14 @@ export async function POST(request: Request) {
 
     const newDirector = {
       id,
-      name: name.trim(),
-      role: role.trim(),
-      category: category.trim(),
-      image: image.trim(),
-      bio: bio.trim(),
-      highlights: Array.isArray(highlights) ? highlights.map((h: string) => h.trim()).filter(Boolean) : [],
-      order: typeof order === "number" ? order : 999,
+      name: typeof name === "string" ? name.trim() : name,
+      role: typeof role === "string" ? role.trim() : role,
+      category: typeof category === "string" ? category.trim() : category,
+      image: typeof image === "string" ? image.trim() : image,
+      bio: typeof bio === "string" ? bio.trim() : bio,
+      highlights: Array.isArray(highlights) ? highlights.map((h: any) => typeof h === "string" ? h.trim() : h).filter(Boolean) : [],
+      order: typeof order === "number" ? order : Number(order) || 999,
+      quote: typeof quote === "string" ? quote.trim() : "",
       createdAt: new Date().toISOString()
     };
 

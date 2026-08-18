@@ -21,41 +21,39 @@ import {
   ChevronRight,
   ShieldCheck,
   Briefcase,
-  Quote
+  Award
 } from "lucide-react";
 
-interface Director {
+interface Leader {
   id: string;
   name: string;
   role: string;
-  category: "Executive" | "Independent";
+  category: "Executive Management" | "Operational Leadership" | "Strategic Advisors";
   image: string;
   bio: string;
   highlights?: string[];
   order?: number;
-  quote?: string;
   createdAt?: string;
 }
 
-export default function DirectorsAdmin() {
-  const [directors, setDirectors] = useState<Director[]>([]);
+export default function LeadersAdmin() {
+  const [leaders, setLeaders] = useState<Leader[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Modal / Form state
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingDirector, setEditingDirector] = useState<Director | null>(null);
+  const [editingLeader, setEditingLeader] = useState<Leader | null>(null);
   
   // Form fields
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
-  const [category, setCategory] = useState<"Executive" | "Independent">("Executive");
+  const [category, setCategory] = useState<"Executive Management" | "Operational Leadership" | "Strategic Advisors">("Executive Management");
   const [image, setImage] = useState("");
   const [bio, setBio] = useState("");
   const [highlightsInput, setHighlightsInput] = useState("");
   const [order, setOrder] = useState<number>(999);
-  const [quote, setQuote] = useState("");
 
   // Status / Feedback state
   const [actionLoading, setActionLoading] = useState(false);
@@ -65,7 +63,7 @@ export default function DirectorsAdmin() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchDirectors();
+    fetchLeaders();
   }, []);
 
   const showToast = (message: string, type: "success" | "error") => {
@@ -75,18 +73,18 @@ export default function DirectorsAdmin() {
     }, 4000);
   };
 
-  const fetchDirectors = async () => {
+  const fetchLeaders = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/directors");
+      const res = await fetch("/api/leaders");
       if (res.ok) {
         const data = await res.json();
-        setDirectors(data);
+        setLeaders(data);
       } else {
-        showToast("Failed to fetch board of directors list", "error");
+        showToast("Failed to fetch leaders list", "error");
       }
     } catch (err: any) {
-      showToast("Error loading directors: " + err.message, "error");
+      showToast("Error loading leaders: " + err.message, "error");
     } finally {
       setLoading(false);
     }
@@ -95,13 +93,12 @@ export default function DirectorsAdmin() {
   const resetForm = () => {
     setName("");
     setRole("");
-    setCategory("Executive");
+    setCategory("Executive Management");
     setImage("");
     setBio("");
     setHighlightsInput("");
     setOrder(999);
-    setQuote("");
-    setEditingDirector(null);
+    setEditingLeader(null);
   };
 
   const handleOpenCreate = () => {
@@ -109,16 +106,15 @@ export default function DirectorsAdmin() {
     setIsFormOpen(true);
   };
 
-  const handleOpenEdit = (director: Director) => {
-    setEditingDirector(director);
-    setName(director.name);
-    setRole(director.role);
-    setCategory(director.category);
-    setImage(director.image);
-    setBio(director.bio);
-    setHighlightsInput(director.highlights ? director.highlights.join(", ") : "");
-    setOrder(director.order ?? 999);
-    setQuote(director.quote ?? "");
+  const handleOpenEdit = (leader: Leader) => {
+    setEditingLeader(leader);
+    setName(leader.name);
+    setRole(leader.role);
+    setCategory(leader.category);
+    setImage(leader.image);
+    setBio(leader.bio);
+    setHighlightsInput(leader.highlights ? leader.highlights.join(", ") : "");
+    setOrder(leader.order ?? 999);
     setIsFormOpen(true);
   };
 
@@ -143,12 +139,11 @@ export default function DirectorsAdmin() {
         image: image.trim(),
         bio: bio.trim(),
         highlights,
-        order: Number(order),
-        quote: quote.trim()
+        order: Number(order)
       };
 
-      const url = editingDirector ? `/api/directors/${editingDirector.id}` : "/api/directors";
-      const method = editingDirector ? "PUT" : "POST";
+      const url = editingLeader ? `/api/leaders/${editingLeader.id}` : "/api/leaders";
+      const method = editingLeader ? "PUT" : "POST";
 
       const res = await fetch(url, {
         method,
@@ -158,18 +153,18 @@ export default function DirectorsAdmin() {
 
       if (res.ok) {
         showToast(
-          editingDirector ? "Director details updated successfully" : "New director created successfully",
+          editingLeader ? "Leader profile updated successfully" : "New leader profile created successfully",
           "success"
         );
         setIsFormOpen(false);
         resetForm();
-        fetchDirectors();
+        fetchLeaders();
       } else {
         const errorData = await res.json();
-        showToast(errorData.error || "Failed to save director details", "error");
+        showToast(errorData.error || "Failed to save leader details", "error");
       }
     } catch (err: any) {
-      showToast("Error saving director details: " + err.message, "error");
+      showToast("Error saving leader details: " + err.message, "error");
     } finally {
       setActionLoading(false);
     }
@@ -178,32 +173,32 @@ export default function DirectorsAdmin() {
   const handleDelete = async (id: string) => {
     try {
       setActionLoading(true);
-      const res = await fetch(`/api/directors/${id}`, {
+      const res = await fetch(`/api/leaders/${id}`, {
         method: "DELETE"
       });
 
       if (res.ok) {
-        showToast("Director deleted successfully", "success");
+        showToast("Leader profile deleted successfully", "success");
         setDeleteConfirmId(null);
-        fetchDirectors();
+        fetchLeaders();
       } else {
-        showToast("Failed to delete director", "error");
+        showToast("Failed to delete leader", "error");
       }
     } catch (err: any) {
-      showToast("Error deleting director: " + err.message, "error");
+      showToast("Error deleting leader: " + err.message, "error");
     } finally {
       setActionLoading(false);
     }
   };
 
   // Filters
-  const filteredDirectors = directors.filter((director) => {
+  const filteredLeaders = leaders.filter((leader) => {
     const matchesSearch =
-      director.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      director.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      director.bio.toLowerCase().includes(searchTerm.toLowerCase());
+      leader.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      leader.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      leader.bio.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesCategory = selectedCategory === "All" || director.category === selectedCategory;
+    const matchesCategory = selectedCategory === "All" || leader.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });
@@ -238,11 +233,11 @@ export default function DirectorsAdmin() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-zinc-200/80 shadow-xs">
         <div>
           <h2 className="text-xl font-black text-zinc-900 tracking-tight flex items-center gap-2">
-            <Users className="w-5 h-5 text-[#147FC3]" />
-            Board of Directors
+            <Award className="w-5 h-5 text-[#147FC3]" />
+            Leadership Team
           </h2>
           <p className="text-zinc-500 text-xs mt-1 font-medium">
-            Create, update, order, and manage profiles for Executive and Independent directors.
+            Manage profiles for Executive Management, Operational Leadership, and Strategic Advisors.
           </p>
         </div>
         <button
@@ -250,7 +245,7 @@ export default function DirectorsAdmin() {
           className="inline-flex items-center justify-center gap-2 bg-[#147FC3] hover:bg-[#0e6198] text-white font-bold text-xs py-3 px-5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 shrink-0 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          <span>Add New Director</span>
+          <span>Add New Leader</span>
         </button>
       </div>
 
@@ -270,8 +265,8 @@ export default function DirectorsAdmin() {
         </div>
 
         {/* Tab Selection */}
-        <div className="flex gap-2">
-          {["All", "Executive", "Independent"].map((cat) => (
+        <div className="flex flex-wrap gap-2">
+          {["All", "Executive Management", "Operational Leadership", "Strategic Advisors"].map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -281,24 +276,24 @@ export default function DirectorsAdmin() {
                   : "bg-white text-zinc-650 hover:bg-zinc-100 border border-zinc-200/70"
               }`}
             >
-              {cat} Board
+              {cat === "All" ? "All Categories" : cat}
             </button>
           ))}
         </div>
 
       </div>
 
-      {/* Directors Grid Display */}
+      {/* Leaders Grid Display */}
       {loading ? (
         <div className="w-full py-20 flex flex-col items-center justify-center gap-3">
           <div className="w-8 h-8 border-4 border-[#147FC3] border-t-transparent rounded-full animate-spin" />
           <p className="text-xs text-zinc-500 font-bold">Loading leadership board...</p>
         </div>
-      ) : filteredDirectors.length === 0 ? (
+      ) : filteredLeaders.length === 0 ? (
         <div className="w-full py-16 bg-white rounded-2xl border border-zinc-250 text-center flex flex-col items-center justify-center gap-3">
           <Users className="w-8 h-8 text-zinc-300" />
           <div>
-            <h4 className="text-sm font-bold text-zinc-700">No Directors Found</h4>
+            <h4 className="text-sm font-bold text-zinc-700">No Leaders Found</h4>
             <p className="text-xs text-zinc-400 mt-1">
               Try searching with a different keyword or category.
             </p>
@@ -306,9 +301,9 @@ export default function DirectorsAdmin() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDirectors.map((director) => (
+          {filteredLeaders.map((leader) => (
             <div
-              key={director.id}
+              key={leader.id}
               className="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               {/* Profile Card Top */}
@@ -317,45 +312,37 @@ export default function DirectorsAdmin() {
                   {/* Photo Preview */}
                   <div className="w-16 h-16 rounded-full overflow-hidden border border-zinc-200 shrink-0 bg-zinc-50">
                     <img
-                      src={director.image || "/directors/manoj.png"}
-                      alt={director.name}
+                      src={leader.image || "/directors/manoj.png"}
+                      alt={leader.name}
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
                   
                   {/* Title Info */}
                   <div>
-                    <h4 className="font-bold text-zinc-900 text-sm line-clamp-1">{director.name}</h4>
-                    <p className="text-xs text-[#147FC3] font-bold mt-0.5">{director.role}</p>
+                    <h4 className="font-bold text-zinc-900 text-sm line-clamp-1">{leader.name}</h4>
+                    <p className="text-xs text-[#147FC3] font-bold mt-0.5">{leader.role}</p>
                     <span className={`inline-block mt-1.5 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${
-                      director.category === "Executive"
+                      leader.category === "Executive Management"
                         ? "bg-zinc-100 text-zinc-700 border border-zinc-200"
-                        : "bg-amber-50 text-amber-800 border border-amber-200"
+                        : leader.category === "Operational Leadership"
+                        ? "bg-amber-50 text-amber-800 border border-amber-200"
+                        : "bg-sky-50 text-sky-850 border border-sky-200"
                     }`}>
-                      {director.category} Board
+                      {leader.category}
                     </span>
                   </div>
                 </div>
 
-                {/* Quote details in card */}
-                {director.quote && (
-                  <div className="bg-amber-50/50 border border-amber-250/60 rounded-xl p-3 relative overflow-hidden">
-                    <Quote className="w-10 h-10 text-amber-500/10 absolute -top-1.5 -left-1.5 transform -rotate-12 pointer-events-none" />
-                    <p className="text-[11px] text-zinc-650 italic font-medium line-clamp-2 pl-3 border-l-2 border-[#147FC3]">
-                      "{director.quote}"
-                    </p>
-                  </div>
-                )}
-
                 {/* Bio text */}
                 <p className="text-zinc-600 text-xs line-clamp-4 leading-relaxed text-justify">
-                  {director.bio}
+                  {leader.bio}
                 </p>
 
                 {/* Highlights tags */}
-                {director.highlights && director.highlights.length > 0 && (
+                {leader.highlights && leader.highlights.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1.5">
-                    {director.highlights.slice(0, 3).map((h, i) => (
+                    {leader.highlights.slice(0, 3).map((h, i) => (
                       <span
                         key={i}
                         className="text-[9px] font-semibold bg-zinc-50 border border-zinc-200 text-zinc-500 rounded px-2 py-0.5"
@@ -363,9 +350,9 @@ export default function DirectorsAdmin() {
                         {h}
                       </span>
                     ))}
-                    {director.highlights.length > 3 && (
+                    {leader.highlights.length > 3 && (
                       <span className="text-[9px] text-zinc-400 font-bold self-center">
-                        +{director.highlights.length - 3} more
+                        +{leader.highlights.length - 3} more
                       </span>
                     )}
                   </div>
@@ -375,19 +362,19 @@ export default function DirectorsAdmin() {
               {/* Card Footer Actions */}
               <div className="bg-zinc-50/70 border-t border-zinc-100 px-5 py-3.5 flex items-center justify-between">
                 <span className="text-[10px] font-bold text-zinc-400">
-                  Order Index: <strong className="text-zinc-750">{director.order ?? 999}</strong>
+                  Order Index: <strong className="text-zinc-750">{leader.order ?? 999}</strong>
                 </span>
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => handleOpenEdit(director)}
+                    onClick={() => handleOpenEdit(leader)}
                     className="p-2 border border-zinc-200 hover:border-[#147FC3]/40 hover:bg-[#147FC3]/5 text-zinc-500 hover:text-[#147FC3] rounded-lg transition-colors cursor-pointer"
                     title="Edit Member Profile"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button
-                    onClick={() => setDeleteConfirmId(director.id)}
+                    onClick={() => setDeleteConfirmId(leader.id)}
                     className="p-2 border border-zinc-200 hover:border-rose-300 hover:bg-rose-50 text-zinc-500 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
                     title="Delete Member"
                   >
@@ -421,7 +408,7 @@ export default function DirectorsAdmin() {
                 <Trash2 className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-black text-zinc-900 text-sm">Delete Director Profile?</h4>
+                <h4 className="font-black text-zinc-900 text-sm">Delete Leader Profile?</h4>
                 <p className="text-zinc-500 text-xs mt-1 leading-relaxed">
                   This action is permanent and cannot be undone. This profile will be deleted from the live board instantly.
                 </p>
@@ -476,10 +463,10 @@ export default function DirectorsAdmin() {
                 <div>
                   <h3 className="font-black text-zinc-900 text-sm flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-[#FCA038]" />
-                    {editingDirector ? "Edit Director Profile" : "Add Board Director"}
+                    {editingLeader ? "Edit Leader Profile" : "Add Leadership Team Member"}
                   </h3>
                   <p className="text-zinc-400 text-[10px] mt-0.5 font-medium">
-                    Provide profile photos, titles, roles, categories, and bio paragraphs.
+                    Provide profile photo, title, category, order index, and details.
                   </p>
                 </div>
                 <button
@@ -515,7 +502,7 @@ export default function DirectorsAdmin() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Chairman & Managing Director"
+                    placeholder="e.g. Chief Operating Officer"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                     required
@@ -529,15 +516,16 @@ export default function DirectorsAdmin() {
                   {/* Category */}
                   <div className="space-y-1">
                     <label className="text-[10px] font-black uppercase text-zinc-700 tracking-wide">
-                      Category Board <span className="text-rose-500">*</span>
+                      Category Group <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value as any)}
-                      className="w-full px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white transition-colors"
+                      className="w-full px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white transition-colors animate-none"
                     >
-                      <option value="Executive">Executive</option>
-                      <option value="Independent">Independent</option>
+                      <option value="Executive Management">Executive Management</option>
+                      <option value="Operational Leadership">Operational Leadership</option>
+                      <option value="Strategic Advisors">Strategic Advisors</option>
                     </select>
                   </div>
 
@@ -564,7 +552,7 @@ export default function DirectorsAdmin() {
                   <ImageUpload
                     value={image}
                     onChange={(url) => setImage(url)}
-                    label="Director Profile Photo"
+                    label="Leader Profile Photo"
                     required
                     placeholder="Upload profile photo or paste Cloudinary URL..."
                   />
@@ -577,30 +565,13 @@ export default function DirectorsAdmin() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Global Serial Entrepreneur, CMD - Hykon India Ltd, Published Author"
+                    placeholder="e.g. 25+ Yrs Retail Finance, Branch Expansion Architect"
                     value={highlightsInput}
                     onChange={(e) => setHighlightsInput(e.target.value)}
                     className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white transition-colors"
                   />
                   <p className="text-[9px] text-zinc-400 font-semibold">
-                    Separate brief highlights tags with commas. E.g. "Global Entrepreneur, Retired Banker"
-                  </p>
-                </div>
-
-                {/* Quote Textarea */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-zinc-700 tracking-wide flex items-center gap-1">
-                    Quote / Statement <span className="text-zinc-400 font-bold lowercase font-sans ml-1">(Optional)</span>
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="e.g. 'Empowering individuals through customized, transparent credit solutions.'"
-                    value={quote}
-                    onChange={(e) => setQuote(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white transition-colors resize-none leading-relaxed"
-                  />
-                  <p className="text-[9px] text-zinc-400 font-semibold">
-                    An inspiring quote, motto, or personal statement by the director.
+                    Separate brief highlights tags with commas. E.g. "FinTech Architect, 18+ Yrs HR Leadership"
                   </p>
                 </div>
 
@@ -611,7 +582,7 @@ export default function DirectorsAdmin() {
                   </label>
                   <textarea
                     rows={6}
-                    placeholder="Describe the member's background, education, achievements, and other active positions..."
+                    placeholder="Describe the member's background, education, achievements, and responsibilities at MaxValue..."
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     required
@@ -643,7 +614,7 @@ export default function DirectorsAdmin() {
                     </>
                   ) : (
                     <>
-                      <span>Save Director</span>
+                      <span>Save Leader</span>
                     </>
                   )}
                 </button>

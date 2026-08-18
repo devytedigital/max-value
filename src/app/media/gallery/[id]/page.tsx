@@ -50,22 +50,6 @@ export default function GalleryDetailPage({ params }: { params: Promise<{ id: st
       list.unshift({ url: currentGallery.image, caption: currentGallery.title || "Cover Photo" });
     }
 
-    // Fallback images if album has only 1 cover image, so gallery preview can be fully navigated
-    if (list.length < 2 && currentGallery?.image) {
-      const demoImages = [
-        currentGallery.image,
-        "/happy-client.png",
-        "/abouthero.png",
-        "/adsgold.jpg",
-        "/adsbike.jpg",
-        "/adsbusiness.jpg"
-      ];
-      list = demoImages.map((url, idx) => ({
-        url,
-        caption: idx === 0 ? (currentGallery.title || "Main View") : `Gallery Snapshot ${idx + 1}`
-      }));
-    }
-
     return list;
   };
 

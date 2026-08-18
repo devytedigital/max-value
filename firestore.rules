@@ -9,6 +9,12 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // Rules for Activities Collection
+    match /activities/{activityId} {
+      // Anyone can query and read activities, writes are managed via secure server API routes
+      allow read, write: if true;
+    }
+
     // Rules for Career Jobs Collection
     match /jobs/{jobId} {
       // Anyone can query and read jobs, and write actions are managed via secure server API routes
@@ -60,6 +66,12 @@ service cloud.firestore {
     // Rules for Directors Collection
     match /directors/{directorId} {
       // Anyone can query and read directors, writes are managed via secure server API routes
+      allow read, write: if true;
+    }
+
+    // Rules for Leaders Collection
+    match /leaders/{leaderId} {
+      // Anyone can query and read leaders, writes are managed via secure server API routes
       allow read, write: if true;
     }
 
