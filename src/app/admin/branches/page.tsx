@@ -105,7 +105,7 @@ export default function AdminBranchesPage() {
     setFormData({
       name: "",
       state: "Kerala", // default state
-      district: stateDistrictMap["Kerala"][0], // default district
+      district: "", // default district empty for manual text input entry
       address: "",
       landmark: "",
       pinCode: "",
@@ -140,11 +140,10 @@ export default function AdminBranchesPage() {
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const stateVal = e.target.value;
-    const districts = stateDistrictMap[stateVal] || [];
     setFormData((prev) => ({
       ...prev,
       state: stateVal,
-      district: districts[0] || ""
+      district: "" // Let admin enter the district manually
     }));
   };
 
@@ -178,24 +177,21 @@ export default function AdminBranchesPage() {
       !state.trim() ||
       !district.trim() ||
       !address.trim() ||
-      !landmark.trim() ||
       !pinCode.trim() ||
       !phone.trim() ||
       !mobile.trim() ||
-      !email.trim() ||
-      !location.trim() ||
       !workingHours.trim()
     ) {
-      setFormError("All fields are required. Please fill out every field in the form.");
+      setFormError("Branch Name, State, District, Address, PIN Code, Phone, Mobile, and Working Hours are required.");
       return;
     }
 
-    if (!email.includes("@")) {
+    if (email.trim() && !email.includes("@")) {
       setFormError("Invalid email address. The email field must include an '@' character.");
       return;
     }
 
-    if (!location.startsWith("http://") && !location.startsWith("https://")) {
+    if (location.trim() && !location.startsWith("http://") && !location.startsWith("https://")) {
       setFormError("Invalid Google Maps URL. The Location field must be a valid link starting with 'http://' or 'https://'.");
       return;
     }
@@ -619,26 +615,20 @@ export default function AdminBranchesPage() {
                     </div>
                   </div>
 
-                  {/* District Select (Required) */}
+                  {/* District Text Input (Required) */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
                       District <span className="text-rose-500">*</span>
                     </label>
-                    <div className="relative">
-                      <select
-                        name="district"
-                        value={formData.district}
-                        onChange={handleInputChange}
-                        className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white appearance-none cursor-pointer"
-                      >
-                        {(stateDistrictMap[formData.state] || []).map((dst) => (
-                          <option key={dst} value={dst}>
-                            {dst}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-zinc-400 absolute right-3.5 top-2.5 pointer-events-none" />
-                    </div>
+                    <input
+                      type="text"
+                      name="district"
+                      required
+                      placeholder="e.g. Kasaragod"
+                      value={formData.district}
+                      onChange={handleInputChange}
+                      className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white"
+                    />
                   </div>
 
                   {/* Address Textarea (Required) */}
@@ -660,13 +650,12 @@ export default function AdminBranchesPage() {
                   {/* Landmark */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Landmark <span className="text-rose-500">*</span>
+                      Landmark
                     </label>
                     <input
                       type="text"
                       name="landmark"
-                      required
-                      placeholder="e.g. Opposite Bus Station"
+                      placeholder="e.g. Opposite Bus Station (Optional)"
                       value={formData.landmark}
                       onChange={handleInputChange}
                       className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white"
@@ -724,13 +713,12 @@ export default function AdminBranchesPage() {
                   {/* Email address */}
                   <div className="flex flex-col">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Email Address <span className="text-rose-500">*</span>
+                      Email Address
                     </label>
                     <input
                       type="email"
                       name="email"
-                      required
-                      placeholder="e.g. chathannur@maxvaluecredits.com"
+                      placeholder="e.g. chathannur@maxvaluecredits.com (Optional)"
                       value={formData.email}
                       onChange={handleInputChange}
                       className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white"
@@ -756,13 +744,12 @@ export default function AdminBranchesPage() {
                   {/* Location Coordinate maps Link */}
                   <div className="flex flex-col md:col-span-2">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">
-                      Google Maps URL Link <span className="text-rose-500">*</span>
+                      Google Maps URL Link
                     </label>
                     <input
                       type="text"
                       name="location"
-                      required
-                      placeholder="e.g. https://maps.google.com/..."
+                      placeholder="e.g. https://maps.google.com/... (Optional)"
                       value={formData.location}
                       onChange={handleInputChange}
                       className="bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 outline-none focus:border-[#147FC3] focus:bg-white"

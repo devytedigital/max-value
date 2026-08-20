@@ -41,13 +41,59 @@ export async function POST(request: Request) {
       );
     }
 
+    const docRef = doc(db, "blogs", "gold-rate-settings");
+    const docSnap = await getDoc(docRef);
+    let historyList: any[] = [];
+
+    if (docSnap.exists()) {
+      const existingData = docSnap.data();
+      if (Array.isArray(existingData.history)) {
+        historyList = existingData.history;
+      } else if (existingData.rate && existingData.lastUpdated) {
+        historyList = [
+          {
+            rate: Number(existingData.rate),
+            date: existingData.lastUpdated,
+            updatedBy: existingData.updatedBy || "Previous Admin",
+          },
+        ];
+      }
+    }
+
+    const timestamp = new Date().toISOString();
+    let updatedHistory = [...historyList];
+
+    if (historyList.length === 0) {
+      updatedHistory = [
+        {
+          rate: rateNum,
+          date: timestamp,
+          updatedBy: updatedBy.trim(),
+        },
+      ];
+    } else if (Number(historyList[0].rate) !== rateNum) {
+      const newHistoryEntry = {
+        rate: rateNum,
+        date: timestamp,
+        updatedBy: updatedBy.trim(),
+      };
+      updatedHistory = [newHistoryEntry, ...historyList].slice(0, 10);
+    } else {
+      // If the rate value is identical to the latest entry, update its timestamp and author to prevent duplicates
+      updatedHistory[0] = {
+        rate: rateNum,
+        date: timestamp,
+        updatedBy: updatedBy.trim(),
+      };
+    }
+
     const payload = {
       rate: rateNum,
-      lastUpdated: new Date().toISOString(),
-      updatedBy: updatedBy.trim()
+      lastUpdated: timestamp,
+      updatedBy: updatedBy.trim(),
+      history: updatedHistory,
     };
 
-    const docRef = doc(db, "blogs", "gold-rate-settings");
     await setDoc(docRef, payload);
 
     return NextResponse.json({ success: true, ...payload }, { status: 200 });

@@ -53,8 +53,30 @@ export default function BranchNetworkPage() {
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Branch[]>([]);
 
-  const states = Object.keys(stateDistrictMap);
-  const availableDistricts = selectedState ? stateDistrictMap[selectedState] || [] : [];
+  // Dynamic states list based on registered branches
+  const states = allBranches.length > 0 
+    ? Array.from(new Set(allBranches.map((b) => b.state))).sort()
+    : Object.keys(stateDistrictMap);
+
+  // Dynamic districts list based on registered branches of the selected state, de-duplicated case-insensitively
+  const availableDistricts = selectedState
+    ? (() => {
+        const sourceList = allBranches.length > 0 ? allBranches : branchDatabase;
+        const uniqueObj: Record<string, string> = {}; // lowercase key -> original value
+        sourceList
+          .filter((b) => b.state.toLowerCase() === selectedState.toLowerCase())
+          .forEach((b) => {
+            const trimmed = b.district.trim();
+            if (trimmed) {
+              const lower = trimmed.toLowerCase();
+              if (!uniqueObj[lower]) {
+                uniqueObj[lower] = trimmed;
+              }
+            }
+          });
+        return Object.values(uniqueObj).sort();
+      })()
+    : [];
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newState = e.target.value;
@@ -78,8 +100,10 @@ export default function BranchNetworkPage() {
     const sourceDb = allBranches.length > 0 ? allBranches : branchDatabase;
 
     const filtered = sourceDb.filter((b) => {
-      const matchState = b.state === selectedState;
-      const matchDistrict = selectedDistrict === "" || b.district === selectedDistrict;
+      const matchState = b.state.toLowerCase() === selectedState.toLowerCase();
+      const matchDistrict =
+        selectedDistrict === "" ||
+        b.district.trim().toLowerCase() === selectedDistrict.trim().toLowerCase();
       return matchState && matchDistrict;
     });
 
@@ -304,14 +328,16 @@ export default function BranchNetworkPage() {
                         </div>
 
                         {/* Landmark */}
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
-                            Landmark
-                          </span>
-                          <span className="text-xs font-semibold text-zinc-700 mt-1.5 leading-snug">
-                            {branch.landmark}
-                          </span>
-                        </div>
+                        {branch.landmark && branch.landmark.trim() && (
+                          <div className="flex flex-col">
+                            <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
+                              Landmark
+                            </span>
+                            <span className="text-xs font-semibold text-zinc-700 mt-1.5 leading-snug">
+                              {branch.landmark}
+                            </span>
+                          </div>
+                        )}
 
                         {/* PIN Code */}
                         <div className="flex flex-col">
@@ -337,18 +363,20 @@ export default function BranchNetworkPage() {
                         </div>
 
                         {/* Email */}
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
-                            Email Address
-                          </span>
-                          <a 
-                            href={`mailto:${branch.email}`} 
-                            className="text-xs font-extrabold text-[#147FC3] hover:text-[#147FC3]/80 hover:underline mt-1.5 truncate block transition-colors"
-                            title={branch.email}
-                          >
-                            {branch.email}
-                          </a>
-                        </div>
+                        {branch.email && branch.email.trim() && (
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] font-bold text-zinc-400 tracking-wider block">
+                              Email Address
+                            </span>
+                            <a 
+                              href={`mailto:${branch.email}`} 
+                              className="text-xs font-extrabold text-[#147FC3] hover:text-[#147FC3]/80 hover:underline mt-1.5 truncate block transition-colors"
+                              title={branch.email}
+                            >
+                              {branch.email}
+                            </a>
+                          </div>
+                        )}
 
                       </div>
 
