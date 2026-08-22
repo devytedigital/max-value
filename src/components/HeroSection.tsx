@@ -244,7 +244,7 @@ const SLIDES = [
    
     heading: (
       <>
-        Compound your <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]">growth</span>, multiply your <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-[#FCA038] bg-clip-text text-transparent">possibilities</span>
+         <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]"></span> <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-[#FCA038] bg-clip-text text-transparent">Maximum Value for Your Gold</span>
       </>
     ),
     primaryCta: { text: "Explore Services", href: "#services" },
@@ -255,7 +255,7 @@ const SLIDES = [
   
     heading: (
       <>
-        <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]">Prosperity</span> is the product of <span className="bg-gradient-to-r from-amber-200 via-[#FCA038] to-orange-300 bg-clip-text text-transparent">wise decisions</span>
+           <span className="text-[#FCA038] drop-shadow-[0_2px_12px_rgba(252,160,56,0.4)]"></span> <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-[#FCA038] bg-clip-text text-transparent">Invest in Your Dreams Wisely</span>
       </>
     ),
     primaryCta: { text: "Apply For Loan", href: "/contact-us" },

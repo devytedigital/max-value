@@ -377,6 +377,7 @@ import {
   Phone,
   PhoneCall,
   Tv,
+  Calculator,
   X,
   MapPin,
   ChevronRight,
@@ -385,6 +386,7 @@ import {
   QrCode,
   Play
 } from "lucide-react";
+import CalculatorModal from "./CalculatorModal";
 
 // Official WhatsApp SVG Component
 const WhatsAppIconSVG = ({ className = "w-6 h-6" }: { className?: string }) => (
@@ -400,6 +402,7 @@ const WhatsAppIconSVG = ({ className = "w-6 h-6" }: { className?: string }) => (
 
 export default function FloatingWidgets() {
   const [activePanel, setActivePanel] = useState<"branch" | "call" | "media" | null>(null);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const [callbackSubmitted, setCallbackSubmitted] = useState(false);
   const [phoneInput, setPhoneInput] = useState("");
   const [nameInput, setNameInput] = useState("");
@@ -724,7 +727,41 @@ export default function FloatingWidgets() {
           </AnimatePresence>
         </div>
 
+
+        {/* =========================================================== */}
+        {/* 4. CALCULATOR BUTTON — icon-only, expands on hover */}
+        {/* =========================================================== */}
+        <div className="relative flex items-center">
+          <button
+            onClick={() => {
+              setActivePanel(null);
+              setIsCalculatorOpen(true);
+            }}
+            className={`group/calc flex items-center h-12 pl-3 pr-3 bg-gradient-to-br from-[#FCA038] to-[#F58220] hover:from-[#f3952a] hover:to-[#e57615] text-white rounded-l-2xl shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-x-1 cursor-pointer overflow-hidden ${
+              isCalculatorOpen ? "ring-2 ring-orange-300" : ""
+            }`}
+            title="Financial & Gold Loan Calculator"
+          >
+            <Calculator className="w-5 h-5 text-white shrink-0" />
+            <span
+              className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out max-w-0 group-hover/calc:max-w-[110px] ${
+                isCalculatorOpen ? "max-w-[110px]" : ""
+              }`}
+            >
+              <span className="pl-2 font-extrabold text-xs tracking-wide uppercase">
+                Calculator
+              </span>
+            </span>
+          </button>
+        </div>
+
       </div>
+
+      {/* Calculator Modal Overlay */}
+      <CalculatorModal
+        isOpen={isCalculatorOpen}
+        onClose={() => setIsCalculatorOpen(false)}
+      />
     </>
   );
 }
