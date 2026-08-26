@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
-import { setCookie } from "@/lib/cookies";
+import { getCookie, setCookie } from "@/lib/cookies";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -14,6 +14,17 @@ export default function AdminLoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
+
+  // Check if session is already active via cookies
+  useEffect(() => {
+    const token = getCookie("admin_token");
+    if (token) {
+      router.push("/admin");
+    } else {
+      setCheckingSession(false);
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +55,21 @@ export default function AdminLoginPage() {
       setLoading(false);
     }
   };
+
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center font-sans select-none text-white">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <div className="w-10 h-10 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-semibold tracking-wider uppercase text-zinc-400">Verifying session...</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-white flex flex-row font-sans select-none overflow-hidden">

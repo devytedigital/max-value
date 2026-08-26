@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { getCookie } from "@/lib/cookies";
 import {
   FileText,
   Plus,
@@ -36,7 +37,7 @@ export default function AdminDocumentsPage() {
 
   // Auth guard check
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
+    const token = getCookie("admin_token");
     if (!token) {
       router.push("/adminlogin");
     }
