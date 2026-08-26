@@ -441,9 +441,9 @@ export default function AdminBlogPage() {
   // Filter and Search Logic
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.author?.name && post.author.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      (post.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (post.summary || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (post.author?.name || "").toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesCategory =
       selectedCategoryFilter === "All" || post.category === selectedCategoryFilter;
