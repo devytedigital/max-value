@@ -336,7 +336,7 @@ export default function HeroSection() {
 
       {/* Main Content Container */}
       <div className="relative z-20 max-w-[1440px] mx-auto px-6 md:px-12 w-full pt-28 pb-20 md:pt-36 md:pb-24 flex flex-col justify-between min-h-screen">
-        <div className="my-auto max-w-4xl">
+        <div className="my-auto max-w-4xl w-full">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentSlide}
@@ -345,7 +345,7 @@ export default function HeroSection() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex flex-col items-start gap-6"
+              className="flex flex-col items-start gap-6 w-full"
             >
               {/* Category / Brand Badge */}
               <motion.div variants={itemVariants}>
@@ -356,7 +356,7 @@ export default function HeroSection() {
               {/* Main Heading */}
               <motion.h1
                 variants={itemVariants}
-                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-white"
+                className="w-full text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] text-white pr-16 sm:pr-0"
               >
                 {activeSlideData.heading}
               </motion.h1>
@@ -398,37 +398,47 @@ export default function HeroSection() {
                   <span>{activeSlideData.secondaryCta.text}</span>
                 </Link>
               </motion.div>
-                        {/* Logos */}
-<motion.div
-  variants={itemVariants}
-  className="flex items-center gap-3 sm:gap-5 md:gap-6 mb-3"
->
-  <div className="relative w-20 h-10 sm:w-28 sm:h-14 md:w-36 md:h-16">
-    <Image
-      src="/Aprlogo.png"
-      alt="Logo 1"
-      fill
-      priority
-      sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 144px"
-      className="object-contain object-left"
-    />
-  </div>
-
-  <div className="relative w-20 h-10 sm:w-28 sm:h-14 md:w-36 md:h-16">
-    <Image
-      src="/ISOlogo.png"
-      alt="Logo 2"
-      fill
-      priority
-      sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 144px"
-      className="object-contain object-left"
-    />
-  </div>
-</motion.div>  
             </motion.div>
-            
           </AnimatePresence>
         </div>
+
+        {/* Certification Badges Bottom-Right */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="absolute bottom-6 right-6 md:bottom-8 md:right-12 z-30"
+        >
+          <div className="bg-zinc-950/40 backdrop-blur-md border border-white/10 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-4 transition-all duration-300 hover:bg-zinc-950/60 hover:border-white/20">
+            <div className="flex flex-col items-start">
+              <span className="text-[9px] font-bold tracking-widest text-[#FCA038] uppercase">Certified</span>
+              <span className="text-[10px] font-bold tracking-wider text-zinc-300 uppercase">Excellence</span>
+            </div>
+            <div className="h-8 w-[1px] bg-white/10" />
+            <div className="flex items-center gap-3">
+              <div className="relative w-16 h-8 sm:w-20 sm:h-10">
+                <Image
+                  src="/Aprlogo.png"
+                  alt="Great Place to Work Certification"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="object-contain object-center"
+                />
+              </div>
+              <div className="relative w-16 h-8 sm:w-20 sm:h-10">
+                <Image
+                  src="/ISOlogo.png"
+                  alt="ISO 9001:2015 Certification"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="object-contain object-center"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
