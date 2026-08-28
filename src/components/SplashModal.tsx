@@ -258,11 +258,11 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
                 {/* Social media icons showcase (Blue main, hover Yellow) */}
                 <div className="flex gap-5 mb-12">
                   {[
-                    { icon: <TwitterIcon className="h-5 w-5" />, url: "https://twitter.com" },
-                    { icon: <Linkedin className="h-5 w-5" />, url: "https://linkedin.com" },
-                    { icon: <Facebook className="h-5 w-5" />, url: "https://facebook.com" },
-                    { icon: <Instagram className="h-5 w-5" />, url: "https://instagram.com" },
-                    { icon: <YoutubeIcon className="h-5 w-5" />, url: "https://youtube.com" }
+                    // { icon: <TwitterIcon className="h-5 w-5" />, url: "https://twitter.com" },
+                    { icon: <Linkedin className="h-5 w-5" />, url: "https://www.linkedin.com/company/maxvalue-credits-and-investments-ltd/?originalSubdomain=in" },
+                    { icon: <Facebook className="h-5 w-5" />, url: "https://www.facebook.com/reel/1068380582593763" },
+                    { icon: <Instagram className="h-5 w-5" />, url: "https://www.instagram.com/p/DcFg-X8JF5I/" },
+                    { icon: <YoutubeIcon className="h-5 w-5" />, url: "https://youtu.be/HbWTT8HCE4o" }
                   ].map((social, index) => (
                     <a
                       key={index}

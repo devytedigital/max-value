@@ -364,9 +364,9 @@ export default function Navbar() {
                 </div>
 
                 {/* Pay Now Button */}
-                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+                {/* <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10.5px] px-4 py-2 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
                   Pay Now
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -406,9 +406,9 @@ export default function Navbar() {
                 </div>
 
                 {/* Pay Now Button */}
-                <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10px] px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
+                {/* <button className="bg-[#FCA038] hover:bg-[#e08922] text-zinc-955 font-bold text-[10px] px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-md shadow-[#FCA038]/10 hover:shadow-[#FCA038]/25 active:scale-95 cursor-pointer">
                   Pay Now
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -646,9 +646,9 @@ export default function Navbar() {
                 </span>
               </div>
 
-              <button className="w-full bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-black text-xs py-2.5 rounded-full cursor-pointer transition-all duration-300 active:scale-95 shadow-md shadow-[#FCA038]/10">
+              {/* <button className="w-full bg-[#FCA038] hover:bg-[#e08922] text-zinc-950 font-black text-xs py-2.5 rounded-full cursor-pointer transition-all duration-300 active:scale-95 shadow-md shadow-[#FCA038]/10">
                 Pay Now
-              </button>
+              </button> */}
               <div className="text-[11px] font-bold text-zinc-500">
                 Toll Free: <span className="text-[#FCA038]">1800 425 22799</span>
               </div>

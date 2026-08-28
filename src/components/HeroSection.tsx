@@ -263,7 +263,7 @@ const SLIDES = [
   }
 ];
 
-const SLIDE_DURATION = 3000;
+const SLIDE_DURATION = 5000;
 
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -354,12 +354,18 @@ export default function HeroSection() {
   
 
               {/* Main Heading */}
-              <motion.h1
+              {/* <motion.h1
                 variants={itemVariants}
                 className="w-full text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] text-white pr-16 sm:pr-0"
               >
                 {activeSlideData.heading}
-              </motion.h1>
+              </motion.h1> */}
+<motion.h1
+  variants={itemVariants}
+  className="w-full whitespace-nowrap text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.1] text-white"
+>
+  {activeSlideData.heading}
+</motion.h1>
 
               {/* Subtitle / Description */}
               <motion.p

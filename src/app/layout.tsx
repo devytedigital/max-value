@@ -16,7 +16,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "maxvalue credits and investments ltd",
-  description: "A premium, smooth animated website built with Next.js, Tailwind CSS, GSAP, and Framer Motion.",
+  description: "MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man. The team behind this venture draws ...",
+  icons: {
+    icon: [
+      { url: "/Logo.png" },
+      { url: "/icon.png" },
+    ],
+    shortcut: "/Logo.png",
+    apple: "/Logo.png",
+  },
 };
 
 export default function RootLayout({

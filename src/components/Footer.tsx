@@ -220,13 +220,43 @@ export default function Footer() {
           <p className="text-xs font-semibold leading-relaxed text-zinc-650 mb-5">
             MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man.
           </p>
-          <div className="flex items-center gap-3">
-            <a href="#" className="hover:text-[#FCA038] transition-colors text-[#147FC3]"><InstagramIcon className="h-4.5 w-4.5" /></a>
-            <a href="#" className="hover:text-[#FCA038] transition-colors text-[#147FC3]"><FacebookIcon className="h-4.5 w-4.5" /></a>
-            <a href="#" className="hover:text-[#FCA038] transition-colors text-[#147FC3]"><YoutubeIcon className="h-4.5 w-4.5" /></a>
-            <a href="#" className="hover:text-[#FCA038] transition-colors text-[#147FC3]"><TwitterIcon className="h-4.5 w-4.5" /></a>
-            <a href="#" className="hover:text-[#FCA038] transition-colors text-[#147FC3]"><LinkedinIcon className="h-4.5 w-4.5" /></a>
-          </div>
+         <div className="flex items-center gap-3">
+  <a
+    href="https://www.instagram.com/p/DcFg-X8JF5I/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
+  >
+    <InstagramIcon className="h-4.5 w-4.5" />
+  </a>
+
+  <a
+    href="https://www.facebook.com/reel/1068380582593763"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
+  >
+    <FacebookIcon className="h-4.5 w-4.5" />
+  </a>
+
+  <a
+    href="https://youtu.be/HbWTT8HCE4o"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
+  >
+    <YoutubeIcon className="h-4.5 w-4.5" />
+  </a>
+
+  <a
+    href="https://www.linkedin.com/company/maxvalue-credits-and-investments-ltd/?originalSubdomain=in"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
+  >
+    <LinkedinIcon className="h-4.5 w-4.5" />
+  </a>
+</div>
         </div>
 
       </div>
