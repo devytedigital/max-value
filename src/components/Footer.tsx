@@ -7,6 +7,7 @@ import {
   Phone,
   Mail,
   ChevronUp,
+  ChevronDown,
   PhoneCall,
   Calendar,
   Layers,
@@ -72,6 +73,12 @@ export default function Footer() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
   const handleScrollToTop = () => {
     if (lenis) {
       lenis.scrollTo(0, { duration: 1.2 });
@@ -84,179 +91,237 @@ export default function Footer() {
     <footer className="w-full bg-[#FAF9F6] text-zinc-600 pt-12 font-sans relative select-none border-t-2 border-[#FCA038]">
 
       {/* Footer Main Columns */}
-      <div className="max-w-7xl mx-auto px-6 md:px-8 pb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 pb-10 grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-12">
+
+        {/* Brand Description & Socials - Always first on Mobile, last on Desktop */}
+        <div className="flex flex-col text-left order-first lg:order-last bg-zinc-950/2 md:bg-zinc-950/3 lg:bg-transparent p-5 md:p-6 lg:p-0 rounded-2xl border border-zinc-200/50 lg:border-none mb-2 lg:mb-0">
+          <div className="flex items-center gap-3 mb-4">
+            <img 
+              src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png" 
+              alt="Max Value" 
+              className="h-10 w-auto object-contain"
+            />
+          </div>
+          <p className="text-xs font-semibold leading-relaxed text-zinc-500 mb-6 lg:mb-5">
+            MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man.
+          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://www.instagram.com/p/DcFg-X8JF5I/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white lg:bg-transparent border border-zinc-200 lg:border-none flex items-center justify-center text-[#147FC3] hover:text-[#FCA038] transition-colors shadow-xs lg:shadow-none"
+            >
+              <InstagramIcon className="h-4.5 w-4.5" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/reel/1068380582593763"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white lg:bg-transparent border border-zinc-200 lg:border-none flex items-center justify-center text-[#147FC3] hover:text-[#FCA038] transition-colors shadow-xs lg:shadow-none"
+            >
+              <FacebookIcon className="h-4.5 w-4.5" />
+            </a>
+
+            <a
+              href="https://youtu.be/HbWTT8HCE4o"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white lg:bg-transparent border border-zinc-200 lg:border-none flex items-center justify-center text-[#147FC3] hover:text-[#FCA038] transition-colors shadow-xs lg:shadow-none"
+            >
+              <YoutubeIcon className="h-4.5 w-4.5" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/maxvalue-credits-and-investments-ltd/?originalSubdomain=in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white lg:bg-transparent border border-zinc-200 lg:border-none flex items-center justify-center text-[#147FC3] hover:text-[#FCA038] transition-colors shadow-xs lg:shadow-none"
+            >
+              <LinkedinIcon className="h-4.5 w-4.5" />
+            </a>
+          </div>
+        </div>
 
         {/* Column 1: Corporate Office */}
-        <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
-            Corporate Office
-          </h4>
-          <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
-            <li className="flex gap-2.5 items-start">
-              <MapPin className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <span>
-                1st Floor Cee Kay Plaza,<br />
-                Opp. Metropolitan Hospital Koorkencherry,<br />
-                Thrissur, Kerala - 680007
-              </span>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Customer Care
+        <div className="flex flex-col text-left border-b border-zinc-200/80 lg:border-none pb-4 lg:pb-0">
+          <button
+            onClick={() => toggleSection("corporate")}
+            className="w-full flex items-center justify-between text-left lg:pointer-events-none bg-transparent border-none p-0 cursor-pointer lg:cursor-default"
+          >
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-[#147FC3] lg:mb-5">
+              Corporate Office
+            </h4>
+            <ChevronDown
+              className={`h-4 w-4 text-zinc-400 transition-transform duration-300 lg:hidden ${
+                openSection === "corporate" ? "rotate-180 text-[#147FC3]" : ""
+              }`}
+            />
+          </button>
+          
+          <div
+            className={`transition-all duration-300 overflow-hidden lg:max-h-none ${
+              openSection === "corporate" ? "max-h-[350px] mt-4 opacity-100" : "max-h-0 opacity-0 lg:max-h-none lg:opacity-100"
+            }`}
+          >
+            <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
+              <li className="flex gap-2.5 items-start">
+                <MapPin className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <span>
+                  1st Floor Cee Kay Plaza,<br />
+                  Opp. Metropolitan Hospital Koorkencherry,<br />
+                  Thrissur, Kerala - 680007
                 </span>
-                <div className="flex flex-wrap gap-1">
-                  <a href="tel:04872422799" className="hover:text-[#147FC3] transition-colors">
-                    0487 2422799
-                  </a>
-                  <span className="text-zinc-350">/</span>
-                  <a href="tel:04876690274" className="hover:text-[#147FC3] transition-colors">
-                    0487 6690274
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Customer Care
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    <a href="tel:04872422799" className="hover:text-[#147FC3] transition-colors">
+                      0487 2422799
+                    </a>
+                    <span className="text-zinc-350">/</span>
+                    <a href="tel:04876690274" className="hover:text-[#147FC3] transition-colors">
+                      0487 6690274
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Working Hours
+                  </span>
+                  <span>Mon - Sat: 9.30 am - 5.30 pm</span>
+                </div>
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Email
+                  </span>
+                  <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
+                    info@maxvaluecredits.com
                   </a>
                 </div>
-              </div>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Working Hours
-                </span>
-                <span>Mon - Sat: 9.30 am - 5.30 pm</span>
-              </div>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Email
-                </span>
-                <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
-                  info@maxvaluecredits.com
-                </a>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Column 2: Bangalore Regional Office */}
-        <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
-            Bangalore Regional Office
-          </h4>
-          <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
-            <li className="flex gap-2.5 items-start">
-              <MapPin className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <span>
-                GVS Complex, No. 329, 10th A main Road,<br />
-                3rd Block Jayanagar, Bangalore,<br />
-                Karnataka - 560011
-              </span>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Phone
+        <div className="flex flex-col text-left border-b border-zinc-200/80 lg:border-none pb-4 lg:pb-0">
+          <button
+            onClick={() => toggleSection("regional")}
+            className="w-full flex items-center justify-between text-left lg:pointer-events-none bg-transparent border-none p-0 cursor-pointer lg:cursor-default"
+          >
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-[#147FC3] lg:mb-5">
+              Bangalore Regional Office
+            </h4>
+            <ChevronDown
+              className={`h-4 w-4 text-zinc-400 transition-transform duration-300 lg:hidden ${
+                openSection === "regional" ? "rotate-180 text-[#147FC3]" : ""
+              }`}
+            />
+          </button>
+          
+          <div
+            className={`transition-all duration-300 overflow-hidden lg:max-h-none ${
+              openSection === "regional" ? "max-h-[350px] mt-4 opacity-100" : "max-h-0 opacity-0 lg:max-h-none lg:opacity-100"
+            }`}
+          >
+            <ul className="flex flex-col gap-4 text-xs font-semibold leading-relaxed">
+              <li className="flex gap-2.5 items-start">
+                <MapPin className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <span>
+                  GVS Complex, No. 329, 10th A main Road,<br />
+                  3rd Block Jayanagar, Bangalore,<br />
+                  Karnataka - 560011
                 </span>
-                <a href="tel:08029650516" className="hover:text-[#147FC3] transition-colors">
-                  08029650516
-                </a>
-              </div>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Working Hours
-                </span>
-                <span>Mon - Sat: 9.30 am - 5.30 pm</span>
-              </div>
-            </li>
-            <li className="flex gap-2.5 items-start">
-              <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
-                  Email
-                </span>
-                <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
-                  info@maxvaluecredits.com
-                </a>
-              </div>
-            </li>
-          </ul>
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Phone className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Phone
+                  </span>
+                  <a href="tel:08029650516" className="hover:text-[#147FC3] transition-colors">
+                    08029650516
+                  </a>
+                </div>
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Clock className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Working Hours
+                  </span>
+                  <span>Mon - Sat: 9.30 am - 5.30 pm</span>
+                </div>
+              </li>
+              <li className="flex gap-2.5 items-start">
+                <Mail className="h-4.5 w-4.5 text-[#147FC3] mt-0.5 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider mb-0.5">
+                    Email
+                  </span>
+                  <a href="mailto:info@maxvaluecredits.com" className="hover:text-[#147FC3] transition-colors">
+                    info@maxvaluecredits.com
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Column 3: Useful Links */}
-        <div className="flex flex-col text-left">
-          <h4 className="font-extrabold text-sm text-[#147FC3] tracking-wider mb-5">
-            Useful Links
-          </h4>
-          <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
-            {[
-              { label: "About Company", href: "/about-us" },
-              { label: "Board of Directors", href: "/board-of-directors" },
-              { label: "Our Leaders", href: "/leaders" },
-              { label: "Corporate Activities", href: "/activities" },
-              { label: "Gold Loan", href: "/gold-loan" },
-              { label: "Vehicle Loan", href: "/vehicle-loan" },
-              { label: "Business Loan", href: "/business-loan" },
-              { label: "Microfinance", href: "/microfinance" },
-              { label: "Financial Blog", href: "/blog" },
-              { label: "Latest News", href: "/news" },
-            ].map((link) => (
-              <li key={link.label}>
-                <a href={link.href} className="hover:text-[#147FC3] transition-colors">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Column 4: Profile Description & Socials */}
-        <div className="flex flex-col text-left">
-          <p className="text-xs font-semibold leading-relaxed text-zinc-650 mb-5">
-            MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man.
-          </p>
-         <div className="flex items-center gap-3">
-  <a
-    href="https://www.instagram.com/p/DcFg-X8JF5I/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
-  >
-    <InstagramIcon className="h-4.5 w-4.5" />
-  </a>
-
-  <a
-    href="https://www.facebook.com/reel/1068380582593763"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
-  >
-    <FacebookIcon className="h-4.5 w-4.5" />
-  </a>
-
-  <a
-    href="https://youtu.be/HbWTT8HCE4o"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
-  >
-    <YoutubeIcon className="h-4.5 w-4.5" />
-  </a>
-
-  <a
-    href="https://www.linkedin.com/company/maxvalue-credits-and-investments-ltd/?originalSubdomain=in"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-[#FCA038] transition-colors text-[#147FC3]"
-  >
-    <LinkedinIcon className="h-4.5 w-4.5" />
-  </a>
-</div>
+        <div className="flex flex-col text-left border-b border-zinc-200/80 lg:border-none pb-4 lg:pb-0">
+          <button
+            onClick={() => toggleSection("links")}
+            className="w-full flex items-center justify-between text-left lg:pointer-events-none bg-transparent border-none p-0 cursor-pointer lg:cursor-default"
+          >
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-[#147FC3] lg:mb-5">
+              Useful Links
+            </h4>
+            <ChevronDown
+              className={`h-4 w-4 text-zinc-400 transition-transform duration-300 lg:hidden ${
+                openSection === "links" ? "rotate-180 text-[#147FC3]" : ""
+              }`}
+            />
+          </button>
+          
+          <div
+            className={`transition-all duration-300 overflow-hidden lg:max-h-none ${
+              openSection === "links" ? "max-h-[380px] mt-4 opacity-100" : "max-h-0 opacity-0 lg:max-h-none lg:opacity-100"
+            }`}
+          >
+            <ul className="flex flex-col gap-3.5 text-xs font-bold leading-relaxed">
+              {[
+                { label: "About Company", href: "/about-us" },
+                { label: "Board of Directors", href: "/board-of-directors" },
+                { label: "Our Leaders", href: "/leaders" },
+                { label: "Corporate Activities", href: "/activities" },
+                { label: "Gold Loan", href: "/gold-loan" },
+                { label: "Vehicle Loan", href: "/vehicle-loan" },
+                { label: "Business Loan", href: "/business-loan" },
+                { label: "Microfinance", href: "/microfinance" },
+                { label: "Financial Blog", href: "/blog" },
+                { label: "Latest News", href: "/news" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="hover:text-[#147FC3] transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
       </div>
