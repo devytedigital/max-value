@@ -78,7 +78,7 @@ export default function AdVideoSection() {
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
               >
-                <source src="/maxvalue ads.mp4" type="video/mp4" />
+                <source src="https://res.cloudinary.com/ckam7yhu/video/upload/f_auto,q_auto/v1788166338/maxvalue_ads.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
 
