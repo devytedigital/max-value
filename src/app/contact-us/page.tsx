@@ -632,7 +632,7 @@ ${formData.enquiry.trim()}`;
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/contactbanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164585/contactbanner.png"
             alt="Contact Us Background"
             className="w-full h-full object-cover object-center"
           />

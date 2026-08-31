@@ -94,7 +94,7 @@ export default function AboutStatsSection() {
 
             <div className="relative overflow-hidden bg-white rounded-none">
               <img
-                src="/happy-client.png"
+                src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164624/happy-client.png"
                 alt="Our Happy Clients at MaxValue"
                 className="w-full h-auto max-h-[320px] object-cover rounded-none"
               />

@@ -136,7 +136,7 @@
 //         playsInline
 //         className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0 scale-105 transform duration-1000"
 //       >
-//         <source src="/maxvalue.mp4" type="video/mp4" />
+//         <source src="https://res.cloudinary.com/ckam7yhu/video/upload/f_auto,q_auto/v1788166004/maxvalue.mp4" type="video/mp4" />
 //         Your browser does not support the video tag.
 //       </video>
 
@@ -330,7 +330,7 @@ export default function HeroSection() {
   playsInline
   className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0"
 >
-  <source src="/maxvalue.mp4" type="video/mp4" />
+  <source src="https://res.cloudinary.com/ckam7yhu/video/upload/f_auto,q_auto/v1788166004/maxvalue.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -424,7 +424,7 @@ export default function HeroSection() {
             <div className="flex items-center gap-3">
               <div className="relative w-16 h-8 sm:w-20 sm:h-10">
                 <Image
-                  src="/Aprlogo.png"
+                  src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164583/Aprlogo.png"
                   alt="Great Place to Work Certification"
                   fill
                   priority
@@ -434,7 +434,7 @@ export default function HeroSection() {
               </div>
               <div className="relative w-16 h-8 sm:w-20 sm:h-10">
                 <Image
-                  src="/ISOlogo.png"
+                  src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164687/ISOlogo.png"
                   alt="ISO 9001:2015 Certification"
                   fill
                   priority

@@ -180,7 +180,7 @@
 //       <section className="relative w-full py-20 md:py-24 overflow-hidden">
 //         {/* Teamwork background image */}
 //         <img
-//           src="/values-bg.png"
+//           src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164705/values-bg.jpg"
 //           alt="Our Values"
 //           className="absolute inset-0 w-full h-full object-cover select-none"
 //         />
@@ -324,7 +324,7 @@ export default function AboutUsPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/abouthero.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164583/abouthero.png"
             alt="About Us Background"
             className="w-full h-full object-cover object-center"
           />
@@ -505,7 +505,7 @@ export default function AboutUsPage() {
       <section className="relative w-full py-20 md:py-24 overflow-hidden">
         {/* Teamwork background image */}
         <img
-          src="/values-bg.png"
+          src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164705/values-bg.jpg"
           alt="Our Values"
           className="absolute inset-0 w-full h-full object-cover select-none"
         />

@@ -22,7 +22,7 @@ const leadersData: Leader[] = [
     name: "Mr. Manoj V B",
     role: "Chairman & Managing Director",
     category: "Executive Management",
-    image: "/directors/manoj.png",
+    image: "https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164193/manoj.jpg",
     bio: "Mr. Manoj V B is an MBA business leader and serial entrepreneur who has been instrumental in founding and steering Maxvalue Credits & Investments Ltd. Under his leadership, the organization has expanded across multi-state branch networks, delivering high-impact financial inclusion and robust governance. He serves as CMD across international operations and has been recognized with honors including the Sharjah Book Festival Best Director Award and the US Navy VIVA Excellence Award.",
     highlights: ["CMD - MaxValue Group", "Global Business Leader", "Sharjah Book Festival & US Navy Awardee"],
   },
@@ -120,7 +120,7 @@ export default function LeadersPage() {
         {/* Background Image — no gradient/color overlay on top */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/board-hero-bg.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164584/board-hero-bg.jpg"
             alt="Leadership Banner"
             className="w-full h-full object-cover object-center"
           />

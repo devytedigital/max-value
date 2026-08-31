@@ -59,7 +59,7 @@ export default function Navbar() {
     } else if (pathname === "/about-us" || pathname === "/board-of-directors" || pathname === "/leaders" || pathname.startsWith("/corporate")) {
       setActiveMenu("CORPORATE");
     } else if (pathname === "/our-services" || pathname === "/gold-loan" || pathname === "/vehicle-loan" || pathname === "/business-loan" || pathname === "/traders-loan" || pathname === "/microfinance") {
-      setActiveMenu("OUR SERVICES");
+      setActiveMenu("SERVICES");
     } else if (pathname === "/media" || pathname === "/activities") {
       setActiveMenu("MEDIA");
     } else if (pathname === "/career") {
@@ -69,7 +69,7 @@ export default function Navbar() {
     } else if (pathname === "/blog" || pathname.startsWith("/blog/")) {
       setActiveMenu("BLOG");
     } else if (pathname === "/branch-network") {
-      setActiveMenu("BRANCH NETWORK");
+      setActiveMenu("BRANCHES");
     } else if (pathname === "/contact-us" || pathname === "/grievance") {
       setActiveMenu("CONTACT US");
     }
@@ -120,7 +120,7 @@ export default function Navbar() {
     if (item === "CAREER") return "/career";
     if (item === "NEWS") return "/news";
     if (item === "BLOG") return "/blog";
-    if (item === "BRANCH NETWORK") return "/branch-network";
+    if (item === "BRANCHES") return "/branch-network";
     if (item === "CONTACT US") return "/contact-us";
     return "";
   };
@@ -128,12 +128,12 @@ export default function Navbar() {
   const menuItems = [
     "HOME",
     "CORPORATE",
-    "OUR SERVICES",
+    "SERVICES",
     "MEDIA",
     "CAREER",
     "NEWS",
     "BLOG",
-    "BRANCH NETWORK",
+    "BRANCHES",
     "CONTACT US"
   ];
 
@@ -160,7 +160,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center">
                   <div className="flex items-center justify-center">
                     <img
-                      src="/Logo.png"
+                      src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png"
                       alt="MAXVALUE Credits and Investments LTD"
                       className="h-11 md:h-14 w-auto object-contain"
                     />
@@ -176,7 +176,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-1 bg-transparent">
                   {menuItems.map((item) => {
                     const isCorporate = item === "CORPORATE";
-                    const isServices = item === "OUR SERVICES";
+                    const isServices = item === "SERVICES";
                     const isContactUs = item === "CONTACT US";
                     const isMedia = item === "MEDIA";
                     const isActive = activeMenu === item;
@@ -385,7 +385,7 @@ export default function Navbar() {
                 </button>
                 <Link href="/" className="flex items-center">
                   <img
-                    src="/Logo.png"
+                    src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png"
                     alt="MAXVALUE Credits and Investments LTD"
                     className="h-7 w-auto object-contain"
                   />
@@ -497,7 +497,7 @@ export default function Navbar() {
                   )}
                 </div>
 
-                {/* OUR SERVICES Accordion */}
+                {/* SERVICES Accordion */}
                 <div className="py-2">
                   <button
                     onClick={() => {
@@ -507,35 +507,35 @@ export default function Navbar() {
                     }}
                     className="w-full text-left text-xs font-bold tracking-wider text-zinc-700 hover:text-[#FCA038] flex items-center justify-between py-2 bg-transparent border-none cursor-pointer"
                   >
-                    <span>Our Services</span>
+                    <span>Services</span>
                     <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180 text-[#FCA038]" : ""}`} />
                   </button>
                   {mobileServicesOpen && (
                     <div className="pl-4 mt-1 flex flex-col gap-2 border-l-2 border-zinc-200 py-1">
                       <Link
                         href="/gold-loan"
-                        onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
+                        onClick={() => { setActiveMenu("SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
                         Gold Loan
                       </Link>
                       <Link
                         href="/vehicle-loan"
-                        onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
+                        onClick={() => { setActiveMenu("SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
                         Vehicle Loan
                       </Link>
                       <Link
                         href="/business-loan"
-                        onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
+                        onClick={() => { setActiveMenu("SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
                         Business Loan
                       </Link>
                       <Link
                         href="/microfinance"
-                        onClick={() => { setActiveMenu("OUR SERVICES"); setMobileMenuOpen(false); }}
+                        onClick={() => { setActiveMenu("SERVICES"); setMobileMenuOpen(false); }}
                         className="py-1.5 text-left text-[11px] font-bold tracking-wider text-zinc-500 hover:text-[#FCA038] flex items-center justify-between"
                       >
                         Microfinance
@@ -591,13 +591,13 @@ export default function Navbar() {
                   News
                 </Link>
 
-                {/* BRANCH NETWORK */}
+                {/* BRANCHES */}
                 <Link
                   href="/branch-network"
-                  onClick={() => { setActiveMenu("BRANCH NETWORK"); setMobileMenuOpen(false); }}
-                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "BRANCH NETWORK" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
+                  onClick={() => { setActiveMenu("BRANCHES"); setMobileMenuOpen(false); }}
+                  className={`py-3 text-left text-xs font-bold tracking-wider flex items-center justify-between transition-colors ${activeMenu === "BRANCHES" ? "text-[#FCA038]" : "text-zinc-700 hover:text-[#FCA038]"}`}
                 >
-                  Branch Network
+                  Branches
                 </Link>
 
                 {/* CONTACT US Accordion */}

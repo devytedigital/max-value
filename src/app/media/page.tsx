@@ -82,7 +82,7 @@
 //             className="w-full relative rounded-2xl md:rounded-3xl overflow-hidden shadow-lg border border-zinc-200/80 bg-zinc-900"
 //           >
 //             <img
-//               src="/mediabanner.png"
+//               src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164728/mediabanner.png"
 //               alt="MaxValue Media Gallery Banner"
 //               className="w-full h-auto object-cover min-h-[160px] sm:min-h-[220px] md:min-h-[300px] max-h-[480px]"
 //             />
@@ -411,7 +411,7 @@ export default function MediaPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/mediabanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164728/mediabanner.png"
             alt="Media Gallery Background"
             className="w-full h-full object-cover object-center"
           />

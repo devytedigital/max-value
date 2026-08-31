@@ -16,7 +16,7 @@ export default function EventsSection() {
       id: "director-message",
       title: "7th Anniversary - Director Message",
       label: "7th Anniversary - Director Message",
-      youtubeId: "96bw8SH7ebg"
+      youtubeId: "HbWTT8HCE4o"
     },
     {
       id: "aikya",
@@ -72,7 +72,7 @@ export default function EventsSection() {
             >
               {/* Background Director Image */}
               <img
-                src="/7th.jpg"
+                src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164581/7th.jpg"
                 alt="7th Anniversary - Director Message"
                 className="absolute inset-0 w-full h-full object-cover select-none"
               />

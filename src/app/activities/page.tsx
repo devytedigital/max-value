@@ -117,7 +117,7 @@ export default function ActivitiesPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/mediabanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164728/mediabanner.png"
             alt="Max Value Activities Banner"
             className="w-full h-full object-cover object-center"
           />

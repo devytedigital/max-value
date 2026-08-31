@@ -144,7 +144,7 @@ export default function AdVideoSection() {
                 {/* QR Code Image */}
                 <div className="w-44 h-44 md:w-52 md:h-52 relative overflow-hidden rounded-xl bg-white p-2 shadow-sm">
                   <img
-                    src="/qr-code-pay.jpg"
+                    src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164704/qr-code-pay.jpg"
                     alt="MaxValue Quick Scan QR Code"
                     className="w-full h-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
                   />

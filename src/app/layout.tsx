@@ -19,11 +19,10 @@ export const metadata: Metadata = {
   description: "MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man. The team behind this venture draws ...",
   icons: {
     icon: [
-      { url: "/Logo.png" },
       { url: "/icon.png" },
     ],
-    shortcut: "/Logo.png",
-    apple: "/Logo.png",
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
@@ -38,6 +37,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <SmoothScrolling>
           {children}

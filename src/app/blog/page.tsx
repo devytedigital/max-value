@@ -473,7 +473,7 @@ export default function BlogListingPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/blogbanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164584/blogbanner.png"
             alt="Max Value Blog Background"
             className="w-full h-full object-cover object-center"
           />

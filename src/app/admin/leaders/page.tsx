@@ -312,7 +312,7 @@ export default function LeadersAdmin() {
                   {/* Photo Preview */}
                   <div className="w-16 h-16 rounded-full overflow-hidden border border-zinc-200 shrink-0 bg-zinc-50">
                     <img
-                      src={leader.image || "/directors/manoj.png"}
+                      src={leader.image || "https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164193/manoj.jpg"}
                       alt={leader.name}
                       className="w-full h-full object-cover object-top"
                     />

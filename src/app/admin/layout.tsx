@@ -255,7 +255,7 @@ export default function AdminLayout({
           {/* Logo */}
           <div className="flex items-center gap-3 relative">
             <img 
-              src="/Logo.png" 
+              src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png" 
               alt="Max Value" 
               className="h-12 w-auto object-contain drop-shadow-lg"
             />
@@ -311,7 +311,7 @@ export default function AdminLayout({
         <div className={`h-20 ${isHovered ? "px-6 justify-start" : "px-3 justify-center"} flex items-center border-b border-slate-855/80 transition-all shrink-0`}>
           <Link href="/admin" className="flex items-center gap-2 overflow-hidden">
             <img 
-              src="/Logo.png" 
+              src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png" 
               alt="Max Value" 
               className={`${isHovered ? "h-9.5" : "h-8"} w-auto object-contain transition-all duration-300`}
             />
@@ -476,7 +476,7 @@ export default function AdminLayout({
             >
               <div className="h-20 px-6 flex items-center justify-between border-b border-slate-900">
                 <Link href="/admin" className="flex items-center gap-2">
-                  <img src="/Logo.png" alt="Max Value" className="h-9 w-auto object-contain" />
+                  <img src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164686/Logo.png" alt="Max Value" className="h-9 w-auto object-contain" />
                 </Link>
                 <button
                   onClick={() => setIsMobileOpen(false)}

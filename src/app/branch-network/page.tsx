@@ -122,7 +122,7 @@ export default function BranchNetworkPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/branch-locater.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164584/branch-locater.png"
             alt="Branch Network Background"
             className="w-full h-full object-cover object-center"
           />

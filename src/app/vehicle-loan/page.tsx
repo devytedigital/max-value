@@ -948,7 +948,7 @@ ${formData.comment.trim()}`;
             >
               <div className="relative mx-auto w-full max-w-[580px] rounded-2xl overflow-hidden border-2 border-slate-200/80 shadow-xl bg-white group">
                 <img
-                  src="/vehichleloanbanner.png"
+                  src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164706/vehichleloanbanner.png"
                   alt="MaxValue Vehicle Loan Banner"
                   className="w-full h-auto object-contain transform group-hover:scale-[1.02] transition-transform duration-500"
                 />
@@ -1010,7 +1010,7 @@ ${formData.comment.trim()}`;
             className="w-full rounded-xl overflow-hidden shadow-xl border border-slate-200/80 bg-white group"
           >
             <img
-              src="/adsbike.jpg"
+              src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164582/adsbike.jpg"
               alt="MaxValue Vehicle Loan Special Promotion & Ad"
               className="w-full h-auto object-cover object-center transform group-hover:scale-[1.01] transition-transform duration-500"
             />

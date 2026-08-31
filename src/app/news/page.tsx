@@ -134,7 +134,7 @@
 //       {/* MODERN EDITORIAL HERO SECTION */}
 //       <section
 //         className="relative w-full py-16 md:py-24 bg-zinc-900 text-white overflow-hidden bg-cover bg-center bg-no-repeat"
-//         style={{ backgroundImage: "url('/branch-locater.png')" }}
+//         style={{ backgroundImage: "url('https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164584/branch-locater.png')" }}
 //       >
 //         {/* Dark overlay for contrast */}
 //         <div className="absolute inset-0 bg-zinc-950/80 z-0 pointer-events-none" />
@@ -693,7 +693,7 @@ export default function NewsPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/newsbanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164729/newsbanner.png"
             alt="Max Value News Background"
             className="w-full h-full object-cover object-center"
           />

@@ -358,7 +358,7 @@ export default function CareerPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/careerbanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164585/careerbanner.png"
             alt="Career Background"
             className="w-full h-full object-cover object-center"
           />
