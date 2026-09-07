@@ -24,7 +24,8 @@ import {
   ExternalLink,
   User,
   Percent,
-  MessageSquare
+  MessageSquare,
+  Sparkles
 } from "lucide-react";
 
 export default function GoldLoanPage() {
@@ -218,42 +219,40 @@ ${formData.comment.trim()}`;
       <Navbar />
 
       {/* HERO SECTION - INSTANT GOLD LOAN SOLUTIONS */}
-      <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-28 bg-white text-zinc-900 border-b border-zinc-200/80 overflow-hidden">
-        {/* Background ambient glow effects */}
+      <section className="relative w-full pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-24 bg-white text-zinc-900 border-b border-zinc-200/80 overflow-hidden">
+        {/* Background ambient grid */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,127,195,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,127,195,0.03)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-          <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-[#147FC3]/5 blur-[120px]" />
-          <div className="absolute -top-10 left-10 w-72 h-72 rounded-full bg-[#FCA038]/5 blur-[80px]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-            {/* Left content (Text - Black & Dark Zinc) */}
+            {/* Left content */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 text-left"
             >
-              
-
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black uppercase leading-tight mb-4">
-                Let your dreams fly high with <br />
-                <span className="text-[#147FC3]">MAXVALUE Gold Loans</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black uppercase leading-[1.15] mb-4">
+                LET YOUR DREAMS FLY<br />
+                HIGH WITH<br />
+                <span className="text-[#147FC3]">MAXVALUE GOLD LOANS</span>
               </h1>
 
-              <div className="w-20 h-1.5 bg-[#FCA038] rounded-full mb-6" />
+              <div className="w-16 h-1.5 bg-[#FCA038] rounded-full mb-6" />
 
-              <p className="text-zinc-700 text-sm md:text-base leading-relaxed mb-6 max-w-xl">
-                Gold loans are the quickest and simplest option to obtain finances for business or personal needs. A gold loan is a secured loan obtained from a lender in exchange for gold jewellery. Lenders often sanction loans based on a proportion of the gold's worth.
+              <p className="text-zinc-700 text-sm md:text-base leading-relaxed mb-8 max-w-xl">
+                Gold loans are the quickest and simplest option to obtain finances for business or personal needs. A gold loan is a secured loan obtained from a lender in exchange for gold jewellery. Lenders often sanction loans based on a proportion of the gold&apos;s worth.
               </p>
 
-              {/* Gold Rate Indicator */}
-              <div className="inline-block bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8 shadow-xs">
-                <p className="text-[11px] uppercase tracking-wider text-zinc-500 font-bold">Today's Gold Rate</p>
-                <p className="text-xl font-black text-[#147FC3] mt-0.5">
-                  ₹{goldRate ? goldRate.toLocaleString("en-IN") : "7,250"} <span className="text-xs text-zinc-500 font-medium">/gram</span>
+              {/* Today's Gold Rate Card */}
+              <div className="inline-block bg-[#F8FAFC] border border-slate-200/90 rounded-xl px-5 py-3.5 mb-8 shadow-xs">
+                <p className="text-[11px] uppercase tracking-wider text-zinc-500 font-bold">TODAY&apos;S GOLD RATE</p>
+                <p className="text-2xl font-black text-[#147FC3] mt-0.5">
+                  ₹{goldRate ? goldRate.toLocaleString("en-IN") : "13,767"}{" "}
+                  <span className="text-xs text-zinc-500 font-medium">/gram</span>
                 </p>
               </div>
 
@@ -262,36 +261,25 @@ ${formData.comment.trim()}`;
                   href="#enquiry-section"
                   className="inline-flex items-center gap-2 bg-[#147FC3] hover:bg-[#0f68a3] text-white font-extrabold text-xs py-3.5 px-7 rounded-lg transition-all shadow-md hover:shadow-lg uppercase tracking-wider active:scale-95 cursor-pointer"
                 >
-                  Apply Now
+                  APPLY NOW
                   <Send className="w-3.5 h-3.5" />
                 </a>
               </div>
             </motion.div>
 
-            {/* Right content (goldloanbanner.png from public folder) */}
+            {/* Right content */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="lg:col-span-6 relative"
+              className="lg:col-span-6 relative flex justify-center lg:justify-end"
             >
-              <div className="relative mx-auto w-full max-w-[580px] rounded-2xl overflow-hidden border-2 border-slate-200/80 shadow-xl bg-white group">
+              <div className="relative w-full max-w-[480px] lg:max-w-[500px] h-[450px] sm:h-[520px] lg:h-[560px] rounded-none overflow-hidden border border-slate-200/80 shadow-md bg-white">
                 <img
                   src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164624/goldloanbanner.png"
                   alt="MaxValue Gold Loan Banner"
-                  className="w-full h-auto object-contain transform group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-full object-cover object-center rounded-none"
                 />
-              </div>
-
-              {/* Floating badge */}
-              <div className="absolute -bottom-5 left-4 sm:left-6 bg-white text-zinc-900 rounded-xl p-4 shadow-xl border border-zinc-200 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wide">Purity Verified</p>
-                  <p className="text-xs font-black text-zinc-900">100% Secure appraisal</p>
-                </div>
               </div>
             </motion.div>
 

@@ -50,38 +50,33 @@ export default function HeroSection() {
 
   const slideVariants: Variants = {
     initial: (dir: number) => ({
-      x: dir > 0 ? 60 : -60,
-      opacity: 0,
-      filter: "blur(6px)"
+      x: dir > 0 ? 30 : -30,
+      opacity: 0
     }),
     animate: {
       x: 0,
       opacity: 1,
-      filter: "blur(0px)",
       transition: {
-        duration: 0.75,
-        ease: "easeOut",
-        staggerChildren: 0.12,
-        delayChildren: 0.1
+        duration: 0.5,
+        ease: "easeOut"
       }
     },
     exit: (dir: number) => ({
-      x: dir > 0 ? -50 : 50,
+      x: dir > 0 ? -30 : 30,
       opacity: 0,
-      filter: "blur(4px)",
       transition: {
-        duration: 0.45,
+        duration: 0.35,
         ease: "easeInOut"
       }
     })
   };
 
   const itemVariants: Variants = {
-    initial: { opacity: 0, y: 24 },
+    initial: { opacity: 0, y: 16 },
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.45, ease: "easeOut" }
     }
   };
 

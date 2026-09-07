@@ -19,11 +19,11 @@ export default function Home() {
       {/* Splash Modal overlay for new users */}
       <SplashModal />
 
-      {/* Ambient background grids & glows (mainly white, slightly use yellow/blue) */}
+      {/* Ambient background grids & glows (optimized radial gradients with zero blur overhead) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,127,195,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,127,195,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-80" />
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#FCA038]/5 blur-[150px]" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#147FC3]/5 blur-[150px]" />
+        <div className="absolute top-0 left-0 w-[50vw] h-[50vw] rounded-full bg-[radial-gradient(circle,rgba(252,160,56,0.05)_0%,transparent_70%)]" />
+        <div className="absolute bottom-[20%] right-0 w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,rgba(20,127,195,0.05)_0%,transparent_70%)]" />
       </div>
 
       <Navbar />

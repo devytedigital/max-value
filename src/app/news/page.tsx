@@ -16,7 +16,6 @@ import {
   Sparkles,
   Search,
   Flame,
-  ChevronRight,
   ChevronDown,
   TrendingUp,
   Mail,
@@ -112,7 +111,7 @@ export default function NewsPage() {
         {/* Background Image — no color overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164729/newsbanner.png"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/v1788430976/Media.jpg.jpg"
             alt="Max Value News Background"
             className="w-full h-full object-cover object-center"
           />
@@ -128,19 +127,6 @@ export default function NewsPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 text-center flex flex-col items-center">
-
-          {/* Breadcrumb Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
-          >
-            <span className="text-slate-200">Home</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-[#FCA038] font-bold">News</span>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

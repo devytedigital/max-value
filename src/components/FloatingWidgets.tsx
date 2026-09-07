@@ -70,10 +70,9 @@ export default function FloatingWidgets() {
           className="relative flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 group"
           aria-label="Chat on WhatsApp with 8891133443"
         >
-          {/* Pulsing online badge ring */}
-          <span className="absolute -top-1 -right-1 flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-400 border-2 border-white"></span>
+          {/* Online badge ring */}
+          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-400 border-2 border-white shadow-xs"></span>
           </span>
 
           <WhatsAppIconSVG className="w-7 h-7" />
@@ -177,7 +176,7 @@ export default function FloatingWidgets() {
             }`}
             title="Get a Call - 1800 425 22799"
           >
-            <PhoneCall className="w-5 h-5 text-white animate-pulse shrink-0" />
+            <PhoneCall className="w-5 h-5 text-white shrink-0" />
             <span
               className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out max-w-0 group-hover/call:max-w-[100px] ${
                 activePanel === "call" ? "max-w-[100px]" : ""

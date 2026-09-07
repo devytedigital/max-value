@@ -20,8 +20,7 @@ import {
   X,
   ArrowUpRight,
   Briefcase,
-  ChevronRight,
-  ChevronDown
+  ChevronDown,
 } from "lucide-react";
 
 interface JobListing {
@@ -43,12 +42,13 @@ const fallbackListings: JobListing[] = [
     location: "Kochi / Thrissur / Regional Branches",
     type: "Full Time",
     experience: "0 - 3 Years",
-    description: "We are looking for dedicated Customer Care Executives to handle customer inquiries, guide borrowers on our loan products, and deliver exceptional service standards.",
+    description:
+      "We are looking for dedicated Customer Care Executives to handle customer inquiries, guide borrowers on our loan products, and deliver exceptional service standards.",
     requirements: [
       "Excellent communication skills in Malayalam and English (Tamil/Kannada is a plus)",
       "Basic computer proficiency and call handling etiquette",
-      "Problem-solving mindset and customer-first approach"
-    ]
+      "Problem-solving mindset and customer-first approach",
+    ],
   },
   {
     id: "branch-manager-gold-loan",
@@ -57,12 +57,13 @@ const fallbackListings: JobListing[] = [
     location: "Triprayar / Calicut / Regional Offices",
     type: "Full Time",
     experience: "3 - 6 Years",
-    description: "Lead branch business growth, oversee gold valuation workflows, ensure audit and regulatory compliance, and build lasting customer relationships.",
+    description:
+      "Lead branch business growth, oversee gold valuation workflows, ensure audit and regulatory compliance, and build lasting customer relationships.",
     requirements: [
       "Prior experience in NBFC/Banking gold loan branch management",
       "Strong leadership and team management capabilities",
-      "Sound understanding of gold valuation standards and KYC compliance"
-    ]
+      "Sound understanding of gold valuation standards and KYC compliance",
+    ],
   },
   {
     id: "relationship-officer-field",
@@ -71,12 +72,13 @@ const fallbackListings: JobListing[] = [
     location: "Multiple Locations (South India)",
     type: "Full Time",
     experience: "0 - 2 Years",
-    description: "Responsible for field customer onboarding, loan application verification, relationship management, and maintaining customer portfolio quality.",
+    description:
+      "Responsible for field customer onboarding, loan application verification, relationship management, and maintaining customer portfolio quality.",
     requirements: [
       "Two-wheeler with valid driving license",
       "High motivation for field engagement and customer interaction",
-      "Good interpersonal and documentation skills"
-    ]
+      "Good interpersonal and documentation skills",
+    ],
   },
   {
     id: "credit-assessment-executive",
@@ -85,12 +87,13 @@ const fallbackListings: JobListing[] = [
     location: "Corporate Office, Thrissur",
     type: "Full Time",
     experience: "2 - 5 Years",
-    description: "Evaluate creditworthiness of business and vehicle loan applicants, verify financial statements, and prepare detailed risk assessment reports.",
+    description:
+      "Evaluate creditworthiness of business and vehicle loan applicants, verify financial statements, and prepare detailed risk assessment reports.",
     requirements: [
       "Degree in Commerce, Finance, or related field",
       "Analytical mindset with experience in loan appraisal processes",
-      "Proficiency in financial documentation and credit risk analysis"
-    ]
+      "Proficiency in financial documentation and credit risk analysis",
+    ],
   },
   {
     id: "it-support-administrator",
@@ -99,13 +102,14 @@ const fallbackListings: JobListing[] = [
     location: "Corporate Office, Kochi",
     type: "Full Time",
     experience: "1 - 4 Years",
-    description: "Manage branch IT infrastructure, network connectivity, system security access, and provide technical assistance to regional offices.",
+    description:
+      "Manage branch IT infrastructure, network connectivity, system security access, and provide technical assistance to regional offices.",
     requirements: [
       "Diploma or B.Tech in IT / Computer Science",
       "Hands-on experience in networking, hardware troubleshooting, and Windows Server",
-      "Quick problem-solving skills for branch technical issues"
-    ]
-  }
+      "Quick problem-solving skills for branch technical issues",
+    ],
+  },
 ];
 
 const formatJobTitle = (title: string) => {
@@ -126,7 +130,9 @@ export default function CareerPage() {
   const [jobListings, setJobListings] = useState<JobListing[]>([]);
   const [loadingJobs, setLoadingJobs] = useState<boolean>(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedJobTitle, setSelectedJobTitle] = useState<string>("CUSTOMER CARE EXECUTIVE");
+  const [selectedJobTitle, setSelectedJobTitle] = useState<string>(
+    "CUSTOMER CARE EXECUTIVE",
+  );
 
   const [formData, setFormData] = useState({
     jobAppliedFor: "CUSTOMER CARE EXECUTIVE",
@@ -213,7 +219,11 @@ export default function CareerPage() {
     setShowSuccess(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -332,12 +342,16 @@ export default function CareerPage() {
         }, 4000);
       } else {
         const errData = await response.json();
-        alert(errData.error || "Failed to submit application. Please try again.");
+        alert(
+          errData.error || "Failed to submit application. Please try again.",
+        );
         setIsSubmitting(false);
       }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Please check your connection and try again.");
+      alert(
+        "Something went wrong. Please check your connection and try again.",
+      );
       setIsSubmitting(false);
     }
   };
@@ -353,51 +367,16 @@ export default function CareerPage() {
       {/* Navbar */}
       <Navbar />
 
-      {/* FULL-SCREEN HERO BANNER — matches About Us banner style */}
-      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-        {/* Background Image — no color overlay */}
+      {/* FULL-SCREEN HERO BANNER */}
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6]">
+        {/* Background Image — full clarity, no dark overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://res.cloudinary.com/ckam7yhu/image/upload/f_auto,q_auto/v1788164585/careerbanner.png"
-            alt="Career Background"
+            src="https://res.cloudinary.com/ckam7yhu/image/upload/v1788427769/max-value-career_section_image.jpg"
+            alt="Build your career with us - Max Value Careers"
             className="w-full h-full object-cover object-center"
           />
-          {/* Subtle bottom darkening only, for text legibility — no color tint */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
         </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 text-center flex flex-col items-center">
-
-          {/* Breadcrumb Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
-          >
-            <span className="text-slate-200">Home</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-[#FCA038] font-bold">Career</span>
-          </motion.div>
-
-          {/* Clean text directly over the image — no box, no background */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <h1
-              className="text-4xl sm:text-6xl md:text-7xl font-black tracking-wider uppercase text-white leading-none"
-              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)" }}
-            >
-              CAREERS
-            </h1>
-          </motion.div>
-
-        </div>
-
-
 
         {/* Curved Bottom Wave Separator — matches About Us banner */}
         <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />
@@ -434,11 +413,10 @@ export default function CareerPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-zinc-600 text-lg md:text-xl max-w-2xl leading-relaxed mb-12 font-medium"
         >
-          We&apos;re looking for passionate people to join us on our mission. We value
-          flat hierarchies, clear communication, and full ownership and responsibility.
+          We&apos;re looking for passionate people to join us on our mission. We
+          value flat hierarchies, clear communication, and full ownership and
+          responsibility.
         </motion.p>
-
-
 
         {/* Job Listings List */}
         <motion.div
@@ -450,7 +428,9 @@ export default function CareerPage() {
           {loadingJobs ? (
             <div className="py-20 text-center flex flex-col items-center justify-center gap-4">
               <div className="w-8 h-8 border-3 border-[#147FC3] border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm font-bold text-zinc-500">Loading open listings...</p>
+              <p className="text-sm font-bold text-zinc-500">
+                Loading open listings...
+              </p>
             </div>
           ) : filteredJobs.length === 0 ? (
             <div className="py-20 text-center border-t border-zinc-200">
@@ -563,24 +543,25 @@ export default function CareerPage() {
                       {activeJob.description}
                     </p>
 
-                    {activeJob.requirements && activeJob.requirements.length > 0 && (
-                      <div>
-                        <h4 className="text-xs font-bold tracking-wider text-zinc-500 mb-2 select-none">
-                          Key Requirements
-                        </h4>
-                        <ul className="space-y-1.5">
-                          {activeJob.requirements.map((req, i) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-2 text-xs text-zinc-600 font-medium"
-                            >
-                              <CheckCircle2 className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
-                              <span className="leading-tight">{req}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {activeJob.requirements &&
+                      activeJob.requirements.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-bold tracking-wider text-zinc-500 mb-2 select-none">
+                            Key Requirements
+                          </h4>
+                          <ul className="space-y-1.5">
+                            {activeJob.requirements.map((req, i) => (
+                              <li
+                                key={i}
+                                className="flex items-start gap-2 text-xs text-zinc-600 font-medium"
+                              >
+                                <CheckCircle2 className="w-4 h-4 text-[#FCA038] shrink-0 mt-0.5" />
+                                <span className="leading-tight">{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                   </div>
                 )}
 
@@ -594,7 +575,12 @@ export default function CareerPage() {
                         Application Submitted Successfully!
                       </h3>
                       <p className="text-xs md:text-sm text-zinc-550 mt-3 max-w-sm font-semibold leading-relaxed">
-                        Thank you for applying. We have successfully received your application for <strong className="text-zinc-800">{formatJobTitle(formData.jobAppliedFor)}</strong>.
+                        Thank you for applying. We have successfully received
+                        your application for{" "}
+                        <strong className="text-zinc-800">
+                          {formatJobTitle(formData.jobAppliedFor)}
+                        </strong>
+                        .
                       </p>
                       <p className="text-[11px] text-zinc-400 mt-6 select-none font-medium">
                         This window will close automatically in a moment...
@@ -602,7 +588,11 @@ export default function CareerPage() {
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                  <form
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
+                    noValidate
+                  >
                     {/* Job Position Dropdown */}
                     <div className="flex flex-col gap-2">
                       <label className="text-xs font-semibold text-zinc-500 select-none">
@@ -633,7 +623,8 @@ export default function CareerPage() {
                     {/* Name */}
                     <div className="flex flex-col gap-2">
                       <label className="text-xs font-semibold text-zinc-500 select-none">
-                        Name (as per Aadhaar) <span className="text-rose-500">*</span>
+                        Name (as per Aadhaar){" "}
+                        <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
                         <input
@@ -685,7 +676,8 @@ export default function CareerPage() {
                     {/* Message / Cover Letter */}
                     <div className="flex flex-col gap-2">
                       <label className="text-xs font-semibold text-zinc-500 select-none">
-                        Message / Cover Letter <span className="text-rose-500">*</span>
+                        Message / Cover Letter{" "}
+                        <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
                         <textarea
@@ -703,7 +695,8 @@ export default function CareerPage() {
                       </div>
                       {errors.coverLetter && (
                         <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                          <AlertCircle className="w-3.5 h-3.5" /> {errors.coverLetter}
+                          <AlertCircle className="w-3.5 h-3.5" />{" "}
+                          {errors.coverLetter}
                         </span>
                       )}
                     </div>
@@ -731,7 +724,8 @@ export default function CareerPage() {
                         </div>
                         {errors.state && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.state}
+                            <AlertCircle className="w-3.5 h-3.5" />{" "}
+                            {errors.state}
                           </span>
                         )}
                       </div>
@@ -757,7 +751,8 @@ export default function CareerPage() {
                         </div>
                         {errors.city && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.city}
+                            <AlertCircle className="w-3.5 h-3.5" />{" "}
+                            {errors.city}
                           </span>
                         )}
                       </div>
@@ -768,7 +763,8 @@ export default function CareerPage() {
                       {/* Experience (years) */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-semibold text-zinc-500 select-none">
-                          Experience (years) <span className="text-rose-500">*</span>
+                          Experience (years){" "}
+                          <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <input
@@ -786,7 +782,8 @@ export default function CareerPage() {
                         </div>
                         {errors.experienceYears && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.experienceYears}
+                            <AlertCircle className="w-3.5 h-3.5" />{" "}
+                            {errors.experienceYears}
                           </span>
                         )}
                       </div>
@@ -794,7 +791,8 @@ export default function CareerPage() {
                       {/* Industry */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-semibold text-zinc-500 select-none">
-                          Current Industry <span className="text-rose-500">*</span>
+                          Current Industry{" "}
+                          <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <input
@@ -812,7 +810,8 @@ export default function CareerPage() {
                         </div>
                         {errors.industry && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.industry}
+                            <AlertCircle className="w-3.5 h-3.5" />{" "}
+                            {errors.industry}
                           </span>
                         )}
                       </div>
@@ -823,7 +822,8 @@ export default function CareerPage() {
                       {/* Employer */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-semibold text-zinc-500 select-none">
-                          Current Employer <span className="text-rose-500">*</span>
+                          Current Employer{" "}
+                          <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <input
@@ -841,7 +841,8 @@ export default function CareerPage() {
                         </div>
                         {errors.employer && (
                           <span className="text-xs text-rose-500 font-bold flex items-center gap-1 mt-0.5">
-                            <AlertCircle className="w-3.5 h-3.5" /> {errors.employer}
+                            <AlertCircle className="w-3.5 h-3.5" />{" "}
+                            {errors.employer}
                           </span>
                         )}
                       </div>
@@ -849,7 +850,8 @@ export default function CareerPage() {
                       {/* CTC */}
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-semibold text-zinc-500 select-none">
-                          Current Annual CTC <span className="text-rose-500">*</span>
+                          Current Annual CTC{" "}
+                          <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <input
@@ -876,7 +878,8 @@ export default function CareerPage() {
                     {/* Resume Upload */}
                     <div className="flex flex-col gap-2">
                       <label className="text-xs font-semibold text-zinc-500 select-none">
-                        Upload Resume (PDF, DOC, DOCX - Max 10MB) <span className="text-rose-500">*</span>
+                        Upload Resume (PDF, DOC, DOCX - Max 10MB){" "}
+                        <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative border-2 border-dashed border-zinc-200 hover:border-[#147FC3] rounded-2xl p-6 bg-white transition-all text-center flex flex-col items-center justify-center cursor-pointer group shadow-3xs">
                         <input

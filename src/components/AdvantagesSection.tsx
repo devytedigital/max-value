@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 // Custom SVG Icons matching your design screenshot
 const QuickProcessingIcon = () => (
   <svg viewBox="0 0 100 100" className="w-14 h-14 text-white" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -102,30 +100,20 @@ export default function AdvantagesSection() {
 
       {/* 1. Header (Centered title) */}
       <div className="text-center max-w-3xl mx-auto mb-12 px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-black text-[#147FC3] tracking-tight leading-none"
-        >
+        <h2 className="text-3xl md:text-4xl font-black text-[#147FC3] tracking-tight leading-none">
           MAXVALUE <br />
           <span className="text-[#FCA038] text-2xl md:text-3xl font-extrabold mt-2 block">
             Advantages
           </span>
-        </motion.h2>
+        </h2>
       </div>
 
       {/* 2. Horizontal Blue Bar containing the 5 cards */}
       <div className="w-full bg-[#147FC3] py-12 md:py-16 px-6">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6">
           {advantages.map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
               className="w-[calc(50%-12px)] sm:w-[calc(33.33%-16px)] lg:w-[calc(20%-20px)] max-w-[190px] aspect-square border border-white/25 flex flex-col items-center justify-center p-5 gap-4 text-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 hover:border-white/70 hover:bg-white/5"
             >
               <div className="flex items-center justify-center">
@@ -134,7 +122,7 @@ export default function AdvantagesSection() {
               <span className="text-[10px] sm:text-xs font-black tracking-wider text-white leading-tight">
                 {item.label}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

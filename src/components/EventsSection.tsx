@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface EventVideo {
@@ -45,27 +44,15 @@ export default function EventsSection() {
       <div className="max-w-7xl mx-auto px-6 md:px-8">
 
         {/* Section Heading */}
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-black text-[#147FC3] tracking-tight mb-12"
-        >
+        <h2 className="text-4xl md:text-5xl font-black text-[#147FC3] tracking-tight mb-12">
           Events
-        </motion.h2>
+        </h2>
 
         {/* Main Grid: Left Column (Director Message Card), Right Column (Video + Playlist) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
           {/* Left Column: Director Message Card (lg:span-4) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-4 flex flex-col"
-          >
+          <div className="lg:col-span-4 flex flex-col">
             <div
               onClick={() => handleSelectVideo(videos[0])}
               className="relative flex-grow min-h-[300px] lg:min-h-0 rounded-2xl overflow-hidden cursor-pointer shadow-md border border-zinc-100"
@@ -88,16 +75,10 @@ export default function EventsSection() {
                 </h3>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column: Interactive Video Player & Playlist (lg:span-8) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-8 bg-zinc-50 rounded-2xl p-6 md:p-8 flex flex-col justify-between border border-zinc-100 shadow-sm"
-          >
+          <div className="lg:col-span-8 bg-zinc-50 rounded-2xl p-6 md:p-8 flex flex-col justify-between border border-zinc-100 shadow-sm">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center h-full">
 
               {/* Sub-Column 1: Video Player Container (md:span-7 or 8) */}
@@ -146,7 +127,7 @@ export default function EventsSection() {
               </div>
 
             </div>
-          </motion.div>
+          </div>
 
         </div>
 

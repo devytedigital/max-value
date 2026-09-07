@@ -183,41 +183,31 @@ export default function ServicesSection() {
 
   return (
     <section className="relative py-20 bg-transparent z-20 overflow-hidden">
-      {/* Background glow effects */}
+      {/* Background glow effects (optimized with zero blur) */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#FCA038]/3 blur-[100px]" />
-        <div className="absolute bottom-1/4 right-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#147FC3]/3 blur-[100px]" />
+        <div className="absolute top-1/4 left-0 w-[35vw] h-[35vw] rounded-full bg-[radial-gradient(circle,rgba(252,160,56,0.04)_0%,transparent_70%)]" />
+        <div className="absolute bottom-1/4 right-0 w-[35vw] h-[35vw] rounded-full bg-[radial-gradient(circle,rgba(20,127,195,0.04)_0%,transparent_70%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
 
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-zinc-900 leading-tight"
-          >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-zinc-900 leading-tight">
             Modern Credit Solutions <br />
             <span className="text-[#147FC3]">
               Tailored For Your Growth
             </span>
-          </motion.h2>
+          </h2>
         </div>
 
         {/* ========================================================================= */}
         {/* DESKTOP STATIC GRID (Lg screens: 2 rows, 3 columns layout, centered bottom) */}
         {/* ========================================================================= */}
         <div className="hidden lg:flex flex-wrap justify-center gap-y-16 gap-x-20">
-          {services.map((service, idx) => (
-            <motion.div
+          {services.map((service) => (
+            <div
               key={service.id + "-desktop"}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="group flex flex-col items-center text-center w-[28%] max-w-[340px]"
             >
               {/* Circle Icon Container */}
@@ -256,7 +246,7 @@ export default function ServicesSection() {
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

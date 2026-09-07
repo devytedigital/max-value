@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { QrCode, Play, ShieldCheck, Zap, Smartphone, Sparkles, CheckCircle2 } from "lucide-react";
 import { useState, useRef } from "react";
 
@@ -22,49 +21,29 @@ export default function AdVideoSection() {
 
   return (
     <section className="relative w-full py-16 md:py-24 bg-transparent z-20 overflow-hidden">
-      {/* Background ambient lighting effects */}
+      {/* Background ambient lighting effects (optimized without blur) */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#147FC3]/5 blur-[120px]" />
-        <div className="absolute bottom-0 right-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#FCA038]/5 blur-[120px]" />
+        <div className="absolute top-1/2 left-0 w-[40vw] h-[40vw] rounded-full bg-[radial-gradient(circle,rgba(20,127,195,0.04)_0%,transparent_70%)]" />
+        <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] rounded-full bg-[radial-gradient(circle,rgba(252,160,56,0.04)_0%,transparent_70%)]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-        
-
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight"
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight">
             Experience <span className="text-[#147FC3]">MaxValue</span> in Action
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-zinc-600 text-sm md:text-base mt-3 leading-relaxed"
-          >
+          <p className="text-zinc-600 text-sm md:text-base mt-3 leading-relaxed">
             Watch our official commercial video to explore our financial solutions, and scan the QR code for quick payment and digital access.
-          </motion.p>
+          </p>
         </div>
 
         {/* Main Content Grid: Video Player (Left 7 cols) & Dedicated QR Code Space (Right 5 cols) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
           {/* LEFT: Video Player Container */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 flex flex-col"
-          >
+          <div className="lg:col-span-7 flex flex-col">
             <div className="relative flex-1 w-full rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-200/80 shadow-2xl group min-h-[320px] md:min-h-[420px] flex items-center justify-center">
               
               {/* HTML5 Video Element */}
@@ -104,16 +83,10 @@ export default function AdVideoSection() {
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* RIGHT: Dedicated QR Code Container */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-5 flex flex-col"
-          >
+          <div className="lg:col-span-5 flex flex-col">
             <div className="h-full rounded-3xl bg-white/90 backdrop-blur-xl border border-zinc-200/90 shadow-xl p-6 md:p-8 flex flex-col items-center text-center justify-between relative overflow-hidden group">
               
               {/* Subtle top decoration gradient */}
@@ -168,7 +141,7 @@ export default function AdVideoSection() {
               </div>
 
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

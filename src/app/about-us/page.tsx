@@ -3,31 +3,31 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, ChevronRight, ChevronDown } from "lucide-react";
+import { ArrowRight, Download, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutUsPage() {
   const values = [
     {
       title: "BE INNOVATIVE WITH OUR PRODUCTS",
-      desc: "Never missing a beat in what is happening in the world of financial services, or how the needs of consumers of financial services are evolving, our team is constantly innovating and perfecting our range of products on offer, to make sure our customers get the best bang for their buck."
+      desc: "Never missing a beat in what is happening in the world of financial services, or how the needs of consumers of financial services are evolving, our team is constantly innovating and perfecting our range of products on offer, to make sure our customers get the best bang for their buck.",
     },
     {
       title: "OFFER UNPARALLELED QUALITY SERVICES",
-      desc: "Every step in our business processes have been optimized and vetted to give our clients the best experience, and we're always working to ensure our services are hassle-free and efficient."
+      desc: "Every step in our business processes have been optimized and vetted to give our clients the best experience, and we're always working to ensure our services are hassle-free and efficient.",
     },
     {
       title: "ALWAYS LOOK OUT FOR THE COMMON MAN",
-      desc: "We are firm believers in the power of the common man and their aspirations, and at MaxValue, we toil to keep their best interests at heart in everything we do."
+      desc: "We are firm believers in the power of the common man and their aspirations, and at MaxValue, we toil to keep their best interests at heart in everything we do.",
     },
     {
       title: "PROVIDE HOLISTIC COUNSEL",
-      desc: "Featuring a team combining exhaustive and varied experiences in the field of financial services, we work diligently to provide our patrons a bird's eye view of their financial performance."
+      desc: "Featuring a team combining exhaustive and varied experiences in the field of financial services, we work diligently to provide our patrons a bird's eye view of their financial performance.",
     },
     {
       title: "SUPPORT OUR CUSTOMERS FOR LIFE",
-      desc: "At MaxValue, we make customers for life. They are our best ambassadors, and we value them and their support in our everyday functions."
-    }
+      desc: "At MaxValue, we make customers for life. They are our best ambassadors, and we value them and their support in our everyday functions.",
+    },
   ];
 
   const documents = [
@@ -35,12 +35,11 @@ export default function AboutUsPage() {
     { name: "Privacy Policy", href: "#" },
     { name: "Fair Practices Code", href: "#" },
     { name: "Recovery Policy", href: "#" },
-    { name: "Charges", href: "#" }
+    { name: "Charges", href: "#" },
   ];
 
   return (
     <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
-
       {/* 3-Tier Navbar */}
       <Navbar />
 
@@ -59,19 +58,6 @@ export default function AboutUsPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 text-center flex flex-col items-center">
-
-          {/* Breadcrumb Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
-          >
-            <span className="text-slate-200">Home</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-[#FCA038] font-bold">About Us</span>
-          </motion.div>
-
           {/* Clean text directly over the image — no box, no background */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -80,15 +66,15 @@ export default function AboutUsPage() {
           >
             <h1
               className="text-4xl sm:text-6xl md:text-7xl font-black tracking-wider uppercase text-white leading-none"
-              style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)" }}
+              style={{
+                textShadow:
+                  "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)",
+              }}
             >
               ABOUT US
             </h1>
           </motion.div>
-
         </div>
-
-
 
         {/* Curved Bottom Wave Separator — matches Board of Directors banner */}
         <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#FAF9F6] [clip-path:ellipse(65%_100%_at_50%_100%)] z-10" />
@@ -103,7 +89,6 @@ export default function AboutUsPage() {
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
             {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -116,7 +101,15 @@ export default function AboutUsPage() {
                 BE CELEBRATED FOR OUR TRUST AND DEPENDABILITY
               </h1>
               <p className="text-zinc-700 text-sm md:text-base leading-relaxed text-justify mb-10 max-w-2xl">
-                MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man. The team behind this venture draws from various walks of life having longstanding experience and expertise in different areas of financial services. Our products are designed to keep a long and enriching relationship with our valued customers. Our vision is to become one of the best providers of superior financial services to common man and to build their trust and confidence in the most professional manner.
+                MAXVALUE Credits & Investments Ltd. is an innovative venture
+                providing high quality financial services to the common man. The
+                team behind this venture draws from various walks of life having
+                longstanding experience and expertise in different areas of
+                financial services. Our products are designed to keep a long and
+                enriching relationship with our valued customers. Our vision is
+                to become one of the best providers of superior financial
+                services to common man and to build their trust and confidence
+                in the most professional manner.
               </p>
 
               {/* Aligned 30th Logo and Corporate Highlights */}
@@ -124,7 +117,7 @@ export default function AboutUsPage() {
                 {/* 30th Logo with mix-blend-multiply for transparent blending */}
                 <div className="relative w-48 shrink-0 select-none mix-blend-multiply">
                   <img
-                    src="https://maxvaluecredits.com/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-13-at-4.44.21-PM.jpeg"
+                    src="https://res.cloudinary.com/ckam7yhu/image/upload/v1788428040/about_page_30years_badge.png"
                     alt="30 Years of Excellence"
                     className="w-full h-auto object-contain"
                   />
@@ -135,15 +128,25 @@ export default function AboutUsPage() {
                   <div className="flex items-start gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#FCA038] mt-1 shrink-0" />
                     <div>
-                      <h4 className="text-sm font-black text-[#147FC3] tracking-wide uppercase">30 Years of Legacy</h4>
-                      <p className="text-zinc-600 text-xs mt-0.5">Empowering communities with trusted financial solutions since inception.</p>
+                      <h4 className="text-sm font-black text-[#147FC3] tracking-wide uppercase">
+                        30 Years of Legacy
+                      </h4>
+                      <p className="text-zinc-600 text-xs mt-0.5">
+                        Empowering communities with trusted financial solutions
+                        since inception.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#FCA038] mt-1 shrink-0" />
                     <div>
-                      <h4 className="text-sm font-black text-[#147FC3] tracking-wide uppercase">Deep Regional Presence</h4>
-                      <p className="text-zinc-600 text-xs mt-0.5">Serving thousands of happy clients across South Indian states.</p>
+                      <h4 className="text-sm font-black text-[#147FC3] tracking-wide uppercase">
+                        Deep Regional Presence
+                      </h4>
+                      <p className="text-zinc-600 text-xs mt-0.5">
+                        Serving thousands of happy clients across South Indian
+                        states.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -172,14 +175,12 @@ export default function AboutUsPage() {
                 />
               </div>
             </motion.div>
-
           </div>
         </div>
       </section>
 
       {/* SECTION 2: MISSION & VISION */}
       <section className="w-full grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[500px] bg-[#0c141c]">
-
         {/* Left Image Panel */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -209,7 +210,10 @@ export default function AboutUsPage() {
               Our Mission
             </h3>
             <p className="text-zinc-300 text-sm md:text-base leading-relaxed text-justify mt-3 max-w-xl">
-              Maxvalue Credits and Investments Ltd. strives to enable our patrons to achieve financial freedom to fulfill their dreams, by empowering them with our subject matter expertise in the domain of non-banking financial services, backed by our global scale.
+              Maxvalue Credits and Investments Ltd. strives to enable our
+              patrons to achieve financial freedom to fulfill their dreams, by
+              empowering them with our subject matter expertise in the domain of
+              non-banking financial services, backed by our global scale.
             </p>
           </div>
 
@@ -219,11 +223,11 @@ export default function AboutUsPage() {
               Our Vision
             </h3>
             <p className="text-zinc-300 text-sm md:text-base leading-relaxed text-justify mt-3 max-w-xl">
-              Be the preferred first choice partner in non-banking financial services for people and businesses globally.
+              Be the preferred first choice partner in non-banking financial
+              services for people and businesses globally.
             </p>
           </div>
         </motion.div>
-
       </section>
 
       {/* SECTION 3: OUR VALUES */}
@@ -238,7 +242,6 @@ export default function AboutUsPage() {
         <div className="absolute inset-0 bg-[#3c1d0c]/85 md:bg-black/80 z-0" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -276,7 +279,6 @@ export default function AboutUsPage() {
               </motion.div>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -289,7 +291,6 @@ export default function AboutUsPage() {
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
           <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16">
-
             {documents.map((doc, idx) => (
               <motion.a
                 key={idx}
@@ -310,14 +311,12 @@ export default function AboutUsPage() {
                 </span>
               </motion.a>
             ))}
-
           </div>
         </div>
       </section>
 
       {/* Corporate Footer */}
       <Footer />
-
     </div>
   );
 }

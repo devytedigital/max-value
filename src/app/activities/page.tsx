@@ -11,7 +11,6 @@ import {
   MapPin,
   Users,
   Search,
-  ChevronRight,
   Filter,
   Flame,
   ArrowRight,
@@ -133,20 +132,6 @@ export default function ActivitiesPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 text-center flex flex-col items-center">
-          {/* Breadcrumb Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
-          >
-            <span className="text-slate-200">Home</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-slate-200">Media</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-[#FCA038] font-bold">Activities</span>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

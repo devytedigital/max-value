@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, Award, ShieldCheck, Users, Briefcase, Sparkles, Building2, Quote } from "lucide-react";
+import { Award, ShieldCheck, Users, Briefcase, Sparkles, Building2, Quote } from "lucide-react";
 
 interface Director {
   id: string;
@@ -148,20 +148,6 @@ export default function BoardOfDirectorsPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 text-center flex flex-col items-center">
-
-          {/* Breadcrumb Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-amber-300 mb-8 shadow-sm"
-          >
-            <span className="text-slate-200">Home</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-slate-200">About Us</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="text-[#FCA038] font-bold">Board of Directors</span>
-          </motion.div>
 
           {/* Clean text directly over the image — no box, no background */}
           <motion.div

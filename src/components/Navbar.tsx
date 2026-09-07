@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { db } from "@/lib/firebase";
@@ -39,12 +39,15 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("HOME");
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const lastScrollYRef = useRef(0);
+  const isScrolledRef = useRef(false);
+  const isVisibleRef = useRef(true);
 
   const [mobileCorporateOpen, setMobileCorporateOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const isLightPage = pathname !== "/" && pathname !== "";
 
@@ -76,29 +79,36 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const shouldBeScrolled = currentScrollY > 10;
+          if (shouldBeScrolled !== isScrolledRef.current) {
+            isScrolledRef.current = shouldBeScrolled;
+            setIsScrolled(shouldBeScrolled);
+          }
 
-      if (currentScrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+          const shouldBeVisible = !(currentScrollY > lastScrollYRef.current && currentScrollY > 150);
+          if (shouldBeVisible !== isVisibleRef.current) {
+            isVisibleRef.current = shouldBeVisible;
+            setIsVisible(shouldBeVisible);
+          }
 
-      // Hide on scroll down past a threshold (150px), show on scroll up
-      if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
+          lastScrollYRef.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     if (mobileMenuOpen) {

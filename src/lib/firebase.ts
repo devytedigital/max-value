@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -16,8 +16,20 @@ const firebaseConfig = {
 // Initialize Firebase (safely checks if the app is already initialized, standard for Next.js hot-reloads)
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-// Initialize Analytics (safely checks if window is defined for Server-Side Rendering)
-const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
+// Initialize Analytics (safely checks isSupported() for SSR, extensions, and restricted environments)
+let analytics: Analytics | null = null;
+
+if (typeof window !== "undefined") {
+  isSupported()
+    .then((supported) => {
+      if (supported) {
+        analytics = getAnalytics(app);
+      }
+    })
+    .catch(() => {
+      // Gracefully ignore analytics if unsupported in the current context
+    });
+}
 
 // Initialize Firestore
 const db = getFirestore(app);

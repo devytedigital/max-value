@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLenis } from "lenis/react";
 import {
   ArrowRight,
   TrendingUp,
@@ -57,7 +56,6 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartY = useRef(0);
-  const lenis = useLenis();
 
   // Check if visitor has already seen the splash screen
   useEffect(() => {
@@ -65,7 +63,6 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
       window.history.scrollRestoration = "manual";
       window.scrollTo(0, 0);
     }
-    lenis?.scrollTo(0, { immediate: true, force: true });
 
     const hasSeen = localStorage.getItem("maxValueSplashDismissed");
     if (!hasSeen) {
@@ -77,7 +74,7 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
     return () => {
       document.body.style.overflow = "unset"; // restore scroll on unmount
     };
-  }, [onComplete, lenis]);
+  }, [onComplete]);
 
   const handleDismiss = () => {
     localStorage.setItem("maxValueSplashDismissed", "true");
@@ -85,20 +82,16 @@ export default function SplashModal({ onComplete }: SplashModalProps) {
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
-    lenis?.scrollTo(0, { immediate: true, force: true });
 
     setShowSplash(false);
     onComplete?.();
 
-    // Wait for the exit animation (800ms) to complete before restoring scroll.
-    // This absorbs any remaining scroll wheel momentum while overflow is still locked.
     setTimeout(() => {
       document.body.style.overflow = "unset";
       if (typeof window !== "undefined") {
         window.scrollTo(0, 0);
       }
-      lenis?.scrollTo(0, { immediate: true, force: true });
-    }, 800);
+    }, 500);
   };
 
   const changeSlide = (direction: "up" | "down") => {
