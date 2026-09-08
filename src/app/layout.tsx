@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   description: "MAXVALUE Credits & Investments Ltd. is an innovative venture providing high quality financial services to the common man. The team behind this venture draws ...",
   icons: {
     icon: [
-      { url: "/icon.png" },
+      { url: "/favicon.ico" },
     ],
-    shortcut: "/icon.png",
-    apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 
