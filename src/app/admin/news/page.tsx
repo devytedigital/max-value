@@ -402,7 +402,7 @@ export default function AdminNewsPage() {
       let response;
       if (currentArticle) {
         response = await fetch(`/api/news/${currentArticle.id}`, {
-          method: "PUT",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
@@ -415,8 +415,14 @@ export default function AdminNewsPage() {
       }
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to save news article");
+        let errMsg = "Failed to save news article";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to save news"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast(
@@ -441,12 +447,21 @@ export default function AdminNewsPage() {
     if (!articleToDelete) return;
 
     try {
-      const response = await fetch(`/api/news/${articleToDelete.id}`, {
-        method: "DELETE"
+      const response = await fetch(`/api/news/${articleToDelete.id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete news article");
+        let errMsg = "Failed to delete news article";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to delete news"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast("News article deleted successfully!", "success");

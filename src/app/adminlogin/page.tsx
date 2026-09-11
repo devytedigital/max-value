@@ -38,7 +38,16 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ email: email.trim(), password: password.trim() }),
       });
 
-      const data = await response.json();
+      let data: any = {};
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error(
+          response.status === 404
+            ? "Login service not found. Please contact support."
+            : `Server error (${response.status}). Please try again later.`
+        );
+      }
 
       if (!response.ok) {
         throw new Error(data.error || "Invalid email or password");

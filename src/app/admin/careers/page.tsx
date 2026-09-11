@@ -196,7 +196,7 @@ export default function AdminCareersPage() {
       if (currentJob) {
         // Edit mode
         response = await fetch(`/api/jobs/${currentJob.id}`, {
-          method: "PUT",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
@@ -210,8 +210,14 @@ export default function AdminCareersPage() {
       }
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to process job listing");
+        let errMsg = "Failed to process job listing";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to save job"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast(
@@ -236,12 +242,21 @@ export default function AdminCareersPage() {
     if (!jobToDelete) return;
 
     try {
-      const response = await fetch(`/api/jobs/${jobToDelete.id}`, {
-        method: "DELETE"
+      const response = await fetch(`/api/jobs/${jobToDelete.id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete job listing");
+        let errMsg = "Failed to delete job listing";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to delete job"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast("Job listing deleted successfully!", "success");

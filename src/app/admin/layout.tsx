@@ -88,7 +88,12 @@ export default function AdminLayout({
           throw new Error("Live check failed");
         }
 
-        const liveData = await res.json();
+        let liveData: any;
+        try {
+          liveData = await res.json();
+        } catch {
+          throw new Error("API returned non-JSON response");
+        }
         
         // Direct redirect if account is deactivated
         if (liveData.status === "Inactive") {

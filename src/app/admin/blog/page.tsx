@@ -385,7 +385,7 @@ export default function AdminBlogPage() {
 
     try {
       const url = currentPost ? `/api/blog/${currentPost.id}` : "/api/blog";
-      const method = currentPost ? "PUT" : "POST";
+      const method = "POST";
       
       const response = await fetch(url, {
         method,
@@ -396,8 +396,14 @@ export default function AdminBlogPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to save blog post");
+        let errMsg = "Failed to save blog post";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to save blog"})`;
+        }
+        throw new Error(errMsg);
       }
 
       await fetchBlogs();
@@ -420,12 +426,23 @@ export default function AdminBlogPage() {
     if (!postToDelete) return;
 
     try {
-      const response = await fetch(`/api/blog/${postToDelete.id}`, {
-        method: "DELETE"
+      const response = await fetch(`/api/blog/${postToDelete.id}?_method=DELETE`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete blog post");
+        let errMsg = "Failed to delete blog post";
+        try {
+          const errorData = await response.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to delete blog"})`;
+        }
+        throw new Error(errMsg);
       }
 
       setPosts((prev) => prev.filter((p) => p.id !== postToDelete.id));

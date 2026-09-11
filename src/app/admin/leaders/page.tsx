@@ -143,7 +143,7 @@ export default function LeadersAdmin() {
       };
 
       const url = editingLeader ? `/api/leaders/${editingLeader.id}` : "/api/leaders";
-      const method = editingLeader ? "PUT" : "POST";
+      const method = "POST";
 
       const res = await fetch(url, {
         method,
@@ -160,8 +160,14 @@ export default function LeadersAdmin() {
         resetForm();
         fetchLeaders();
       } else {
-        const errorData = await res.json();
-        showToast(errorData.error || "Failed to save leader details", "error");
+        let errMsg = "Failed to save leader details";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to save leader"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error saving leader details: " + err.message, "error");
@@ -173,8 +179,10 @@ export default function LeadersAdmin() {
   const handleDelete = async (id: string) => {
     try {
       setActionLoading(true);
-      const res = await fetch(`/api/leaders/${id}`, {
-        method: "DELETE"
+      const res = await fetch(`/api/leaders/${id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (res.ok) {
@@ -182,7 +190,14 @@ export default function LeadersAdmin() {
         setDeleteConfirmId(null);
         fetchLeaders();
       } else {
-        showToast("Failed to delete leader", "error");
+        let errMsg = "Failed to delete leader";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to delete leader"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error deleting leader: " + err.message, "error");

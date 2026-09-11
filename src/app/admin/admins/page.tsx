@@ -198,7 +198,7 @@ export default function AdminUsersPage() {
       let response;
       if (currentAdmin) {
         response = await fetch(`/api/admins/${currentAdmin.id}`, {
-          method: "PUT",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
@@ -210,10 +210,15 @@ export default function AdminUsersPage() {
         });
       }
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error || "Failed to save administrator account");
+        let errMsg = "Failed to save administrator account";
+        try {
+          const result = await response.json();
+          if (result?.error) errMsg = result.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to save admin"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast(
@@ -234,13 +239,20 @@ export default function AdminUsersPage() {
     const newStatus = admin.status === "Active" ? "Inactive" : "Active";
     try {
       const response = await fetch(`/api/admins/${admin.id}`, {
-        method: "PUT",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to change account status");
+        let errMsg = "Failed to change account status";
+        try {
+          const errRes = await response.json();
+          if (errRes?.error) errMsg = errRes.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to change status"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast(`User status changed to ${newStatus}`, "success");
@@ -264,13 +276,21 @@ export default function AdminUsersPage() {
     if (!adminToDelete) return;
 
     try {
-      const response = await fetch(`/api/admins/${adminToDelete.id}`, {
-        method: "DELETE",
+      const response = await fetch(`/api/admins/${adminToDelete.id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" }),
       });
 
-      const resData = await response.json();
       if (!response.ok) {
-        throw new Error(resData.error || "Failed to delete account");
+        let errMsg = "Failed to delete account";
+        try {
+          const resData = await response.json();
+          if (resData?.error) errMsg = resData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to delete account"})`;
+        }
+        throw new Error(errMsg);
       }
 
       showToast("Account removed successfully!", "success");

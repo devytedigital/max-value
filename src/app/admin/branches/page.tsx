@@ -200,7 +200,7 @@ export default function AdminBranchesPage() {
       setFormSubmitting(true);
       const isEdit = !!currentBranch;
       const url = isEdit ? `/api/branches/${currentBranch.id}` : "/api/branches";
-      const method = isEdit ? "PUT" : "POST";
+      const method = "POST";
 
       const response = await fetch(url, {
         method,
@@ -209,8 +209,14 @@ export default function AdminBranchesPage() {
       });
 
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || "Failed to save branch");
+        let errMsg = "Failed to save branch";
+        try {
+          const errData = await response.json();
+          if (errData?.error) errMsg = errData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to save branch"})`;
+        }
+        throw new Error(errMsg);
       }
 
       await fetchBranches(); // Refresh list
@@ -234,12 +240,21 @@ export default function AdminBranchesPage() {
   const handleDeleteBranch = async () => {
     if (!branchToDelete) return;
     try {
-      const response = await fetch(`/api/branches/${branchToDelete.id}`, {
-        method: "DELETE"
+      const response = await fetch(`/api/branches/${branchToDelete.id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete branch");
+        let errMsg = "Failed to delete branch";
+        try {
+          const errData = await response.json();
+          if (errData?.error) errMsg = errData.error;
+        } catch {
+          errMsg = `Server error (${response.status}: ${response.statusText || "Unable to delete branch"})`;
+        }
+        throw new Error(errMsg);
       }
 
       await fetchBranches(); // Refresh list

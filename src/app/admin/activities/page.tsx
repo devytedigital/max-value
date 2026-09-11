@@ -197,7 +197,7 @@ export default function ActivitiesAdmin() {
       };
 
       const url = editingActivity ? `/api/activities/${editingActivity.id}` : "/api/activities";
-      const method = editingActivity ? "PUT" : "POST";
+      const method = "POST";
 
       const res = await fetch(url, {
         method,
@@ -214,8 +214,14 @@ export default function ActivitiesAdmin() {
         resetForm();
         fetchActivities();
       } else {
-        const errorData = await res.json();
-        showToast(errorData.error || "Failed to save activity details", "error");
+        let errMsg = "Failed to save activity details";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to save activity"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error saving activity: " + err.message, "error");
@@ -227,8 +233,10 @@ export default function ActivitiesAdmin() {
   const handleDelete = async (id: string) => {
     try {
       setActionLoading(true);
-      const res = await fetch(`/api/activities/${id}`, {
-        method: "DELETE"
+      const res = await fetch(`/api/activities/${id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (res.ok) {
@@ -236,7 +244,14 @@ export default function ActivitiesAdmin() {
         setDeleteConfirmId(null);
         fetchActivities();
       } else {
-        showToast("Failed to delete activity", "error");
+        let errMsg = "Failed to delete activity";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to delete activity"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error deleting activity: " + err.message, "error");

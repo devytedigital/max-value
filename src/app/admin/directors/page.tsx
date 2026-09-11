@@ -83,7 +83,14 @@ export default function DirectorsAdmin() {
         const data = await res.json();
         setDirectors(data);
       } else {
-        showToast("Failed to fetch board of directors list", "error");
+        let errMsg = "Failed to fetch board of directors list";
+        try {
+          const data = await res.json();
+          if (data?.error) errMsg = data.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to load directors"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error loading directors: " + err.message, "error");
@@ -148,7 +155,8 @@ export default function DirectorsAdmin() {
       };
 
       const url = editingDirector ? `/api/directors/${editingDirector.id}` : "/api/directors";
-      const method = editingDirector ? "PUT" : "POST";
+      // Use POST method to ensure compatibility with LiteSpeed/proxy servers that block PUT requests
+      const method = "POST";
 
       const res = await fetch(url, {
         method,
@@ -165,8 +173,14 @@ export default function DirectorsAdmin() {
         resetForm();
         fetchDirectors();
       } else {
-        const errorData = await res.json();
-        showToast(errorData.error || "Failed to save director details", "error");
+        let errMsg = "Failed to save director details";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to save director"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error saving director details: " + err.message, "error");
@@ -178,8 +192,10 @@ export default function DirectorsAdmin() {
   const handleDelete = async (id: string) => {
     try {
       setActionLoading(true);
-      const res = await fetch(`/api/directors/${id}`, {
-        method: "DELETE"
+      const res = await fetch(`/api/directors/${id}?_method=DELETE`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _method: "DELETE" })
       });
 
       if (res.ok) {
@@ -187,7 +203,14 @@ export default function DirectorsAdmin() {
         setDeleteConfirmId(null);
         fetchDirectors();
       } else {
-        showToast("Failed to delete director", "error");
+        let errMsg = "Failed to delete director";
+        try {
+          const errorData = await res.json();
+          if (errorData?.error) errMsg = errorData.error;
+        } catch {
+          errMsg = `Server error (${res.status}: ${res.statusText || "Unable to delete director"})`;
+        }
+        showToast(errMsg, "error");
       }
     } catch (err: any) {
       showToast("Error deleting director: " + err.message, "error");
