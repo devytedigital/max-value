@@ -3,7 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Download } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutUsPage() {
@@ -30,14 +30,14 @@ export default function AboutUsPage() {
     },
   ];
 
-  // Document download section muted as requested
-  // const documents = [
-  //   { name: "Interest Policy", href: "#" },
-  //   { name: "Privacy Policy", href: "#" },
-  //   { name: "Fair Practices Code", href: "#" },
-  //   { name: "Recovery Policy", href: "#" },
-  //   { name: "Charges", href: "#" },
-  // ];
+  // Document download section
+  const documents = [
+    { name: "Interest Policy", href: "https://drive.google.com/file/d/1BPGKbl5eX_siDI5KA2txk3Uvz5iLLQjt/view?usp=drive_link" },
+    { name: "Privacy Policy", href: "https://drive.google.com/file/d/1-McIRWi52RrSXMS7NBHodKdGMXHA8Bwr/view?usp=drive_link" },
+    { name: "Fair Practices Code", href: "https://drive.google.com/file/d/1tcKCFlGplpXQkInCHdFazv4NWAX_6KLS/view?usp=drive_link" },
+    { name: "Recovery Policy", href: "https://drive.google.com/file/d/1fL1mCJlKXhTkaMGEQAhyEXCb1vBi2-N9/view?usp=drive_link" },
+    { name: "Charges", href: "https://drive.google.com/file/d/1xbI6v93pso94360fjXMyCj29CGZU3wla/view?usp=drive_link" },
+  ];
 
   return (
     <div className="relative min-h-screen bg-[#FAF9F6] text-zinc-950 overflow-x-hidden selection:bg-[#147FC3] selection:text-white font-sans">
@@ -251,8 +251,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* SECTION 4: POLICY DOWNLOADS (MUTED AS REQUESTED) */}
-      {/*
+      {/* SECTION 4: POLICY DOWNLOADS */}
       <section className="relative w-full py-16 md:py-20 bg-transparent">
         <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,#147FC3_0%,transparent_50%)]" />
@@ -264,6 +263,8 @@ export default function AboutUsPage() {
               <motion.a
                 key={idx}
                 href={doc.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -281,7 +282,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-      */}
 
       {/* Corporate Footer */}
       <Footer />
