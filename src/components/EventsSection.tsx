@@ -13,8 +13,8 @@ export default function EventsSection() {
   const videos: EventVideo[] = [
     {
       id: "director-message",
-      title: "7th Anniversary - Director Message",
-      label: "7th Anniversary - Director Message",
+      title: "maxvalue credits and investments ltd managing director message",
+      label: "maxvalue credits and investments ltd managing director message",
       youtubeId: "HbWTT8HCE4o"
     },
     {
