@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/microfinance/layout,_N_T_/microfinance/page,_N_T_/microfinance"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/microfinance/__PAGE__",
+    "/microfinance",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "app": {
+    "[project]/src/app/_not-found/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/about-us/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/activities/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/activities/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/admins/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/blog/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/branches/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/careers/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/directors/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/leaders/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/media/documents/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/media/gallery/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/media/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/media/videos/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/news/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/admin/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/adminlogin/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/blog/[id]/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/blog/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/board-of-directors/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/branch-network/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/business-loan/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/career/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/contact-us/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/contact/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/gold-loan/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/grievance/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/leaders/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/media/gallery/[id]/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/media/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/microfinance/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/news/[id]/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/news/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/traders-loan/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ],
+    "[project]/src/app/vehicle-loan/page": [
+      "static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/traders-loan/layout,_N_T_/traders-loan/page,_N_T_/traders-loan"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/traders-loan/__PAGE__",
+    "/traders-loan",
+    "/_index",
+    "/_head"
+  ]
+}
